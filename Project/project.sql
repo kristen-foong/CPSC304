@@ -158,200 +158,172 @@ CREATE TABLE EvolvesInto (
 
 
 -- insert into species table
-INSERT INTO Species VALUES (
-    (1,'Bulbasaur','Overgrow',NULL,'Chrolophyll'),
-    (2,'Ivysaur','Overgrow',NULL,'Chrolophyll'),
-    (3,'Venusaur','Overgrow',NULL,'Chrolophyll'),
-    (3,'Mega Venusaur','Thick Fat',NULL,NULL),
-    (4,'Charmander','Blaze',NULL,'Solar Power'),
-    (5,'Charmeleon','Blaze',NULL,'Solar Power'),
-    (6,'Charizard','Blaze',NULL,'Solar Power'),
-    (6,'Mega Charizard X','Tough Claws',NULL,NULL),
-    (6,'Mega Charizard Y','Drought',NULL,NULL),
-    (7,'Squirtle','Torrent',NULL,'Rain Dish'),
-    (8,'Wartortle','Torrent',NULL,'Rain Dish'),
-    (9,'Blastoise','Torrent',NULL,'Rain Dish'),
-    (9,'Mega Blastoise','Mega Launcher',NULL,NULL),
-    (10,'Caterpie','Shield Dust',NULL,'Run Away'),
-    (11,'Metapod','Shed Skin',NULL,NULL),
-    (12,'Butterfree','Compound Eyes',NULL,'Tinted Lens'),
-    (13,'Weedle','Shield Dust',NULL,'Run Away'),
-    (14,'Kakuna','Shed Skin',NULL,NULL),
-    (15,'Beedrill','Swarm',NULL,'Sniper'),
-    (15,'Mega Beedrill','Adaptability',NULL,NULL),
-    (16,'Pidgey','Keen Eye','Tangled Feet','Big Pecks'),
-    (17,'Pidgeotto','Keen Eye','Tangled Feet','Big Pecks'),
-    (18,'Pidgeot','Keen Eye','Tangled Feet','Big Pecks'),
-    (18,'Mega Pidgeot','No Guard',NULL,NULL),
-    (19,'Rattata','Run Away','Guts','Hustle'),
-    (19,'Rattata','Gluttony','Hustle','Thick Fat'),
-    (20,'Raticate','Run Away','Guts','Hustle'),
-    (20,'Raticate','Gluttony','Hustle','Thick Fat'),
-    (21,'Spearow','Keen Eye',NULL,'Sniper'),
-    (22,'Fearow','Keen Eye',NULL,'Sniper'),
-    (23,'Ekans','Intimidate','Shed Skin','Unnerve'),
-    (24,'Arbok','Intimidate','Shed Skin','Unnerve'),
-    (25,'Pikachu','Static',NULL,'Lightning Rod'),
-    (26,'Raichu','Static',NULL,'Lightning Rod'),
-    (26,'Raichu','Surge Surfer',NULL,NULL),
-    (27,'Sandshrew','Sand Veil',NULL,'Sand Rush'),
-    (27,'Sandshrew','Snow Cloak',NULL,'Slush Rush'),
-    (28,'Sandslash','Sand Veil',NULL,'Sand Rush'),
-    (28,'Sandslash','Snow Cloak',NULL,'Slush Rush'),
-    (29,'Nidoran F','Poison Point','Rivalry','Hustle'),
-    (30,'Nidorina','Poison Point','Rivalry','Hustle'),
-    (31,'Nidoqueen','Poison Point','Rivalry','Sheer Force'),
-    (32,'Nidoran M','Poison Point','Rivalry','Hustle'),
-    (33,'Nidorino','Poison Point','Rivalry','Hustle'),
-    (34,'Nidoking','Poison Point','Rivalry','Sheer Force'),
-    (35,'Clefairy','Cute Charm','Magic Guard','Friend Guard'),
-    (36,'Clefable','Cute Charm','Magic Guard','Friend Guard'),
-    (37,'Vulpix','Flash Fire',NULL,'Drought'),
-    (37,'Vulpix','Snow Cloak',NULL,'Snow Warning'),
-    (38,'Ninetales','Flash Fire',NULL,'Drought'),
-    (38,'Ninetales','Snow Cloak',NULL,'Snow Warning'),
-    (39,'Jigglypuff','Cute Charm','Competitive','Friend Guard'),
-    (40,'Wigglytuff','Cute Charm','Competitive','Friend Guard'),
-    (41,'Zubat','Inner Focus',NULL,'Infiltrator'),
-    (42,'Golbat','Inner Focus',NULL,'Infiltrator'),
-    (43,'Oddish','Chlorophyll',NULL,'Run Away'),
-    (44,'Gloom','Chlorophyll',NULL,'Stench'),
-    (45,'Vileplume','Chlorophyll',NULL,'Effect Spore'),
-    (46,'Paras','Effect Spore','Dry Skin','Damp'),
-    (47,'Parasect','Effect Spore','Dry Skin','Damp'),
-    (48,'Venonat','Compound Eyes','Tinted Lens','Run Away'),
-    (49,'Venomoth','Shield Dust','Tinted Lens','Wonder Skin'),
-    (50,'Diglett','Sand Veil','Arena Trap','Sand Force'),
-    (50,'Diglett','Sand Veil','Tangling Hair','Sand Force'),
-    (51,'Dugtrio','Sand Veil','Arena Trap','Sand Force'),
-    (51,'Dugtrio','Sand Veil','Tangling Hair','Sand Force'),
-    (52,'Meowth','Pickup','Technician','Unnerve'),
-    (52,'Meowth','Pickup','Technician','Rattled'),
-    (52,'Meowth','Pickup','Tough Claws','Unnerve'),
-    (53,'Persian','Limber','Technician','Unnerve'),
-    (53,'Persian','Fur Coat','Technician','Rattled'),
-    (54,'Psyduck','Damp','Cloud Nine','Swift Swim'),
-    (55,'Golduck','Damp','Cloud Nine','Swift Swim'),
-    (56,'Mankey','Vital Spilit','Anger Point','Defiant'),
-    (57,'Primeape','Vital Spilit','Anger Point','Defiant'),
-    (58,'Growlithe','Intimidate','Flash Fire','Justified'),
-    (59,'Arcanine','Intimidate','Flash Fire','Justified'),
-    (60,'Poliwag','Water Absorb','Damp','Swift Swim'),
-    (61,'Poliwhirl','Water Absorb','Damp','Swift Swim'),
-    (62,'Poliwrath','Water Absorb','Damp','Swift Swim'),
-    (63,'Abra','Synchronize','Inner Focus','Magic guard'),
-    (64,'Kadabra','Synchronize','Inner Focus','Magic guard'),
-    (65,'Alakazam','Synchronize','Inner Focus','Magic guard'),
-    (65,'Mega Alakazam','Trace',NULL,NULL));
+INSERT INTO Species VALUES (1,'Bulbasaur','Overgrow',NULL,'Chrolophyll');
+INSERT INTO Species VALUES (2,'Ivysaur','Overgrow',NULL,'Chrolophyll');
+INSERT INTO Species VALUES (3,'Venusaur','Overgrow',NULL,'Chrolophyll');
+INSERT INTO Species VALUES (4,'Charmander','Blaze',NULL,'Solar Power');
+INSERT INTO Species VALUES (5,'Charmeleon','Blaze',NULL,'Solar Power');
+INSERT INTO Species VALUES (6,'Charizard','Blaze',NULL,'Solar Power');
+INSERT INTO Species VALUES (7,'Squirtle','Torrent',NULL,'Rain Dish');
+INSERT INTO Species VALUES (8,'Wartortle','Torrent',NULL,'Rain Dish');
+INSERT INTO Species VALUES (9,'Blastoise','Torrent',NULL,'Rain Dish');
+INSERT INTO Species VALUES (10,'Caterpie','Shield Dust',NULL,'Run Away');
+INSERT INTO Species VALUES (11,'Metapod','Shed Skin',NULL,NULL);
+INSERT INTO Species VALUES (12,'Butterfree','Compound Eyes',NULL,'Tinted Lens');
+INSERT INTO Species VALUES (13,'Weedle','Shield Dust',NULL,'Run Away');
+INSERT INTO Species VALUES (14,'Kakuna','Shed Skin',NULL,NULL);
+INSERT INTO Species VALUES (15,'Beedrill','Swarm',NULL,'Sniper');
+INSERT INTO Species VALUES (16,'Pidgey','Keen Eye','Tangled Feet','Big Pecks');
+INSERT INTO Species VALUES (17,'Pidgeotto','Keen Eye','Tangled Feet','Big Pecks');
+INSERT INTO Species VALUES (18,'Pidgeot','Keen Eye','Tangled Feet','Big Pecks');
+INSERT INTO Species VALUES (19,'Rattata','Run Away','Guts','Hustle');
+INSERT INTO Species VALUES (19,'Rattata','Gluttony','Hustle','Thick Fat');
+INSERT INTO Species VALUES (20,'Raticate','Run Away','Guts','Hustle');
+INSERT INTO Species VALUES (21,'Spearow','Keen Eye',NULL,'Sniper');
+INSERT INTO Species VALUES (22,'Fearow','Keen Eye',NULL,'Sniper');
+INSERT INTO Species VALUES (23,'Ekans','Intimidate','Shed Skin','Unnerve');
+INSERT INTO Species VALUES (24,'Arbok','Intimidate','Shed Skin','Unnerve');
+INSERT INTO Species VALUES (25,'Pikachu','Static',NULL,'Lightning Rod');
+INSERT INTO Species VALUES (26,'Raichu','Static',NULL,'Lightning Rod');
+INSERT INTO Species VALUES (27,'Sandshrew','Sand Veil',NULL,'Sand Rush');
+INSERT INTO Species VALUES (28,'Sandslash','Snow Cloak',NULL,'Slush Rush');
+INSERT INTO Species VALUES (29, 'Nidoran F', 'Poison Point', 'Rivalry', 'Hustle');
+INSERT INTO Species VALUES (30,'Nidorina','Poison Point','Rivalry','Hustle');
+INSERT INTO Species VALUES (31, 'Nidoqueen', 'Poison Point', 'Rivalry', 'Hustle');
+INSERT INTO Species VALUES (32,'Nidoran M','Poison Point','Rivalry','Hustle');
+INSERT INTO Species VALUES (34,'Nidoking','Poison Point','Rivalry','Sheer Force');
+INSERT INTO Species VALUES (36,'Clefable','Cute Charm','Magic Guard','Friend Guard');
+INSERT INTO Species VALUES (37,'Vulpix','Flash Fire',NULL,'Drought');
+INSERT INTO Species VALUES (38,'Ninetales','Flash Fire',NULL,'Drought');
+INSERT INTO Species VALUES (39,'Jigglypuff','Cute Charm','Competitive','Friend Guard');
+INSERT INTO Species VALUES (40,'Wigglytuff','Cute Charm','Competitive','Friend Guard');
+INSERT INTO Species VALUES (41,'Zubat','Inner Focus',NULL,'Infiltrator');
+INSERT INTO Species VALUES (42,'Golbat','Inner Focus',NULL,'Infiltrator');
+INSERT INTO Species VALUES (43,'Oddish','Chlorophyll',NULL,'Run Away');
+INSERT INTO Species VALUES (44,'Gloom','Chlorophyll',NULL,'Stench');
+INSERT INTO Species VALUES (45,'Vileplume','Chlorophyll',NULL,'Effect Spore');
+INSERT INTO Species VALUES (46,'Paras','Effect Spore','Dry Skin','Damp');
+INSERT INTO Species VALUES (47,'Parasect','Effect Spore','Dry Skin','Damp');
+INSERT INTO Species VALUES (48,'Venonat','Compound Eyes','Tinted Lens','Run Away');
+INSERT INTO Species VALUES (49,'Venomoth','Shield Dust','Tinted Lens','Wonder Skin');
+INSERT INTO Species VALUES (50,'Diglett','Sand Veil','Arena Trap','Sand Force');
+INSERT INTO Species VALUES (51,'Dugtrio','Sand Veil','Arena Trap','Sand Force');
+INSERT INTO Species VALUES (52,'Meowth','Pickup','Technician','Unnerve');
+INSERT INTO Species VALUES (52,'Meowth','Pickup','Tough Claws','Unnerve');
+INSERT INTO Species VALUES (53,'Persian','Limber','Technician','Unnerve');
+INSERT INTO Species VALUES (54,'Psyduck','Damp','Cloud Nine','Swift Swim');
+INSERT INTO Species VALUES (55,'Golduck','Damp','Cloud Nine','Swift Swim');
+INSERT INTO Species VALUES (56,'Mankey','Vital Spilit','Anger Point','Defiant');
+INSERT INTO Species VALUES (57,'Primeape','Vital Spilit','Anger Point','Defiant');
+INSERT INTO Species VALUES (58,'Growlithe','Intimidate','Flash Fire','Justified');
+INSERT INTO Species VALUES (59,'Arcanine','Intimidate','Flash Fire','Justified');
+INSERT INTO Species VALUES (60,'Poliwag','Water Absorb','Damp','Swift Swim');
+INSERT INTO Species VALUES (61,'Poliwhirl','Water Absorb','Damp','Swift Swim');
+INSERT INTO Species VALUES (62,'Poliwrath','Water Absorb','Damp','Swift Swim');
+INSERT INTO Species VALUES (63,'Abra','Synchronize','Inner Focus','Magic guard');
+INSERT INTO Species VALUES (64,'Kadabra','Synchronize','Inner Focus','Magic guard');
+INSERT INTO Species VALUES (65,'Alakazam','Synchronize','Inner Focus','Magic guard');
+
+
+-- insert into Mega_Evolution table
+INSERT INTO Mega_Evolution VALUES (3,'Mega Venusaur','Thick Fat',NULL,NULL);
+INSERT INTO Mega_Evolution VALUES (6,'Mega Charizard X','Tough Claws',NULL,NULL);
+INSERT INTO Mega_Evolution VALUES (6,'Mega Charizard Y','Drought',NULL,NULL);
+INSERT INTO Mega_Evolution VALUES (9,'Mega Blastoise','Mega Launcher',NULL,NULL);
+INSERT INTO Mega_Evolution VALUES (15,'Mega Beedrill','Adaptability',NULL,NULL);
+INSERT INTO Mega_Evolution VALUES (18,'Mega Pidgeot','No Guard',NULL,NULL);
+INSERT INTO Mega_Evolution VALUES (65,'Mega Alakazam','Trace',NULL,NULL);
 
 
 -- insert into TypeName
-INSERT INTO Type VALUES
-		('Normal'),
-		('Fire'),
-		('Water'),
-		('Grass'),
-		('Electric'),
-		('Ice'),
-		('Fighting'),
-		('Poison'),
-		('Ground'),
-		('Flying'),
-		('Psychic'),
-		('Bug'),
-		('Rock'),
-		('Ghost'),
-		('Dark'),
-		('Dragon'),
-		('Steel'),
-		('Fairy');
+INSERT INTO Type VALUES ('Normal');
+INSERT INTO Type VALUES ('Fire');
+INSERT INTO Type VALUES ('Water');
+INSERT INTO Type VALUES ('Grass');
+INSERT INTO Type VALUES ('Electric');
+INSERT INTO Type VALUES ('Ice');
+INSERT INTO Type VALUES ('Fighting');
+INSERT INTO Type VALUES ('Poison');
+INSERT INTO Type VALUES ('Ground');
+INSERT INTO Type VALUES ('Flying');
+INSERT INTO Type VALUES ('Psychic');
+INSERT INTO Type VALUES ('Bug');
+INSERT INTO Type VALUES ('Rock');
+INSERT INTO Type VALUES ('Ghost');
+INSERT INTO Type VALUES ('Dark');
+INSERT INTO Type VALUES ('Dragon');
+INSERT INTO Type VALUES ('Steel');
+INSERT INTO Type VALUES ('Fairy');
 
 
 -- insert into stats table
-INSERT INTO Stats VALUES
-    (1,45,49,49,65,65,45),
-    (2,60,62,63,80,80,60),
-    (3,80,82,83,100,100,80),
-    (3,80,100,123,122,120,80),
-    (4,39,52,43,60,50,65),
-    (5,58,64,58,80,65,80),
-    (6,78,84,78,109,85,100),
-    (6,78,130,111,130,85,100),
-    (6,78,104,78,159,115,100),
-    (7,44,48,65,50,64,43),
-    (8,59,63,80,65,80,58),
-    (9,79,83,100,85,105,78),
-    (9,79,103,120,135,115,78),
-    (10,45,30,35,20,20,45),
-    (11,50,20,55,25,25,30),
-    (12,60,45,50,90,80,70),
-    (13,40,35,30,20,20,50),
-    (14,45,25,50,25,25,35),
-    (15,65,90,40,45,80,75),
-    (15,65,150,40,15,80,145),
-    (16,40,45,40,35,35,56),
-    (17,63,60,55,50,50,71),
-    (18,83,80,75,70,70,101),
-    (18,83,80,80,135,80,121),
-    (19,30,56,35,25,35,72),
-    (19,30,56,35,25,35,72),
-    (20,55,81,60,50,70,97),
-    (20,75,71,70,40,80,77),
-    (21,40,60,30,31,31,70),
-    (22,65,90,65,61,61,100),
-    (23,35,60,44,40,54,55),
-    (24,60,95,69,65,79,80),
-    (25,35,55,40,50,50,90),
-    (26,60,90,55,90,80,110),
-    (26,60,85,50,95,85,110),
-    (27,50,75,85,20,30,40),
-    (27,50,75,90,10,35,40),
-    (28,75,100,110,45,55,65),
-    (28,75,100,120,25,65,65),
-    (29,55,47,52,40,40,41),
-    (30,70,62,67,55,55,56),
-    (31,90,92,87,75,85,76),
-    (32,46,57,40,40,40,50),
-    (33,61,72,57,55,55,65),
-    (34,81,102,77,85,75,85),
-    (35,70,45,48,60,65,35),
-    (36,95,70,73,95,90,60),
-    (37,38,41,40,50,65,65),
-    (37,38,41,40,50,65,65),
-    (38,73,76,75,81,100,100),
-    (38,73,67,75,81,100,109),
-    (39,115,45,20,45,25,20),
-    (40,140,70,45,85,50,45),
-    (41,40,45,35,30,40,55),
-    (42,75,80,70,65,75,90),
-    (43,45,50,55,75,65,30),
-    (44,60,65,70,85,75,40),
-    (45,75,80,85,110,90,50),
-    (46,35,70,55,45,55,25),
-    (47,60,95,80,60,80,30),
-    (48,60,55,50,40,55,45),
-    (49,70,65,60,90,75,90),
-    (50,10,55,25,35,45,95),
-    (50,10,55,30,35,45,90),
-    (51,35,100,50,50,70,120),
-    (51,35,100,60,50,70,110),
-    (52,40,45,35,40,40,90),
-    (52,40,35,35,50,40,90),
-    (52,50,65,55,40,40,40),
-    (53,65,70,60,65,65,115),
-    (53,65,60,60,75,65,115),
-    (54,50,52,48,65,50,55),
-    (55,80,82,78,95,80,85),
-    (56,40,80,35,35,45,70),
-    (57,65,105,60,60,70,95),
-    (58,55,70,45,70,50,60),
-    (59,90,110,80,100,80,95),
-    (60,40,50,40,40,40,90),
-    (61,65,65,65,50,50,90),
-    (62,90,95,95,70,90,70),
-    (63,25,20,15,105,55,90),
-    (64,40,35,30,120,70,105),
-    (65,55,50,45,135,95,120);
+INSERT INTO Stats VALUES (1,45,49,49,65,65,45);
+INSERT INTO Stats VALUES (2,60,62,63,80,80,60);
+INSERT INTO Stats VALUES (3,80,82,83,100,100,80);
+INSERT INTO Stats VALUES (3,80,100,123,122,120,80);
+INSERT INTO Stats VALUES (4,39,52,43,60,50,65);
+INSERT INTO Stats VALUES (5,58,64,58,80,65,80);
+INSERT INTO Stats VALUES (6,78,84,78,109,85,100);
+INSERT INTO Stats VALUES (7,44,48,65,50,64,43);
+INSERT INTO Stats VALUES (8,59,63,80,65,80,58);
+INSERT INTO Stats VALUES (9,79,83,100,85,105,78);
+INSERT INTO Stats VALUES (10,45,30,35,20,20,45);
+INSERT INTO Stats VALUES (11,50,20,55,25,25,30);
+INSERT INTO Stats VALUES (12,60,45,50,90,80,70);
+INSERT INTO Stats VALUES (13,40,35,30,20,20,50);
+INSERT INTO Stats VALUES (14,45,25,50,25,25,35);
+INSERT INTO Stats VALUES (15,65,90,40,45,80,75);
+INSERT INTO Stats VALUES (15,65,150,40,15,80,145);
+INSERT INTO Stats VALUES (16,40,45,40,35,35,56);
+INSERT INTO Stats VALUES (17,63,60,55,50,50,71);
+INSERT INTO Stats VALUES (18,83,80,75,70,70,101);
+INSERT INTO Stats VALUES (19,30,56,35,25,35,72);
+INSERT INTO Stats VALUES (20,55,81,60,50,70,97);
+INSERT INTO Stats VALUES (21,40,60,30,31,31,70);
+INSERT INTO Stats VALUES (22,65,90,65,61,61,100);
+INSERT INTO Stats VALUES (23,35,60,44,40,54,55);
+INSERT INTO Stats VALUES (24,60,95,69,65,79,80);
+INSERT INTO Stats VALUES (25,35,55,40,50,50,90);
+INSERT INTO Stats VALUES (26,60,90,55,90,80,110);
+INSERT INTO Stats VALUES (27,50,75,85,20,30,40);
+INSERT INTO Stats VALUES (28,75,100,110,45,55,65);
+INSERT INTO Stats VALUES (29,55,47,52,40,40,41);
+INSERT INTO Stats VALUES (30,70,62,67,55,55,56);
+INSERT INTO Stats VALUES (31,90,92,87,75,85,76);
+INSERT INTO Stats VALUES (32,46,57,40,40,40,50);
+INSERT INTO Stats VALUES (33,61,72,57,55,55,65);
+INSERT INTO Stats VALUES (34,81,102,77,85,75,85);
+INSERT INTO Stats VALUES (35,70,45,48,60,65,35);
+INSERT INTO Stats VALUES (36,95,70,73,95,90,60);
+INSERT INTO Stats VALUES (37,38,41,40,50,65,65);
+INSERT INTO Stats VALUES (38,73,76,75,81,100,100);
+INSERT INTO Stats VALUES (39,115,45,20,45,25,20);
+INSERT INTO Stats VALUES (40,140,70,45,85,50,45);
+INSERT INTO Stats VALUES (41,40,45,35,30,40,55);
+INSERT INTO Stats VALUES (42,75,80,70,65,75,90);
+INSERT INTO Stats VALUES (43,45,50,55,75,65,30);
+INSERT INTO Stats VALUES (44,60,65,70,85,75,40);
+INSERT INTO Stats VALUES (45,75,80,85,110,90,50);
+INSERT INTO Stats VALUES (46,35,70,55,45,55,25);
+INSERT INTO Stats VALUES (47,60,95,80,60,80,30);
+INSERT INTO Stats VALUES (48,60,55,50,40,55,45);
+INSERT INTO Stats VALUES (49,70,65,60,90,75,90);
+INSERT INTO Stats VALUES (50,10,55,25,35,45,95);
+INSERT INTO Stats VALUES (51,35,100,50,50,70,120);
+INSERT INTO Stats VALUES (52,40,45,35,40,40,90);
+INSERT INTO Stats VALUES (53,65,70,60,65,65,115);
+INSERT INTO Stats VALUES (54,50,52,48,65,50,55);
+INSERT INTO Stats VALUES (55,80,82,78,95,80,85);
+INSERT INTO Stats VALUES (56,40,80,35,35,45,70);
+INSERT INTO Stats VALUES (57,65,105,60,60,70,95);
+INSERT INTO Stats VALUES (58,55,70,45,70,50,60);
+INSERT INTO Stats VALUES (59,90,110,80,100,80,95);
+INSERT INTO Stats VALUES (60,40,50,40,40,40,90);
+INSERT INTO Stats VALUES (61,65,65,65,50,50,90);
+INSERT INTO Stats VALUES (62,90,95,95,70,90,70);
+INSERT INTO Stats VALUES (63,25,20,15,105,55,90);
+INSERT INTO Stats VALUES (64,40,35,30,120,70,105);
+INSERT INTO Stats VALUES (65,55,50,45,135,95,120);
 
 
 -- insert into ofType
