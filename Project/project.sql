@@ -48,8 +48,8 @@ CREATE TABLE Stats (
 	ID				INT,
 	HP				INT,
 	Atk				INT,
-	Spatk			INT,
 	Def				INT,
+	Spatk			INT,
 	Spdef			INT,
 	Speed			INT,
 	PRIMARY KEY (ID),
@@ -79,6 +79,7 @@ CREATE TABLE Status_Item (
 
 -- Mega_Evolution table
 CREATE TABLE Mega_Evolution (
+	ID					INT,
 	MeName			VARCHAR(20),
 	SpName			VARCHAR(20),
 	Mega_Stone			VARCHAR(20),
@@ -179,7 +180,6 @@ INSERT INTO Species VALUES (16,'Pidgey','Keen Eye','Tangled Feet','Big Pecks');
 INSERT INTO Species VALUES (17,'Pidgeotto','Keen Eye','Tangled Feet','Big Pecks');
 INSERT INTO Species VALUES (18,'Pidgeot','Keen Eye','Tangled Feet','Big Pecks');
 INSERT INTO Species VALUES (19,'Rattata','Run Away','Guts','Hustle');
-INSERT INTO Species VALUES (19,'Rattata','Gluttony','Hustle','Thick Fat');
 INSERT INTO Species VALUES (20,'Raticate','Run Away','Guts','Hustle');
 INSERT INTO Species VALUES (21,'Spearow','Keen Eye',NULL,'Sniper');
 INSERT INTO Species VALUES (22,'Fearow','Keen Eye',NULL,'Sniper');
@@ -194,6 +194,7 @@ INSERT INTO Species VALUES (30,'Nidorina','Poison Point','Rivalry','Hustle');
 INSERT INTO Species VALUES (31, 'Nidoqueen', 'Poison Point', 'Rivalry', 'Hustle');
 INSERT INTO Species VALUES (32,'Nidoran M','Poison Point','Rivalry','Hustle');
 INSERT INTO Species VALUES (34,'Nidoking','Poison Point','Rivalry','Sheer Force');
+INSERT INTO Species VALUES (35, 'Clefairy', 'Cute Charm', 'Magic Guard','Friend Guard');
 INSERT INTO Species VALUES (36,'Clefable','Cute Charm','Magic Guard','Friend Guard');
 INSERT INTO Species VALUES (37,'Vulpix','Flash Fire',NULL,'Drought');
 INSERT INTO Species VALUES (38,'Ninetales','Flash Fire',NULL,'Drought');
@@ -211,7 +212,6 @@ INSERT INTO Species VALUES (49,'Venomoth','Shield Dust','Tinted Lens','Wonder Sk
 INSERT INTO Species VALUES (50,'Diglett','Sand Veil','Arena Trap','Sand Force');
 INSERT INTO Species VALUES (51,'Dugtrio','Sand Veil','Arena Trap','Sand Force');
 INSERT INTO Species VALUES (52,'Meowth','Pickup','Technician','Unnerve');
-INSERT INTO Species VALUES (52,'Meowth','Pickup','Tough Claws','Unnerve');
 INSERT INTO Species VALUES (53,'Persian','Limber','Technician','Unnerve');
 INSERT INTO Species VALUES (54,'Psyduck','Damp','Cloud Nine','Swift Swim');
 INSERT INTO Species VALUES (55,'Golduck','Damp','Cloud Nine','Swift Swim');
@@ -228,13 +228,13 @@ INSERT INTO Species VALUES (65,'Alakazam','Synchronize','Inner Focus','Magic gua
 
 
 -- insert into Mega_Evolution table
-INSERT INTO Mega_Evolution VALUES (3,'Mega Venusaur','Thick Fat',NULL,NULL);
-INSERT INTO Mega_Evolution VALUES (6,'Mega Charizard X','Tough Claws',NULL,NULL);
-INSERT INTO Mega_Evolution VALUES (6,'Mega Charizard Y','Drought',NULL,NULL);
-INSERT INTO Mega_Evolution VALUES (9,'Mega Blastoise','Mega Launcher',NULL,NULL);
-INSERT INTO Mega_Evolution VALUES (15,'Mega Beedrill','Adaptability',NULL,NULL);
-INSERT INTO Mega_Evolution VALUES (18,'Mega Pidgeot','No Guard',NULL,NULL);
-INSERT INTO Mega_Evolution VALUES (65,'Mega Alakazam','Trace',NULL,NULL);
+INSERT INTO Mega_Evolution VALUES (3,'Mega Venusaur','Venusaur','Venusaurite');
+INSERT INTO Mega_Evolution VALUES (6,'Mega Charizard X','Charizard','Charizardite X');
+INSERT INTO Mega_Evolution VALUES (6,'Mega Charizard Y','Charizard','Charizardite Y');
+INSERT INTO Mega_Evolution VALUES (9,'Mega Blastoise','Blastoise','Blastoisinite');
+INSERT INTO Mega_Evolution VALUES (15,'Mega Beedrill','Beedrill','Beedrillite');
+INSERT INTO Mega_Evolution VALUES (18,'Mega Pidgeot','Pidgeot','Pidgeotite');
+INSERT INTO Mega_Evolution VALUES (65,'Mega Alakazam','Alakazam','Alakazite');
 
 
 -- insert into TypeName
@@ -406,7 +406,7 @@ INSERT INTO WeakAgainst VALUES ('Normal', 'Steel');
 INSERT INTO WeakAgainst VALUES ('Normal', 'Fighting');
 INSERT INTO WeakAgainst VALUES ('Fighting', 'Flying');
 INSERT INTO WeakAgainst VALUES ('Fighting', 'Poison');
-INSERT INTO WeakAgainst VALUES ('Fighting', 'Psychic';
+INSERT INTO WeakAgainst VALUES ('Fighting', 'Psychic');
 INSERT INTO WeakAgainst VALUES ('Fighting', 'Bug');
 INSERT INTO WeakAgainst VALUES ('Fighting', 'Ghost');
 INSERT INTO WeakAgainst VALUES ('Fighting', 'Fairy');
