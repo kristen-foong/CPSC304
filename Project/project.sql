@@ -1,6 +1,8 @@
-DROP TABLE Pokemon;
-DROP TABLE Species;
+DROP TABLE EvolvesInto;
 DROP TABLE Type;
+DROP TABLE has_a;
+DROP TABLE uses;
+DROP TABLE Species;
 DROP TABLE Stats;
 DROP TABLE Item;
 DROP TABLE Evo_Item;
@@ -11,9 +13,7 @@ DROP TABLE ofType;
 DROP TABLE is_of;
 DROP TABLE WeakAgainst;
 DROP TABLE requires;
-DROP TABLE uses;
-DROP TABLE has_a;
-DROP TABLE EvolvesInto;
+DROP TABLE Pokemon;
 
 -- Pokemon table
 CREATE TABLE Pokemon (
@@ -327,231 +327,206 @@ INSERT INTO Stats VALUES (65,55,50,45,135,95,120);
 
 
 -- insert into ofType
-INSERT INTO ofType VALUES
-    (1,'Grass','Poison'),
-    (2,'Grass','Poison'),
-    (3,'Grass','Poison'),
-    (3,'Grass','Poison'),
-    (4,'Fire',NULL),
-    (5,'Fire',NULL),
-    (6,'Fire','Flying'),
-    (6,'Fire','Dragon'),
-    (6,'Fire','Flying'),
-    (7,'Water',NULL),
-    (8,'Water',NULL),
-    (9,'Water',NULL),
-    (9,'Water',NULL),
-    (10,'Bug',NULL),
-    (11,'Bug',NULL),
-    (12,'Bug','Flying'),
-    (13,'Bug','Poison'),
-    (14,'Bug','Poison'),
-    (15,'Bug','Poison'),
-    (15,'Bug','Poison'),
-    (16,'Normal','Flying'),
-    (17,'Normal','Flying'),
-    (18,'Normal','Flying'),
-    (18,'Normal','Flying'),
-    (19,'Normal',NULL),
-    (19,'Dark','Normal'),
-    (20,'Normal',NULL),
-    (20,'Dark','Normal'),
-    (21,'Normal','Flying'),
-    (22,'Normal','Flying'),
-    (23,'Poison',NULL),
-    (24,'Poison',NULL),
-    (25,'Electric',NULL),
-    (26,'Electric',NULL),
-    (26,'Electric','Psychic'),
-    (27,'Ground',NULL),
-    (27,'Ice','Steel'),
-    (28,'Ground',NULL),
-    (28,'Ice','Steel'),
-    (29,'Poison',NULL),
-    (30,'Poison',NULL),
-    (31,'Poison','Ground'),
-    (32,'Poison',NULL),
-    (33,'Poison',NULL),
-    (34,'Poison','Ground'),
-    (35,'Fairy',NULL),
-    (36,'Fairy',NULL),
-    (37,'Fire',NULL),
-    (37,'Ice',NULL),
-    (38,'Fire',NULL),
-    (38,'Ice','Fairy'),
-    (39,'Normal','Fairy'),
-    (40,'Normal','Fairy'),
-    (41,'Poison','Flying'),
-    (42,'Poison','Flying'),
-    (43,'Grass','Poison'),
-    (44,'Grass','Poison'),
-    (45,'Grass','Poison'),
-    (46,'Bug','Grass'),
-    (47,'Bug','Grass'),
-    (48,'Bug','Poison'),
-    (49,'Bug','Poison'),
-    (50,'Ground',NULL),
-    (50,'Ground','Steel'),
-    (51,'Ground',NULL),
-    (51,'Ground','Steel'),
-    (52,'Normal',NULL),
-    (52,'Dark',NULL),
-    (52,'Steel',NULL),
-    (53,'Normal',NULL),
-    (53,'Dark',NULL),
-    (54,'Water',NULL),
-    (55,'Water',NULL),
-    (56,'Fighting',NULL),
-    (57,'Fighting',NULL),
-    (58,'Fire',NULL),
-    (59,'Fire',NULL),
-    (60,'Water',NULL),
-    (61,'Water',NULL),
-    (62,'Water','Fighting'),
-    (63,'Psychic',NULL),
-    (64,'Psychic',NULL),
-    (65,'Psychic',NULL),
-    (65,'Psychic',NULL);
+INSERT INTO ofType VALUES (1,'Grass','Poison');
+INSERT INTO ofType VALUES (2,'Grass','Poison');
+INSERT INTO ofType VALUES (3,'Grass','Poison');
+INSERT INTO ofType VALUES (3,'Grass','Poison');
+INSERT INTO ofType VALUES (4,'Fire',NULL);
+INSERT INTO ofType VALUES (5,'Fire',NULL);
+INSERT INTO ofType VALUES (6,'Fire','Flying');
+INSERT INTO ofType VALUES (7,'Water',NULL);
+INSERT INTO ofType VALUES (8,'Water',NULL);
+INSERT INTO ofType VALUES (9,'Water',NULL);
+INSERT INTO ofType VALUES (10,'Bug',NULL);
+INSERT INTO ofType VALUES (11,'Bug',NULL);
+INSERT INTO ofType VALUES (12,'Bug','Flying');
+INSERT INTO ofType VALUES (13,'Bug','Poison');
+INSERT INTO ofType VALUES (14,'Bug','Poison');
+INSERT INTO ofType VALUES (15,'Bug','Poison');
+INSERT INTO ofType VALUES (16,'Normal','Flying');
+INSERT INTO ofType VALUES (17,'Normal','Flying');
+INSERT INTO ofType VALUES (18,'Normal','Flying');
+INSERT INTO ofType VALUES (19,'Normal',NULL);
+INSERT INTO ofType VALUES (20,'Normal',NULL);
+INSERT INTO ofType VALUES (21,'Normal','Flying');
+INSERT INTO ofType VALUES (22,'Normal','Flying');
+INSERT INTO ofType VALUES (23,'Poison',NULL);
+INSERT INTO ofType VALUES (24,'Poison',NULL);
+INSERT INTO ofType VALUES (25,'Electric',NULL);
+INSERT INTO ofType VALUES (26,'Electric',NULL);
+INSERT INTO ofType VALUES (27,'Ground',NULL);
+INSERT INTO ofType VALUES (28,'Ground',NULL);
+INSERT INTO ofType VALUES (28,'Ice','Steel');
+INSERT INTO ofType VALUES (29,'Poison',NULL);
+INSERT INTO ofType VALUES (30,'Poison',NULL);
+INSERT INTO ofType VALUES (31,'Poison','Ground');
+INSERT INTO ofType VALUES (32,'Poison',NULL);
+INSERT INTO ofType VALUES (33,'Poison',NULL);
+INSERT INTO ofType VALUES (34,'Poison','Ground');
+INSERT INTO ofType VALUES (35,'Fairy',NULL);
+INSERT INTO ofType VALUES (36,'Fairy',NULL);
+INSERT INTO ofType VALUES (37,'Fire',NULL);
+INSERT INTO ofType VALUES (38,'Fire',NULL);
+INSERT INTO ofType VALUES (39,'Normal','Fairy');
+INSERT INTO ofType VALUES (40,'Normal','Fairy');
+INSERT INTO ofType VALUES (41,'Poison','Flying');
+INSERT INTO ofType VALUES (42,'Poison','Flying');
+INSERT INTO ofType VALUES (43,'Grass','Poison');
+INSERT INTO ofType VALUES (44,'Grass','Poison');
+INSERT INTO ofType VALUES (45,'Grass','Poison');
+INSERT INTO ofType VALUES (46,'Bug','Grass');
+INSERT INTO ofType VALUES (47,'Bug','Grass');
+INSERT INTO ofType VALUES (48,'Bug','Poison');
+INSERT INTO ofType VALUES (49,'Bug','Poison');
+INSERT INTO ofType VALUES (50,'Ground',NULL);
+INSERT INTO ofType VALUES (51,'Ground',NULL);
+INSERT INTO ofType VALUES (51,'Ground','Steel');
+INSERT INTO ofType VALUES (52,'Normal',NULL);
+INSERT INTO ofType VALUES (53,'Normal',NULL);
+INSERT INTO ofType VALUES (54,'Water',NULL);
+INSERT INTO ofType VALUES (55,'Water',NULL);
+INSERT INTO ofType VALUES (56,'Fighting',NULL);
+INSERT INTO ofType VALUES (57,'Fighting',NULL);
+INSERT INTO ofType VALUES (58,'Fire',NULL);
+INSERT INTO ofType VALUES (59,'Fire',NULL);
+INSERT INTO ofType VALUES (60,'Water',NULL);
+INSERT INTO ofType VALUES (61,'Water',NULL);
+INSERT INTO ofType VALUES (62,'Water','Fighting');
+INSERT INTO ofType VALUES (63,'Psychic',NULL);
+INSERT INTO ofType VALUES (64,'Psychic',NULL);
+INSERT INTO ofType VALUES (65,'Psychic',NULL);
 
-INSERT INTO WeakAgainst VALUES
-		('Normal', 'Rock'),
-		('Normal', 'Ghost'),
-		('Normal', 'Steel'),
-		('Normal', 'Fighting'),
-		('Fighting', 'Flying'),
-		('Fighting', 'Poison'),
-		('Fighting', 'Psychic'),
-		('Fighting', 'Bug'),
-		('Fighting', 'Ghost'),
-		('Fighting', 'Fairy'),
-		('Flying', 'Rock'),
-		('Flying', 'Steel'),
-		('Flying', 'Electric'),
-		('Flying', 'Ice'),
-		('Poison', 'Poison'),
-		('Poison', 'Ground'),
-		('Poison', 'Rock'),
-		('Poison', 'Ghost'),
-		('Poison', 'Steel'),
-		('Poison', 'Psychic'),
-		('Ground', 'Flying'),
-		('Ground', 'Bug'),
-		('Ground', 'Grass'),
-		('Ground', 'Water'),
-		('Ground', 'Ice'),
-		('Rock', 'Fighting'),
-		('Rock', 'Ground'),
-		('Rock', 'Steel'),
-		('Rock', 'Water'),
-		('Rock', 'Grass'),
-		('Bug', 'Fighting'),
-		('Bug', 'Flying'),
-		('Bug', 'Poison'),
-		('Bug', 'Ghost'),
-		('Bug', 'Steel'),
-		('Bug', 'Fire'),
-		('Bug', 'Fairy'),
-		('Bug', 'Rock'),
-		('Ghost', 'Normal'),
-		('Ghost', 'Dark'),
-		('Ghost', 'Ghost'),
-		('Steel', 'Steel'),
-		('Steel', 'Fire'),
-		('Steel', 'Water'),
-		('Steel', 'Electric'),
-		('Steel', 'Fighting'),
-		('Steel', 'Ground'),
-		('Fire', 'Rock'),
-		('Fire', 'Fire'),
-		('Fire', 'Water'),
-		('Fire', 'Dragon'),
-		('Fire', 'Ground'),
-		('Water', 'Water'),
-		('Water', 'Grass'),
-		('Water', 'Dragon'),
-		('Water', 'Electric'),
-		('Grass', 'Flying'),
-		('Grass', 'Poison'),
-		('Grass', 'Bug'),
-		('Grass', 'Steel'),
-		('Grass', 'Fire'),
-		('Grass', 'Grass'),
-		('Grass', 'Dragon'),
-		('Grass', 'Ice'),
-		('Electric', 'Ground'),
-		('Electric', 'Grass'),
-		('Electric', 'Electric'),
-		('Electric', 'Dragon'),
-		('Psychic', 'Steel'),
-		('Psychic', 'Psychic'),
-		('Psychic', 'Dark'),
-		('Psychic', 'Bug'),
-		('Psychic', 'Ghost'),
-		('Ice', 'Steel'),
-		('Ice', 'Fire'),
-		('Ice', 'Water'),
-		('Ice', 'Ice'),
-		('Ice', 'Fighting'),
-		('Ice', 'Rock'),
-		('Dragon', 'Steel'),
-		('Dragon', 'Fairy'),
-		('Dragon', 'Dragon'),
-		('Dragon', 'Fairy'),
-		('Dragon', 'Ice'),
-		('Fairy', 'Poison'),
-		('Fairy', 'Steel'),
-		('Fairy', 'Fire'),
-		('Dark', 'Fighting'),
-		('Dark', 'Dark'),
-		('Dark', 'Fairy'),
-		('Dark', 'Bug');
 
-INSERT INTO EvolvesInto VALUES
-    (1,2,'Bulbasaur'),
-    (2,3,'Ivysaur'),
-    (4,5,'Charmander'),
-    (5,6,'Charmeleon'),
-    (7,8,'Squirtle'),
-    (8,9,'Wartortle'),
-    (10,11,'Caterpie'),
-    (11,12,'Metapod'),
-    (13,14,'Kakuna'),
-    (14,15,'Beedrill'),
-    (15,15,'Mega Beedrill'),
-    (16,17,'Pidgeotto'),
-    (17,18,'Pidgeot'),
-    (18,18,'Mega Pidgeot'),
-    (19,19,'Rattata'),
-    (19,20,'Raticate'),
-    (20,20,'Raticate'),
-    (21,22,'Fearow'),
-    (23,24,'Arbok'),
-    (25,26,'Raichu'),
-    (26,26,'Raichu'),
-    (27,27,'Sandshrew'),
-    (27,28,'Sandslash'),
-    (28,28,'Sandslash'),
-    (29,30,'Nidorina'),
-    (30,31,'Nidoqueen'),
-    (32,33,'Nidorino'),
-    (33,34,'Nidoking'),
-    (35,36,'Clefable'),
-    (37,38,'Ninetales'),
-    (39,40,'Wigglytuff'),
-    (41,42,'Golbat'),
-    (43,44,'Gloom'),
-    (44,45,'Vileplume'),
-    (46,47,'Parasect'),
-    (47,48,'Venonat'),
-    (48,49,'Venomoth'),
-    (50,50,'Diglett'),
-    (50,51,'Dugtrio'),
-    (51,51,'Dugtrio'),
-    (52,53,'Persian'),
-    (54,55,'Golduck'),
-    (56,57,'Primeape'),
-    (58,59,'Arcanine'),
-    (60,61,'Poliwhirl'),
-    (61,62,'Poliwrath'),
-    (63,64,'Kadabra'),
-    (64,65,'Alakazam'),
+-- insert WeakAgainst table
+INSERT INTO WeakAgainst VALUES ('Normal', 'Rock');
+INSERT INTO WeakAgainst VALUES ('Normal', 'Ghost');
+INSERT INTO WeakAgainst VALUES ('Normal', 'Steel');
+INSERT INTO WeakAgainst VALUES ('Normal', 'Fighting');
+INSERT INTO WeakAgainst VALUES ('Fighting', 'Flying');
+INSERT INTO WeakAgainst VALUES ('Fighting', 'Poison');
+INSERT INTO WeakAgainst VALUES ('Fighting', 'Psychic';
+INSERT INTO WeakAgainst VALUES ('Fighting', 'Bug');
+INSERT INTO WeakAgainst VALUES ('Fighting', 'Ghost');
+INSERT INTO WeakAgainst VALUES ('Fighting', 'Fairy');
+INSERT INTO WeakAgainst VALUES ('Flying', 'Rock');
+INSERT INTO WeakAgainst VALUES ('Flying', 'Steel');
+INSERT INTO WeakAgainst VALUES ('Flying', 'Electric');
+INSERT INTO WeakAgainst VALUES ('Flying', 'Ice');
+INSERT INTO WeakAgainst VALUES ('Poison', 'Poison');
+INSERT INTO WeakAgainst VALUES ('Poison', 'Ground');
+INSERT INTO WeakAgainst VALUES ('Poison', 'Rock');
+INSERT INTO WeakAgainst VALUES ('Poison', 'Ghost');
+INSERT INTO WeakAgainst VALUES ('Poison', 'Steel');
+INSERT INTO WeakAgainst VALUES ('Poison', 'Psychic');
+INSERT INTO WeakAgainst VALUES ('Ground', 'Flying');
+INSERT INTO WeakAgainst VALUES ('Ground', 'Bug');
+INSERT INTO WeakAgainst VALUES ('Ground', 'Grass');
+INSERT INTO WeakAgainst VALUES ('Ground', 'Water');
+INSERT INTO WeakAgainst VALUES ('Ground', 'Ice');
+INSERT INTO WeakAgainst VALUES ('Rock', 'Fighting');
+INSERT INTO WeakAgainst VALUES ('Rock', 'Ground');
+INSERT INTO WeakAgainst VALUES ('Rock', 'Steel');
+INSERT INTO WeakAgainst VALUES ('Rock', 'Water');
+INSERT INTO WeakAgainst VALUES ('Rock', 'Grass');
+INSERT INTO WeakAgainst VALUES ('Bug', 'Fighting');;
+INSERT INTO WeakAgainst VALUES ('Bug', 'Flying');
+INSERT INTO WeakAgainst VALUES ('Bug', 'Poison');
+INSERT INTO WeakAgainst VALUES ('Bug', 'Ghost');
+INSERT INTO WeakAgainst VALUES ('Bug', 'Steel');
+INSERT INTO WeakAgainst VALUES ('Bug', 'Fire');
+INSERT INTO WeakAgainst VALUES ('Bug', 'Fairy');
+INSERT INTO WeakAgainst VALUES ('Bug', 'Rock');
+INSERT INTO WeakAgainst VALUES ('Ghost', 'Normal');
+INSERT INTO WeakAgainst VALUES ('Ghost', 'Dark');
+INSERT INTO WeakAgainst VALUES ('Ghost', 'Ghost');
+INSERT INTO WeakAgainst VALUES ('Steel', 'Steel');
+INSERT INTO WeakAgainst VALUES ('Steel', 'Fire');
+INSERT INTO WeakAgainst VALUES ('Steel', 'Water');
+INSERT INTO WeakAgainst VALUES ('Steel', 'Electric');
+INSERT INTO WeakAgainst VALUES ('Steel', 'Fighting');
+INSERT INTO WeakAgainst VALUES ('Steel', 'Ground');
+INSERT INTO WeakAgainst VALUES ('Fire', 'Rock');
+INSERT INTO WeakAgainst VALUES ('Fire', 'Fire');
+INSERT INTO WeakAgainst VALUES ('Fire', 'Water');
+INSERT INTO WeakAgainst VALUES ('Fire', 'Dragon');
+INSERT INTO WeakAgainst VALUES ('Fire', 'Ground');
+INSERT INTO WeakAgainst VALUES ('Water', 'Water');
+INSERT INTO WeakAgainst VALUES ('Water', 'Grass');
+INSERT INTO WeakAgainst VALUES ('Water', 'Dragon');
+INSERT INTO WeakAgainst VALUES ('Water', 'Electric');
+INSERT INTO WeakAgainst VALUES ('Grass', 'Flying');
+INSERT INTO WeakAgainst VALUES ('Grass', 'Poison');
+INSERT INTO WeakAgainst VALUES ('Grass', 'Bug');
+INSERT INTO WeakAgainst VALUES ('Grass', 'Steel');
+INSERT INTO WeakAgainst VALUES ('Grass', 'Fire');
+INSERT INTO WeakAgainst VALUES ('Grass', 'Grass');
+INSERT INTO WeakAgainst VALUES ('Grass', 'Dragon');
+INSERT INTO WeakAgainst VALUES ('Grass', 'Ice');
+INSERT INTO WeakAgainst VALUES ('Electric', 'Ground');
+INSERT INTO WeakAgainst VALUES ('Electric', 'Grass');
+INSERT INTO WeakAgainst VALUES ('Electric', 'Electric');
+INSERT INTO WeakAgainst VALUES ('Electric', 'Dragon');
+INSERT INTO WeakAgainst VALUES ('Psychic', 'Steel');
+INSERT INTO WeakAgainst VALUES ('Psychic', 'Psychic');
+INSERT INTO WeakAgainst VALUES ('Psychic', 'Dark');
+INSERT INTO WeakAgainst VALUES ('Psychic', 'Bug');
+INSERT INTO WeakAgainst VALUES ('Psychic', 'Ghost');
+INSERT INTO WeakAgainst VALUES ('Ice', 'Steel');
+INSERT INTO WeakAgainst VALUES ('Ice', 'Fire');
+INSERT INTO WeakAgainst VALUES ('Ice', 'Water');
+INSERT INTO WeakAgainst VALUES ('Ice', 'Ice');
+INSERT INTO WeakAgainst VALUES ('Ice', 'Fighting');
+INSERT INTO WeakAgainst VALUES ('Ice', 'Rock');
+INSERT INTO WeakAgainst VALUES ('Dragon', 'Steel');
+INSERT INTO WeakAgainst VALUES ('Dragon', 'Fairy');
+INSERT INTO WeakAgainst VALUES ('Dragon', 'Dragon');
+INSERT INTO WeakAgainst VALUES ('Dragon', 'Fairy');
+INSERT INTO WeakAgainst VALUES ('Dragon', 'Ice');
+INSERT INTO WeakAgainst VALUES ('Fairy', 'Poison');
+INSERT INTO WeakAgainst VALUES ('Fairy', 'Steel');
+INSERT INTO WeakAgainst VALUES ('Fairy', 'Fire');
+INSERT INTO WeakAgainst VALUES ('Dark', 'Fighting');
+INSERT INTO WeakAgainst VALUES ('Dark', 'Dark');
+INSERT INTO WeakAgainst VALUES ('Dark', 'Fairy');
+INSERT INTO WeakAgainst VALUES ('Dark', 'Bug');
+
+-- insert EvolvesInto table
+INSERT INTO EvolvesInto VALUES (1,2,'Ivysaur');
+INSERT INTO EvolvesInto VALUES (2,3,'Venusaur');
+INSERT INTO EvolvesInto VALUES (4,5,'Charmeleon');
+INSERT INTO EvolvesInto VALUES (5,6,'Charizard');
+INSERT INTO EvolvesInto VALUES (7,8,'Wartortle');
+INSERT INTO EvolvesInto VALUES (8,9,'Blastoise');
+INSERT INTO EvolvesInto VALUES (10,11,'Metapod');
+INSERT INTO EvolvesInto VALUES (11,12),'Butterfree');
+INSERT INTO EvolvesInto VALUES (13,14,'Kakuna');
+INSERT INTO EvolvesInto VALUES (14,15,'Beedrill');
+INSERT INTO EvolvesInto VALUES (16,17,'Pidgeotto');
+INSERT INTO EvolvesInto VALUES (17,18,'Pidgeot');
+INSERT INTO EvolvesInto VALUES (19,20,'Raticate');
+INSERT INTO EvolvesInto VALUES (21,22,'Fearow');
+INSERT INTO EvolvesInto VALUES (23,24,'Arbok');
+INSERT INTO EvolvesInto VALUES (25,26,'Raichu');
+INSERT INTO EvolvesInto VALUES (27,28,'Sandslash');
+INSERT INTO EvolvesInto VALUES (29,30,'Nidorina');
+INSERT INTO EvolvesInto VALUES (30,31,'Nidoqueen');
+INSERT INTO EvolvesInto VALUES (32,33,'Nidorino');
+INSERT INTO EvolvesInto VALUES (33,34,'Nidoking');
+INSERT INTO EvolvesInto VALUES (35,36,'Clefable');
+INSERT INTO EvolvesInto VALUES (37,38,'Ninetales');
+INSERT INTO EvolvesInto VALUES (39,40,'Wigglytuff');
+INSERT INTO EvolvesInto VALUES (41,42,'Golbat');
+INSERT INTO EvolvesInto VALUES (43,44,'Gloom');
+INSERT INTO EvolvesInto VALUES (44,45,'Vileplume');
+INSERT INTO EvolvesInto VALUES (46,47,'Parasect');
+INSERT INTO EvolvesInto VALUES (47,48,'Venonat');
+INSERT INTO EvolvesInto VALUES (48,49,'Venomoth');
+INSERT INTO EvolvesInto VALUES (50,51,'Dugtrio');
+INSERT INTO EvolvesInto VALUES (52,53,'Persian');
+INSERT INTO EvolvesInto VALUES (54,55,'Golduck');
+INSERT INTO EvolvesInto VALUES (56,57,'Primeape');
+INSERT INTO EvolvesInto VALUES (58,59,'Arcanine');
+INSERT INTO EvolvesInto VALUES (60,61,'Poliwhirl');
+INSERT INTO EvolvesInto VALUES (61,62,'Poliwrath');
+INSERT INTO EvolvesInto VALUES (63,64,'Kadabra');
+INSERT INTO EvolvesInto VALUES (64,65,'Alakazam');
