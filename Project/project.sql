@@ -22,7 +22,7 @@ CREATE TABLE Pokemon (
 	TimeCaught		DATETIME,
 	ID					INT,
 	PRIMARY KEY (ID, TimeCaught),
-	FOREIGN KEY (ID) REFERENCES Species ON DELETE/UPDATE CASCADE
+	FOREIGN KEY (ID) REFERENCES Species ON UPDATE CASCADE
 );
 
 -- Species table
@@ -45,7 +45,8 @@ CREATE TABLE Type (
 
 -- Stats table
 CREATE TABLE Stats (
-	HP					INT,
+	ID				INT,
+	HP				INT,
 	Atk				INT,
 	Spatk			INT,
 	Def				INT,
@@ -107,9 +108,10 @@ CREATE TABLE ofType (
 	ID			VARCHAR(20),
 	Type1		VARCHAR(20),
 	Type2 		VARCHAR(20),
-	PRIMARY KEY (ID, TypeName),
+	PRIMARY KEY (ID),
 	FOREIGN KEY (ID) REFERENCES Species,
-	FOREIGN KEY (TypeName) REFERENCES Type
+	FOREIGN KEY (Type1) REFERENCES Type,
+	FOREIGN KEY (Type2) REFERENCES Type
 );
 
 -- WeakAgainst table
@@ -428,7 +430,7 @@ INSERT INTO WeakAgainst VALUES ('Rock', 'Ground');
 INSERT INTO WeakAgainst VALUES ('Rock', 'Steel');
 INSERT INTO WeakAgainst VALUES ('Rock', 'Water');
 INSERT INTO WeakAgainst VALUES ('Rock', 'Grass');
-INSERT INTO WeakAgainst VALUES ('Bug', 'Fighting');;
+INSERT INTO WeakAgainst VALUES ('Bug', 'Fighting');
 INSERT INTO WeakAgainst VALUES ('Bug', 'Flying');
 INSERT INTO WeakAgainst VALUES ('Bug', 'Poison');
 INSERT INTO WeakAgainst VALUES ('Bug', 'Ghost');
@@ -480,7 +482,6 @@ INSERT INTO WeakAgainst VALUES ('Ice', 'Rock');
 INSERT INTO WeakAgainst VALUES ('Dragon', 'Steel');
 INSERT INTO WeakAgainst VALUES ('Dragon', 'Fairy');
 INSERT INTO WeakAgainst VALUES ('Dragon', 'Dragon');
-INSERT INTO WeakAgainst VALUES ('Dragon', 'Fairy');
 INSERT INTO WeakAgainst VALUES ('Dragon', 'Ice');
 INSERT INTO WeakAgainst VALUES ('Fairy', 'Poison');
 INSERT INTO WeakAgainst VALUES ('Fairy', 'Steel');
@@ -491,42 +492,42 @@ INSERT INTO WeakAgainst VALUES ('Dark', 'Fairy');
 INSERT INTO WeakAgainst VALUES ('Dark', 'Bug');
 
 -- insert EvolvesInto table
-INSERT INTO EvolvesInto VALUES (1,2,'Ivysaur');
-INSERT INTO EvolvesInto VALUES (2,3,'Venusaur');
-INSERT INTO EvolvesInto VALUES (4,5,'Charmeleon');
-INSERT INTO EvolvesInto VALUES (5,6,'Charizard');
-INSERT INTO EvolvesInto VALUES (7,8,'Wartortle');
-INSERT INTO EvolvesInto VALUES (8,9,'Blastoise');
-INSERT INTO EvolvesInto VALUES (10,11,'Metapod');
-INSERT INTO EvolvesInto VALUES (11,12),'Butterfree');
-INSERT INTO EvolvesInto VALUES (13,14,'Kakuna');
-INSERT INTO EvolvesInto VALUES (14,15,'Beedrill');
-INSERT INTO EvolvesInto VALUES (16,17,'Pidgeotto');
-INSERT INTO EvolvesInto VALUES (17,18,'Pidgeot');
-INSERT INTO EvolvesInto VALUES (19,20,'Raticate');
-INSERT INTO EvolvesInto VALUES (21,22,'Fearow');
-INSERT INTO EvolvesInto VALUES (23,24,'Arbok');
-INSERT INTO EvolvesInto VALUES (25,26,'Raichu');
-INSERT INTO EvolvesInto VALUES (27,28,'Sandslash');
-INSERT INTO EvolvesInto VALUES (29,30,'Nidorina');
-INSERT INTO EvolvesInto VALUES (30,31,'Nidoqueen');
-INSERT INTO EvolvesInto VALUES (32,33,'Nidorino');
-INSERT INTO EvolvesInto VALUES (33,34,'Nidoking');
-INSERT INTO EvolvesInto VALUES (35,36,'Clefable');
-INSERT INTO EvolvesInto VALUES (37,38,'Ninetales');
-INSERT INTO EvolvesInto VALUES (39,40,'Wigglytuff');
-INSERT INTO EvolvesInto VALUES (41,42,'Golbat');
-INSERT INTO EvolvesInto VALUES (43,44,'Gloom');
-INSERT INTO EvolvesInto VALUES (44,45,'Vileplume');
-INSERT INTO EvolvesInto VALUES (46,47,'Parasect');
-INSERT INTO EvolvesInto VALUES (47,48,'Venonat');
-INSERT INTO EvolvesInto VALUES (48,49,'Venomoth');
-INSERT INTO EvolvesInto VALUES (50,51,'Dugtrio');
-INSERT INTO EvolvesInto VALUES (52,53,'Persian');
-INSERT INTO EvolvesInto VALUES (54,55,'Golduck');
-INSERT INTO EvolvesInto VALUES (56,57,'Primeape');
-INSERT INTO EvolvesInto VALUES (58,59,'Arcanine');
-INSERT INTO EvolvesInto VALUES (60,61,'Poliwhirl');
-INSERT INTO EvolvesInto VALUES (61,62,'Poliwrath');
-INSERT INTO EvolvesInto VALUES (63,64,'Kadabra');
-INSERT INTO EvolvesInto VALUES (64,65,'Alakazam');
+INSERT INTO EvolvesInto VALUES (1,2);
+INSERT INTO EvolvesInto VALUES (2,3);
+INSERT INTO EvolvesInto VALUES (4,5);
+INSERT INTO EvolvesInto VALUES (5,6);
+INSERT INTO EvolvesInto VALUES (7,8);
+INSERT INTO EvolvesInto VALUES (8,9);
+INSERT INTO EvolvesInto VALUES (10,11);
+INSERT INTO EvolvesInto VALUES (11,12);
+INSERT INTO EvolvesInto VALUES (13,14);
+INSERT INTO EvolvesInto VALUES (14,15);
+INSERT INTO EvolvesInto VALUES (16,17);
+INSERT INTO EvolvesInto VALUES (17,18);
+INSERT INTO EvolvesInto VALUES (19,20);
+INSERT INTO EvolvesInto VALUES (21,22);
+INSERT INTO EvolvesInto VALUES (23,24);
+INSERT INTO EvolvesInto VALUES (25,26);
+INSERT INTO EvolvesInto VALUES (27,28);
+INSERT INTO EvolvesInto VALUES (29,30);
+INSERT INTO EvolvesInto VALUES (30,31);
+INSERT INTO EvolvesInto VALUES (32,33);
+INSERT INTO EvolvesInto VALUES (33,34);
+INSERT INTO EvolvesInto VALUES (35,36);
+INSERT INTO EvolvesInto VALUES (37,38);
+INSERT INTO EvolvesInto VALUES (39,40);
+INSERT INTO EvolvesInto VALUES (41,42);
+INSERT INTO EvolvesInto VALUES (43,44);
+INSERT INTO EvolvesInto VALUES (44,45);
+INSERT INTO EvolvesInto VALUES (46,47);
+INSERT INTO EvolvesInto VALUES (47,48);
+INSERT INTO EvolvesInto VALUES (48,49);
+INSERT INTO EvolvesInto VALUES (50,51);
+INSERT INTO EvolvesInto VALUES (52,53);
+INSERT INTO EvolvesInto VALUES (54,55);
+INSERT INTO EvolvesInto VALUES (56,57);
+INSERT INTO EvolvesInto VALUES (58,59);
+INSERT INTO EvolvesInto VALUES (60,61);
+INSERT INTO EvolvesInto VALUES (61,62);
+INSERT INTO EvolvesInto VALUES (63,64);
+INSERT INTO EvolvesInto VALUES (64,65);
