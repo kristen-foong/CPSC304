@@ -24,6 +24,7 @@ CREATE TABLE Species (
 	HiddenAbility	VARCHAR(255),
 	PRIMARY KEY (ID)
 );
+GRANT SELECT ON Species TO PUBLIC;
 
 -- Pokemon table
 CREATE TABLE Pokemon (
@@ -34,6 +35,7 @@ CREATE TABLE Pokemon (
 	PRIMARY KEY (Nickname),
 	FOREIGN KEY (ID) REFERENCES SPECIES
 );
+GRANT ALL PRIVILEGES ON Pokemon TO PUBLIC;
 
 -- EvolvesInto table
 CREATE TABLE EvolvesInto (
@@ -41,12 +43,14 @@ CREATE TABLE EvolvesInto (
 	SpID2			INT,
 	PRIMARY KEY (SpID1, SpID2)
 );
+GRANT ALL PRIVILEGES ON EvolvesInto TO PUBLIC;
 
 -- P_Type table
 CREATE TABLE P_Type (
 	P_TypeName			VARCHAR(20),
 	PRIMARY KEY (P_TypeName)
 );
+GRANT ALL PRIVILEGES ON P_Type TO PUBLIC;
 
 -- P_Stats table
 CREATE TABLE P_Stats (
@@ -59,6 +63,7 @@ CREATE TABLE P_Stats (
 	Speed			INT,
 	PRIMARY KEY (ID)
 );
+GRANT ALL PRIVILEGES ON P_Stats TO PUBLIC;
 
 -- Item table
 CREATE TABLE Item (
@@ -66,6 +71,7 @@ CREATE TABLE Item (
 	Quantity			INT,
 	PRIMARY KEY (ItemName)
 );
+GRANT ALL PRIVILEGES ON Item TO PUBLIC;
 
 -- Evo Item table
 CREATE TABLE Evo_Item (
@@ -73,6 +79,7 @@ CREATE TABLE Evo_Item (
 	Usage			VARCHAR(20),
 	FOREIGN KEY (ItemName) REFERENCES Item
 );
+GRANT ALL PRIVILEGES ON Evo_Item TO PUBLIC;
 
 -- Status Item table
 CREATE TABLE Status_Item (
@@ -80,6 +87,7 @@ CREATE TABLE Status_Item (
 	Status			VARCHAR(20),
 	FOREIGN KEY (ItemName) REFERENCES Item
 );
+GRANT ALL PRIVILEGES ON Status_Item TO PUBLIC;
 
 -- Mega_Evolution table
 CREATE TABLE Mega_Evolution (
@@ -90,6 +98,7 @@ CREATE TABLE Mega_Evolution (
 	PRIMARY KEY (MeName),
 	FOREIGN KEY (ID) REFERENCES Species ON DELETE CASCADE
 );
+GRANT ALL PRIVILEGES ON Mega_Evolution TO PUBLIC;
 
 -- Mega_Item table
 CREATE TABLE Mega_Item (
@@ -98,6 +107,7 @@ CREATE TABLE Mega_Item (
 	PRIMARY KEY (MeName),
 	FOREIGN KEY (MeName) REFERENCES Mega_Evolution ON DELETE CASCADE
 );
+GRANT ALL PRIVILEGES ON Mega_Item TO PUBLIC;
 
 -- has table
 CREATE TABLE has (
@@ -105,6 +115,7 @@ CREATE TABLE has (
 	PRIMARY KEY (ID),
 	FOREIGN KEY (ID) REFERENCES Species
 );
+GRANT ALL PRIVILEGES ON has TO PUBLIC;
 
 -- is of table
 CREATE TABLE is_of (
@@ -114,6 +125,7 @@ CREATE TABLE is_of (
 	FOREIGN KEY (Nickname) REFERENCES Pokemon,
 	FOREIGN KEY (ID) REFERENCES Species
 );
+GRANT ALL PRIVILEGES ON is_of TO PUBLIC;
 
 -- ofType table
 CREATE TABLE ofType (
@@ -125,6 +137,7 @@ CREATE TABLE ofType (
 	FOREIGN KEY (Type1) REFERENCES P_Type,
 	FOREIGN KEY (Type2) REFERENCES P_Type
 );
+GRANT ALL PRIVILEGES ON ofType TO PUBLIC;
 
 -- WeakAgainst table
 CREATE TABLE WeakAgainst (
@@ -133,6 +146,7 @@ CREATE TABLE WeakAgainst (
 	FOREIGN KEY (Type1_TypeName) REFERENCES P_Type(P_TypeName),
 	FOREIGN KEY (Type2_TypeName) REFERENCES P_Type(P_TypeName)
 );
+GRANT ALL PRIVILEGES ON WeakAgainst TO PUBLIC;
 
 
 -- p_uses table
@@ -142,6 +156,7 @@ CREATE TABLE p_uses (
 	PRIMARY KEY (Nickname, ItemName),
 	FOREIGN KEY (Nickname) REFERENCES Pokemon
 );
+GRANT ALL PRIVILEGES ON p_uses TO PUBLIC;
 
 -- has_a table
 CREATE TABLE has_a (
@@ -151,6 +166,7 @@ CREATE TABLE has_a (
 	FOREIGN KEY (MeName) REFERENCES Mega_Evolution,
 	FOREIGN KEY (ID) REFERENCES Species
 );
+GRANT ALL PRIVILEGES ON has_a TO PUBLIC;
 
 
 -- insert into species table
