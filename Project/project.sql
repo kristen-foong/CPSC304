@@ -142,7 +142,7 @@ CREATE TABLE Mega_Item (
 );
 
 -- p_uses table
-CREATE TABLE p_p_uses (
+CREATE TABLE p_uses (
 	TimeCaught		DATETIME,
 	ItemName			VARCHAR(20),
 	PRIMARY KEY (TimeCaught, ItemName),
