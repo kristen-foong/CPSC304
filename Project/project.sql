@@ -27,10 +27,10 @@ CREATE TABLE Species (
 
 -- Pokemon table
 CREATE TABLE Pokemon (
-	Nickname			VARCHAR(255),
+	ID					INT,
+	Nickname		VARCHAR(255),
 	Gender			VARCHAR(20),
 	TimeCaught		TIMESTAMP,
-	ID					INT,
 	PRIMARY KEY (TimeCaught),
 	FOREIGN KEY (ID) REFERENCES SPECIES
 );

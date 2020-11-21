@@ -58,11 +58,11 @@
             </tr>
             <?php
                 connectToDB();
-                $result = executePlainSQL("SELECT * FROM speciesTable");
+                $result = executePlainSQL("SELECT * FROM Species");
 
                 if (($row = oci_fetch_row($result)) != false) {
                     while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
-                        echo "<tr><td>" . $row["SPID"] . "</td><td>" . $row["SPNAME"] . "</td></tr>";
+                        echo "<tr><td>" . $row["ID"] . "</td><td>" . $row["SpName"] . "</td></tr>";
                     }
                 }
             ?>
@@ -79,11 +79,11 @@
             </tr>
             <?php
                 connectToDB();
-                $result = executePlainSQL("SELECT * FROM pokemonTable");
+                $result = executePlainSQL("SELECT * FROM Pokemon");
 
                 if (($row = oci_fetch_row($result)) != false) {
                     while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
-                        echo "<tr><td>" . $row["SPID"] . "</td><td><input type='text' onchange='updateNickname(this.value)' value='" . $row["NICKNAME"] . "'></td><td>" . $row["GENDER"] . "</td><td>" . $row["POKEMONWEIGHT"] . "</td><td>" . $row["FRIENDSHIPLEVEL"] . "</td><td>" . $row["TIMECAUGHT"] . "</td></tr>";
+                        echo "<tr><td>" . $row["ID"] . "</td><td><input type='text' onchange='updateNickname(this.value)' value='" . $row["Nickname"] . "'></td><td>" . $row["Gender"] . "</td><td>" . $row["TIMECAUGHT"] . "</td></tr>";
                     }
                 }
             ?>
@@ -200,27 +200,23 @@
             $new_name = $_POST['newName'];
 
             // you need the wrap the old name and new name values with single quotations
-            executePlainSQL("UPDATE pokemonTable SET nickname='" . $new_name . "' WHERE nickname='" . $old_name . "'");
+            executePlainSQL("UPDATE Pokemon SET nickname='" . $new_name . "' WHERE nickname='" . $old_name . "'");
             OCICommit($db_conn);
         }
 
         function handleResetRequest() {
             global $db_conn;
             // Drop old tables
-            executePlainSQL("DROP TABLE pokemonTable");
-            executePlainSQL("DROP TABLE speciesTable");
+            executePlainSQL("DROP TABLE Pokemon");
 
-            // Create new tables
-            echo "<br> creating new table <br>";
-            executePlainSQL("CREATE TABLE speciesTable (spid int, spName varchar(30), PRIMARY KEY (spid), UNIQUE (spName))");
-            executePlainSQL("INSERT INTO speciesTable VALUES (1, 'Bulbasaur')");
-            executePlainSQL("INSERT INTO speciesTable VALUES (2, 'Ivysaur')");
-            executePlainSQL("INSERT INTO speciesTable VALUES (3, 'Venusaur')");
-            executePlainSQL("INSERT INTO speciesTable VALUES (4, 'Charmander')");
-            executePlainSQL("INSERT INTO speciesTable VALUES (5, 'Charmeleon')");
-            executePlainSQL("INSERT INTO speciesTable VALUES (6, 'Charizard')");
-
-            executePlainSQL("CREATE TABLE pokemonTable (spid int, nickname varchar(30), gender varchar(30), pokemonWeight decimal(3, 1), friendshipLevel decimal(3, 2), timeCaught timestamp, PRIMARY KEY (timeCaught), CONSTRAINT FK_speciesID FOREIGN KEY (spid) REFERENCES speciesTable(spid))");
+            executePlainSQL("CREATE TABLE Pokemon (
+              Nickname		VARCHAR(255),
+              Gender			VARCHAR(20),
+            	TimeCaught	TIMESTAMP,
+            	ID					INT,
+            	PRIMARY KEY (TimeCaught),
+            	FOREIGN KEY (ID) REFERENCES SPECIES)"
+            );
             // executePlainSQL("CREATE TABLE statTable (hp int, attack int, spAttack int, defence int, spDefence int, speed int, increase varchar(30), decrease varchar(30))");
             OCICommit($db_conn);
         }
@@ -238,23 +234,23 @@
             //     $tuple
             // );
 
-            $randomSpid = executePlainSQL("SELECT spid FROM (SELECT spid FROM speciesTable ORDER BY DBMS_RANDOM.RANDOM) WHERE rownum < 5");
+            $randomSpid = executePlainSQL("SELECT ID FROM (SELECT spid FROM Species ORDER BY DBMS_RANDOM.RANDOM) WHERE rownum < 5");
             $randomSpidResult = OCI_Fetch_Array($randomSpid, OCI_BOTH);
-            $randomSpname = executePlainSQL("SELECT spName FROM speciesTable WHERE spid = $randomSpidResult[0]");
+            $randomSpname = executePlainSQL("SELECT SpName FROM Species WHERE ID = $randomSpidResult[0]");
             $randomSpnameResult = OCI_Fetch_Array($randomSpname, OCI_BOTH);
-            $newPokemon = executePlainSQL("INSERT INTO pokemonTable VALUES ($randomSpidResult[0], '$randomSpnameResult[0]', 'male', 30.3, 0.01, CURRENT_TIMESTAMP)");
+            $newPokemon = executePlainSQL("INSERT INTO Pokemon VALUES ($randomSpidResult[0], '$randomSpnameResult[0]', 'male', 30.3, 0.01, CURRENT_TIMESTAMP)");
             OCICommit($db_conn);
         }
 
         function handleCountRequest() {
             global $db_conn;
 
-            $resultSp = executePlainSQL("SELECT Count(*) FROM speciesTable");
+            $resultSp = executePlainSQL("SELECT Count(*) FROM Species");
             if (($row = oci_fetch_row($resultSp)) != false) {
                 echo "<br> The number of tuples in Species Table: " . $row[0] . "<br>";
             }
 
-            $resultPm = executePlainSQL("SELECT Count(*) FROM pokemonTable");
+            $resultPm = executePlainSQL("SELECT Count(*) FROM Pokemon");
             if (($row = oci_fetch_row($resultPm)) != false) {
                 echo "<br> The number of tuples in Pokemon Table: " . $row[0] . "<br>";
             }
