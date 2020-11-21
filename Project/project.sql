@@ -1,18 +1,18 @@
 DROP TABLE EvolvesInto;
-DROP TABLE Type;
 DROP TABLE has_a;
 DROP TABLE uses;
+DROP TABLE requires;
+DROP TABLE ofType;
+DROP TABLE WeakAgainst;
+DROP TABLE is_of;
+DROP TABLE has;
+DROP TABLE Mega_Evolution;
+DROP TABLE Evo_Item;
+DROP TABLE Status_Item;
+DROP TABLE Type;
 DROP TABLE Species;
 DROP TABLE Stats;
 DROP TABLE Item;
-DROP TABLE Evo_Item;
-DROP TABLE Status_Item;
-DROP TABLE Mega_Evolution;
-DROP TABLE has;
-DROP TABLE ofType;
-DROP TABLE is_of;
-DROP TABLE WeakAgainst;
-DROP TABLE requires;
 DROP TABLE Pokemon;
 
 -- Pokemon table
@@ -90,7 +90,7 @@ CREATE TABLE Mega_Evolution (
 
 -- has table
 CREATE TABLE has (
-	ID				VARCHAR(20),
+	ID				INT,
 	PRIMARY KEY (ID),
 	FOREIGN KEY (ID) REFERENCES Species
 );
@@ -98,7 +98,7 @@ CREATE TABLE has (
 -- is of table
 CREATE TABLE is_of (
 	TimeCaught			DATETIME,
-	ID						VARCHAR(20),
+	ID						INT,
 	PRIMARY KEY (TimeCaught, ID),
 	FOREIGN KEY (TimeCaught) REFERENCES Pokemon,
 	FOREIGN KEY (ID) REFERENCES Species
@@ -106,8 +106,8 @@ CREATE TABLE is_of (
 
 -- ofType table
 CREATE TABLE ofType (
-	ID			VARCHAR(20),
-	Type1		VARCHAR(20),
+	ID				INT,
+	Type1			VARCHAR(20),
 	Type2 		VARCHAR(20),
 	PRIMARY KEY (ID),
 	FOREIGN KEY (ID) REFERENCES Species,
