@@ -31,7 +31,7 @@ CREATE TABLE Pokemon (
 	Nickname		VARCHAR(255),
 	Gender			VARCHAR(20),
 	TimeCaught		TIMESTAMP,
-	PRIMARY KEY (TimeCaught),
+	PRIMARY KEY (Nickname),
 	FOREIGN KEY (ID) REFERENCES SPECIES
 );
 
@@ -108,10 +108,10 @@ CREATE TABLE has (
 
 -- is of table
 CREATE TABLE is_of (
-	TimeCaught		TIMESTAMP,
+	Nickname		VARCHAR(255),
 	ID						INT,
-	PRIMARY KEY (TimeCaught, ID),
-	FOREIGN KEY (TimeCaught) REFERENCES Pokemon,
+	PRIMARY KEY (Nickname, ID),
+	FOREIGN KEY (Nickname) REFERENCES Pokemon,
 	FOREIGN KEY (ID) REFERENCES Species
 );
 
@@ -137,10 +137,10 @@ CREATE TABLE WeakAgainst (
 
 -- p_uses table
 CREATE TABLE p_uses (
-	TimeCaught		TIMESTAMP,
+	Nickname		VARCHAR(255),
 	ItemName			VARCHAR(20),
-	PRIMARY KEY (TimeCaught, ItemName),
-	FOREIGN KEY (TimeCaught) REFERENCES Pokemon
+	PRIMARY KEY (Nickname, ItemName),
+	FOREIGN KEY (Nickname) REFERENCES Pokemon
 );
 
 -- has_a table
@@ -520,3 +520,23 @@ INSERT INTO EvolvesInto VALUES (60,61);
 INSERT INTO EvolvesInto VALUES (61,62);
 INSERT INTO EvolvesInto VALUES (63,64);
 INSERT INTO EvolvesInto VALUES (64,65);
+
+--
+-- -- procedure to pick random pokemon ID
+-- CREATE PROCEDURE randomPokemon
+-- AS
+-- 	SELECT ID, SpName
+-- 	FROM (
+-- 		SELECT ID, SpName
+-- 		FROM Species
+-- 		ORDER BY DBMS_RANDOM.RANDOM
+-- 	)
+-- 	WHERE ROWNUM < 65
+-- GO ;
+--
+-- -- procedure to insert random pokemon to table
+-- CREATE PROCEDURE addRandom @ID INT, @SpName varchar(255)
+-- AS
+-- 	INSERT INTO Pokemon
+-- 	VALUES (ID, SpName, 'Male', CURRENT_TIMESTAMP)
+-- GO ;

@@ -207,16 +207,34 @@
         function handleResetRequest() {
             global $db_conn;
             // Drop old tables
+            echo("Resetting...");
+            executePlainSQL("DROP TABLE p_uses");
+            executePlainSQL("DROP TABLE is_of");
             executePlainSQL("DROP TABLE Pokemon");
 
+            echo("Making new tables...");
             executePlainSQL("CREATE TABLE Pokemon (
-              Nickname		VARCHAR(255),
-              Gender			VARCHAR(20),
-            	TimeCaught	TIMESTAMP,
+              ID					INT,
+            	Nickname		VARCHAR(255),
+            	Gender			VARCHAR(20),
+            	TimeCaught		TIMESTAMP,
+            	PRIMARY KEY (Nickname),
+            	FOREIGN KEY (ID) REFERENCES SPECIES
+            )");
+            executePlainSQL("CREATE TABLE is_of (
+            	Nickname		VARCHAR(255),
             	ID					INT,
-            	PRIMARY KEY (TimeCaught),
-            	FOREIGN KEY (ID) REFERENCES SPECIES)"
-            );
+            	PRIMARY KEY (Nickname, ID),
+            	FOREIGN KEY (Nickname) REFERENCES Pokemon,
+            	FOREIGN KEY (ID) REFERENCES Species
+            )");
+            executePlainSQL("CREATE TABLE p_uses (
+              	Nickname		VARCHAR(255),
+              	ItemName		VARCHAR(20),
+              	PRIMARY KEY (Nickname, ItemName),
+              	FOREIGN KEY (Nickname) REFERENCES Pokemon
+            )");
+            echo("Done!");
             // executePlainSQL("CREATE TABLE statTable (hp int, attack int, spAttack int, defence int, spDefence int, speed int, increase varchar(30), decrease varchar(30))");
             OCICommit($db_conn);
         }
@@ -234,11 +252,11 @@
             //     $tuple
             // );
 
-            $randomSpid = executePlainSQL("SELECT ID FROM (SELECT spid FROM Species ORDER BY DBMS_RANDOM.RANDOM) WHERE rownum < 5");
+            $randomSpid = executePlainSQL("SELECT ID FROM (SELECT ID FROM Species ORDER BY DBMS_RANDOM.RANDOM) WHERE ROWNUM < 65");
             $randomSpidResult = OCI_Fetch_Array($randomSpid, OCI_BOTH);
             $randomSpname = executePlainSQL("SELECT SpName FROM Species WHERE ID = $randomSpidResult[0]");
             $randomSpnameResult = OCI_Fetch_Array($randomSpname, OCI_BOTH);
-            $newPokemon = executePlainSQL("INSERT INTO Pokemon VALUES ($randomSpidResult[0], '$randomSpnameResult[0]', 'male', 30.3, 0.01, CURRENT_TIMESTAMP)");
+            $newPokemon = executePlainSQL("INSERT INTO Pokemon VALUES ($randomSpidResult[0],'$randomSpnameResult[0]' , 'male', CURRENT_TIMESTAMP)");
             OCICommit($db_conn);
         }
 
