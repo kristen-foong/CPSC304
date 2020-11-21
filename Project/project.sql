@@ -22,28 +22,24 @@ CREATE TABLE Pokemon (
 	TimeCaught		DATETIME,
 	ID					INT,
 	PRIMARY KEY (ID, TimeCaught),
-	FOREIGN KEY (ID) REFERENCES Species ON UPDATE CASCADE
+	FOREIGN KEY (ID) REFERENCES Species ON DELETE/UPDATE CASCADE;
 );
 
 -- Species table
 CREATE TABLE Species (
 	ID						INT,
-	SpName					VARCHAR(255),
+	SpName				VARCHAR(255),
 	Ability2 			VARCHAR(255),
-	Ability1				VARCHAR(255),
+	Ability1			VARCHAR(255),
 	HiddenAbility	VARCHAR(255),
-	UNIQUE (SpName),
-	PRIMARY KEY (ID),
-	FOREIGN KEY (ID) REFERENCES EvolvesInto ON UPDATE CASCADE
+	PRIMARY KEY (ID)
 );
 
 -- EvolvesInto table
 CREATE TABLE EvolvesInto (
 	SpID1			INT,
 	SpID2			INT,
-	PRIMARY KEY (SpID1, SpID2),
-	FOREIGN KEY (SpID1) REFERENCES Species(ID),
-	FOREIGN KEY (SpID2) REFERENCES Species(ID)
+	PRIMARY KEY (SpID1, SpID2)
 );
 
 -- Type table
@@ -193,6 +189,7 @@ INSERT INTO Species VALUES (29, 'Nidoran F', 'Poison Point', 'Rivalry', 'Hustle'
 INSERT INTO Species VALUES (30,'Nidorina','Poison Point','Rivalry','Hustle');
 INSERT INTO Species VALUES (31, 'Nidoqueen', 'Poison Point', 'Rivalry', 'Hustle');
 INSERT INTO Species VALUES (32,'Nidoran M','Poison Point','Rivalry','Hustle');
+INSERT INTO Species VALUES (33, 'Nidorino', 'Poison Point', 'Rivalry', 'Hustle');
 INSERT INTO Species VALUES (34,'Nidoking','Poison Point','Rivalry','Sheer Force');
 INSERT INTO Species VALUES (35, 'Clefairy', 'Cute Charm', 'Magic Guard','Friend Guard');
 INSERT INTO Species VALUES (36,'Clefable','Cute Charm','Magic Guard','Friend Guard');
@@ -262,7 +259,6 @@ INSERT INTO Type VALUES ('Fairy');
 INSERT INTO P_Stats VALUES (1,45,49,49,65,65,45);
 INSERT INTO P_Stats VALUES (2,60,62,63,80,80,60);
 INSERT INTO P_Stats VALUES (3,80,82,83,100,100,80);
-INSERT INTO P_Stats VALUES (3,80,100,123,122,120,80);
 INSERT INTO P_Stats VALUES (4,39,52,43,60,50,65);
 INSERT INTO P_Stats VALUES (5,58,64,58,80,65,80);
 INSERT INTO P_Stats VALUES (6,78,84,78,109,85,100);
@@ -275,7 +271,6 @@ INSERT INTO P_Stats VALUES (12,60,45,50,90,80,70);
 INSERT INTO P_Stats VALUES (13,40,35,30,20,20,50);
 INSERT INTO P_Stats VALUES (14,45,25,50,25,25,35);
 INSERT INTO P_Stats VALUES (15,65,90,40,45,80,75);
-INSERT INTO P_Stats VALUES (15,65,150,40,15,80,145);
 INSERT INTO P_Stats VALUES (16,40,45,40,35,35,56);
 INSERT INTO P_Stats VALUES (17,63,60,55,50,50,71);
 INSERT INTO P_Stats VALUES (18,83,80,75,70,70,101);
@@ -332,7 +327,6 @@ INSERT INTO P_Stats VALUES (65,55,50,45,135,95,120);
 INSERT INTO ofType VALUES (1,'Grass','Poison');
 INSERT INTO ofType VALUES (2,'Grass','Poison');
 INSERT INTO ofType VALUES (3,'Grass','Poison');
-INSERT INTO ofType VALUES (3,'Grass','Poison');
 INSERT INTO ofType VALUES (4,'Fire',NULL);
 INSERT INTO ofType VALUES (5,'Fire',NULL);
 INSERT INTO ofType VALUES (6,'Fire','Flying');
@@ -358,7 +352,6 @@ INSERT INTO ofType VALUES (25,'Electric',NULL);
 INSERT INTO ofType VALUES (26,'Electric',NULL);
 INSERT INTO ofType VALUES (27,'Ground',NULL);
 INSERT INTO ofType VALUES (28,'Ground',NULL);
-INSERT INTO ofType VALUES (28,'Ice','Steel');
 INSERT INTO ofType VALUES (29,'Poison',NULL);
 INSERT INTO ofType VALUES (30,'Poison',NULL);
 INSERT INTO ofType VALUES (31,'Poison','Ground');
@@ -382,7 +375,6 @@ INSERT INTO ofType VALUES (48,'Bug','Poison');
 INSERT INTO ofType VALUES (49,'Bug','Poison');
 INSERT INTO ofType VALUES (50,'Ground',NULL);
 INSERT INTO ofType VALUES (51,'Ground',NULL);
-INSERT INTO ofType VALUES (51,'Ground','Steel');
 INSERT INTO ofType VALUES (52,'Normal',NULL);
 INSERT INTO ofType VALUES (53,'Normal',NULL);
 INSERT INTO ofType VALUES (54,'Water',NULL);
