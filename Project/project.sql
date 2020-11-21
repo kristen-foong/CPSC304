@@ -15,16 +15,6 @@ DROP TABLE Item;
 DROP TABLE Pokemon;
 DROP TABLE Species;
 
--- Pokemon table
-CREATE TABLE Pokemon (
-	Nickname			VARCHAR(255),
-	Gender			VARCHAR(20),
-	TimeCaught		DATETIME,
-	ID					INT,
-	PRIMARY KEY (ID, TimeCaught),
-	FOREIGN KEY (ID) REFERENCES SPECIES
-);
-
 -- Species table
 CREATE TABLE Species (
 	ID						INT,
@@ -33,6 +23,16 @@ CREATE TABLE Species (
 	Ability1			VARCHAR(255),
 	HiddenAbility	VARCHAR(255),
 	PRIMARY KEY (ID)
+);
+
+-- Pokemon table
+CREATE TABLE Pokemon (
+	Nickname			VARCHAR(255),
+	Gender			VARCHAR(20),
+	TimeCaught		TIMESTAMP,
+	ID					INT,
+	PRIMARY KEY (TimeCaught),
+	FOREIGN KEY (ID) REFERENCES SPECIES
 );
 
 -- EvolvesInto table
@@ -108,7 +108,7 @@ CREATE TABLE has (
 
 -- is of table
 CREATE TABLE is_of (
-	TimeCaught		DATETIME,
+	TimeCaught		TIMESTAMP,
 	ID						INT,
 	PRIMARY KEY (TimeCaught, ID),
 	FOREIGN KEY (TimeCaught) REFERENCES Pokemon,
@@ -137,7 +137,7 @@ CREATE TABLE WeakAgainst (
 
 -- p_uses table
 CREATE TABLE p_uses (
-	TimeCaught		DATETIME,
+	TimeCaught		TIMESTAMP,
 	ItemName			VARCHAR(20),
 	PRIMARY KEY (TimeCaught, ItemName),
 	FOREIGN KEY (TimeCaught) REFERENCES Pokemon
@@ -151,7 +151,6 @@ CREATE TABLE has_a (
 	FOREIGN KEY (MeName) REFERENCES Mega_Evolution,
 	FOREIGN KEY (ID) REFERENCES Species
 );
-
 
 
 -- insert into species table
