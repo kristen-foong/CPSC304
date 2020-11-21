@@ -9,7 +9,7 @@ DROP TABLE has;
 DROP TABLE Mega_Evolution;
 DROP TABLE Evo_Item;
 DROP TABLE Status_Item;
-DROP TABLE Type;
+DROP TABLE P_Type;
 DROP TABLE P_Stats;
 DROP TABLE Item;
 DROP TABLE Pokemon;
@@ -21,7 +21,8 @@ CREATE TABLE Pokemon (
 	Gender			VARCHAR(20),
 	TimeCaught		DATETIME,
 	ID					INT,
-	PRIMARY KEY (ID, TimeCaught)
+	PRIMARY KEY (ID, TimeCaught),
+	FOREIGN KEY (ID) REFERENCES SPECIES
 );
 
 -- Species table
@@ -31,7 +32,7 @@ CREATE TABLE Species (
 	Ability2 			VARCHAR(255),
 	Ability1			VARCHAR(255),
 	HiddenAbility	VARCHAR(255),
-	PRIMARY KEY (SpName)
+	PRIMARY KEY (ID)
 );
 
 -- EvolvesInto table
@@ -41,10 +42,10 @@ CREATE TABLE EvolvesInto (
 	PRIMARY KEY (SpID1, SpID2)
 );
 
--- Type table
-CREATE TABLE Type (
-	TypeName			VARCHAR(20),
-	PRIMARY KEY (TypeName)
+-- P_Type table
+CREATE TABLE P_Type (
+	P_TypeName			VARCHAR(20),
+	PRIMARY KEY (P_TypeName)
 );
 
 -- P_Stats table
@@ -56,8 +57,7 @@ CREATE TABLE P_Stats (
 	Spatk			INT,
 	Spdef			INT,
 	Speed			INT,
-	PRIMARY KEY (ID),
-	FOREIGN KEY (ID) REFERENCES Species ON DELETE CASCADE
+	PRIMARY KEY (ID)
 );
 
 -- Item table
@@ -87,9 +87,16 @@ CREATE TABLE Mega_Evolution (
 	MeName			VARCHAR(20),
 	SpName			VARCHAR(20),
 	Mega_Stone			VARCHAR(20),
-	PRIMARY KEY (ID, MeName),
-	FOREIGN KEY (SpName) REFERENCES Species ON DELETE CASCADE,
-	FOREIGN KEY (Mega_Stone) REFERENCES Mega_Item ON DELETE CASCADE
+	PRIMARY KEY (MeName),
+	FOREIGN KEY (ID) REFERENCES Species ON DELETE CASCADE
+);
+
+-- Mega_Item table
+CREATE TABLE Mega_Item (
+	Mega_Stone		VARCHAR(20),
+	MeName				VARCHAR(20),
+	PRIMARY KEY (MeName),
+	FOREIGN KEY (MeName) REFERENCES Mega_Evolution ON DELETE CASCADE
 );
 
 -- has table
@@ -101,7 +108,7 @@ CREATE TABLE has (
 
 -- is of table
 CREATE TABLE is_of (
-	TimeCaught			DATETIME,
+	TimeCaught		DATETIME,
 	ID						INT,
 	PRIMARY KEY (TimeCaught, ID),
 	FOREIGN KEY (TimeCaught) REFERENCES Pokemon,
@@ -110,31 +117,23 @@ CREATE TABLE is_of (
 
 -- ofType table
 CREATE TABLE ofType (
-	ID				INT,
+	ID					INT,
 	Type1			VARCHAR(20),
 	Type2 		VARCHAR(20),
 	PRIMARY KEY (ID),
 	FOREIGN KEY (ID) REFERENCES Species,
-	FOREIGN KEY (Type1) REFERENCES Type,
-	FOREIGN KEY (Type2) REFERENCES Type
+	FOREIGN KEY (Type1) REFERENCES P_Type,
+	FOREIGN KEY (Type2) REFERENCES P_Type
 );
 
 -- WeakAgainst table
 CREATE TABLE WeakAgainst (
 	Type1_TypeName		VARCHAR(20),
 	Type2_TypeName		VARCHAR(20),
-	PRIMARY KEY (Type1_TypeName, Type2_TypeName),
-	FOREIGN KEY (Type1_TypeName) REFERENCES Type(TypeName),
-	FOREIGN KEY (Type2_TypeName) REFERENCES Type(TypeName)
+	FOREIGN KEY (Type1_TypeName) REFERENCES P_Type(P_TypeName),
+	FOREIGN KEY (Type2_TypeName) REFERENCES P_Type(P_TypeName)
 );
 
--- Mega_Item table
-CREATE TABLE Mega_Item (
-	Mega_Stone		VARCHAR(20),
-	MeName				VARCHAR(20),
-	PRIMARY KEY (Mega_Stone, MeName),
-	FOREIGN KEY (MeName) REFERENCES Mega_Evolution
-);
 
 -- p_uses table
 CREATE TABLE p_uses (
@@ -233,25 +232,25 @@ INSERT INTO Mega_Evolution VALUES (18,'Mega Pidgeot','Pidgeot','Pidgeotite');
 INSERT INTO Mega_Evolution VALUES (65,'Mega Alakazam','Alakazam','Alakazite');
 
 
--- insert into TypeName
-INSERT INTO Type VALUES ('Normal');
-INSERT INTO Type VALUES ('Fire');
-INSERT INTO Type VALUES ('Water');
-INSERT INTO Type VALUES ('Grass');
-INSERT INTO Type VALUES ('Electric');
-INSERT INTO Type VALUES ('Ice');
-INSERT INTO Type VALUES ('Fighting');
-INSERT INTO Type VALUES ('Poison');
-INSERT INTO Type VALUES ('Ground');
-INSERT INTO Type VALUES ('Flying');
-INSERT INTO Type VALUES ('Psychic');
-INSERT INTO Type VALUES ('Bug');
-INSERT INTO Type VALUES ('Rock');
-INSERT INTO Type VALUES ('Ghost');
-INSERT INTO Type VALUES ('Dark');
-INSERT INTO Type VALUES ('Dragon');
-INSERT INTO Type VALUES ('Steel');
-INSERT INTO Type VALUES ('Fairy');
+-- insert into P_TypeName
+INSERT INTO P_Type VALUES ('Normal');
+INSERT INTO P_Type VALUES ('Fire');
+INSERT INTO P_Type VALUES ('Water');
+INSERT INTO P_Type VALUES ('Grass');
+INSERT INTO P_Type VALUES ('Electric');
+INSERT INTO P_Type VALUES ('Ice');
+INSERT INTO P_Type VALUES ('Fighting');
+INSERT INTO P_Type VALUES ('Poison');
+INSERT INTO P_Type VALUES ('Ground');
+INSERT INTO P_Type VALUES ('Flying');
+INSERT INTO P_Type VALUES ('Psychic');
+INSERT INTO P_Type VALUES ('Bug');
+INSERT INTO P_Type VALUES ('Rock');
+INSERT INTO P_Type VALUES ('Ghost');
+INSERT INTO P_Type VALUES ('Dark');
+INSERT INTO P_Type VALUES ('Dragon');
+INSERT INTO P_Type VALUES ('Steel');
+INSERT INTO P_Type VALUES ('Fairy');
 
 
 -- insert into P_P_Stats table
