@@ -10,19 +10,18 @@ DROP TABLE Mega_Evolution;
 DROP TABLE Evo_Item;
 DROP TABLE Status_Item;
 DROP TABLE Type;
-DROP TABLE Species;
 DROP TABLE P_Stats;
 DROP TABLE Item;
 DROP TABLE Pokemon;
+DROP TABLE Species;
 
 -- Pokemon table
 CREATE TABLE Pokemon (
 	Nickname			VARCHAR(255),
-	Gender			BOOL,
+	Gender			VARCHAR(20),
 	TimeCaught		DATETIME,
 	ID					INT,
-	PRIMARY KEY (ID, TimeCaught),
-	FOREIGN KEY (ID) REFERENCES Species ON DELETE/UPDATE CASCADE;
+	PRIMARY KEY (ID, TimeCaught)
 );
 
 -- Species table
@@ -32,7 +31,7 @@ CREATE TABLE Species (
 	Ability2 			VARCHAR(255),
 	Ability1			VARCHAR(255),
 	HiddenAbility	VARCHAR(255),
-	PRIMARY KEY (ID)
+	PRIMARY KEY (SpName)
 );
 
 -- EvolvesInto table
@@ -88,7 +87,7 @@ CREATE TABLE Mega_Evolution (
 	MeName			VARCHAR(20),
 	SpName			VARCHAR(20),
 	Mega_Stone			VARCHAR(20),
-	PRIMARY KEY (MeName),
+	PRIMARY KEY (ID, MeName),
 	FOREIGN KEY (SpName) REFERENCES Species ON DELETE CASCADE,
 	FOREIGN KEY (Mega_Stone) REFERENCES Mega_Item ON DELETE CASCADE
 );
