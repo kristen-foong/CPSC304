@@ -56,7 +56,7 @@
                 <th>ID</th>
                 <th>Name</th>
             </tr>
-            <?php
+            <!-- <?php
                 connectToDB();
                 $result = executePlainSQL("SELECT * FROM Species");
 
@@ -65,7 +65,7 @@
                         echo "<tr><td>" . $row["ID"] . "</td><td>" . $row["SpName"] . "</td></tr>";
                     }
                 }
-            ?>
+            ?> -->
         </table>
 
         <table>
@@ -73,11 +73,9 @@
                 <th>Species ID</th>
                 <th>Nickname</th>
                 <th>Gender</th>
-                <th>Weight</th>
-                <th>Friendship level</th>
                 <th>Time caught</th>
             </tr>
-            <?php
+            <!-- <?php
                 connectToDB();
                 $result = executePlainSQL("SELECT * FROM Pokemon");
 
@@ -86,7 +84,7 @@
                         echo "<tr><td>" . $row["ID"] . "</td><td><input type='text' onchange='updateNickname(this.value)' value='" . $row["Nickname"] . "'></td><td>" . $row["Gender"] . "</td><td>" . $row["TIMECAUGHT"] . "</td></tr>";
                     }
                 }
-            ?>
+            ?> -->
         </table>
 
         <script>
@@ -208,32 +206,35 @@
             global $db_conn;
             // Drop old tables
             echo("Resetting...");
-            executePlainSQL("DROP TABLE p_uses");
-            executePlainSQL("DROP TABLE is_of");
-            executePlainSQL("DROP TABLE Pokemon");
+            // executePlainSQL("DROP TABLE p_uses");
+            // executePlainSQL("DROP TABLE is_of");
+            // executePlainSQL("DROP TABLE Pokemon");
 
-            echo("Making new tables...");
-            executePlainSQL("CREATE TABLE Pokemon (
-              ID					INT,
-            	Nickname		VARCHAR(255),
-            	Gender			VARCHAR(20),
-            	TimeCaught		TIMESTAMP,
-            	PRIMARY KEY (Nickname),
-            	FOREIGN KEY (ID) REFERENCES SPECIES
-            )");
-            executePlainSQL("CREATE TABLE is_of (
-            	Nickname		VARCHAR(255),
-            	ID					INT,
-            	PRIMARY KEY (Nickname, ID),
-            	FOREIGN KEY (Nickname) REFERENCES Pokemon,
-            	FOREIGN KEY (ID) REFERENCES Species
-            )");
-            executePlainSQL("CREATE TABLE p_uses (
-              	Nickname		VARCHAR(255),
-              	ItemName		VARCHAR(20),
-              	PRIMARY KEY (Nickname, ItemName),
-              	FOREIGN KEY (Nickname) REFERENCES Pokemon
-            )");
+            echo("Clearing tables...");
+            // executePlainSQL("CREATE TABLE Pokemon (
+            //   ID					INT,
+            // 	Nickname		VARCHAR(255),
+            // 	Gender			VARCHAR(20),
+            // 	TimeCaught		TIMESTAMP,
+            // 	PRIMARY KEY (Nickname),
+            // 	FOREIGN KEY (ID) REFERENCES SPECIES
+            // )");
+            // executePlainSQL("CREATE TABLE is_of (
+            // 	Nickname		VARCHAR(255),
+            // 	ID					INT,
+            // 	PRIMARY KEY (Nickname, ID),
+            // 	FOREIGN KEY (Nickname) REFERENCES Pokemon,
+            // 	FOREIGN KEY (ID) REFERENCES Species
+            // )");
+            // executePlainSQL("CREATE TABLE p_uses (
+            //   	Nickname		VARCHAR(255),
+            //   	ItemName		VARCHAR(20),
+            //   	PRIMARY KEY (Nickname, ItemName),
+            //   	FOREIGN KEY (Nickname) REFERENCES Pokemon
+            // )");
+            executePlainSQL("DELETE FROM Pokemon");
+            executePlainSQL("DELETE FROM is_of");
+            executePlainSQL("DELETE FROM p_uses");
             echo("Done!");
             // executePlainSQL("CREATE TABLE statTable (hp int, attack int, spAttack int, defence int, spDefence int, speed int, increase varchar(30), decrease varchar(30))");
             OCICommit($db_conn);
@@ -252,11 +253,12 @@
             //     $tuple
             // );
 
-            $randomSpid = executePlainSQL("SELECT ID FROM (SELECT ID FROM Species ORDER BY DBMS_RANDOM.RANDOM) WHERE ROWNUM < 65");
+            $randomSpid = executePlainSQL("SELECT ID FROM (SELECT ID FROM Species ORDER BY DBMS_RANDOM.RANDOM) WHERE ROWNUM < 5");
             $randomSpidResult = OCI_Fetch_Array($randomSpid, OCI_BOTH);
             $randomSpname = executePlainSQL("SELECT SpName FROM Species WHERE ID = $randomSpidResult[0]");
             $randomSpnameResult = OCI_Fetch_Array($randomSpname, OCI_BOTH);
             $newPokemon = executePlainSQL("INSERT INTO Pokemon VALUES ($randomSpidResult[0],'$randomSpnameResult[0]' , 'male', CURRENT_TIMESTAMP)");
+
             OCICommit($db_conn);
         }
 
