@@ -51,41 +51,15 @@
 
         <hr />
 
-        <table>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-            </tr>
-            <!-- <?php
-                connectToDB();
-                $result = executePlainSQL("SELECT * FROM Species");
 
-                if (($row = oci_fetch_row($result)) != false) {
-                    while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
-                        echo "<tr><td>" . $row["ID"] . "</td><td>" . $row["SpName"] . "</td></tr>";
-                    }
-                }
-            ?> -->
-        </table>
+        <h2>Display Your Pokemon</h2>
+        <form method="GET" action="project.php">
+            <input type="hidden" id="displayPokemon" name="displayPokemonRequest">
+            <input type="submit" name="displayPokemon"></p>
+        </form>
 
-        <table>
-            <tr>
-                <th>Species ID</th>
-                <th>Nickname</th>
-                <th>Gender</th>
-                <th>Time caught</th>
-            </tr>
-            <!-- <?php
-                connectToDB();
-                $result = executePlainSQL("SELECT * FROM Pokemon");
+        <hr />
 
-                if (($row = oci_fetch_row($result)) != false) {
-                    while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
-                        echo "<tr><td>" . $row["ID"] . "</td><td><input type='text' onchange='updateNickname(this.value)' value='" . $row["Nickname"] . "'></td><td>" . $row["Gender"] . "</td><td>" . $row["TIMECAUGHT"] . "</td></tr>";
-                    }
-                }
-            ?> -->
-        </table>
 
         <script>
             function updateNickname(string) {
@@ -253,22 +227,23 @@
             //     $tuple
             // );
             //
-            // $randomSpid = executePlainSQL("SELECT id FROM (SELECT id FROM Species ORDER BY DBMS_RANDOM.RANDOM) WHERE ROWNUM < 5");
-            // $randomSpidResult = OCI_Fetch_Array($randomSpid, OCI_BOTH);
-            // $randomSpname = executePlainSQL("SELECT SpName FROM Species WHERE id = $randomSpidResult[0]");
-            // $randomSpnameResult = OCI_Fetch_Array($randomSpname, OCI_BOTH);
-            // $newPokemon = executePlainSQL("INSERT INTO Pokemon VALUES ($randomSpidResult[0],'$randomSpnameResult[0]' , 'male', CURRENT_TIMESTAMP)");
+            $randomSpid = executePlainSQL("SELECT id FROM (SELECT id FROM Species ORDER BY DBMS_RANDOM.RANDOM) WHERE ROWNUM = 1");
+            $randomSpidResult = OCI_Fetch_Array($randomSpid, OCI_BOTH);
+            $randomSpname = executePlainSQL("SELECT SpName FROM Species WHERE id = $randomSpidResult[0]");
+            $randomSpnameResult = OCI_Fetch_Array($randomSpname, OCI_BOTH);
+            $newPokemon = executePlainSQL("INSERT INTO Pokemon VALUES ($randomSpidResult[0],'$randomSpnameResult[0]' , 'male', CURRENT_TIMESTAMP)");
 
-             $sql = "SELECT id FROM (SELECT id FROM Species ORDER BY DBMS_RANDOM.RANDOM) WHERE ROWNUM = 1";
-            //$rdm = random_int(0,65);
-            //$sql = "SELECT id FROM Species WHERE id=$rdm";
-            echo $sql . "<br>";
-            $stid = oci_parse($db_conn, $sql);
-            oci_execute($stid);
-            $nrows = oci_fetch_all($stid, $res);
-            echo "$nrows fetched<br>";
-            var_dump($res);
-            $pid = $res['id'];
+            //  $sql = "SELECT id FROM (SELECT id FROM Species ORDER BY DBMS_RANDOM.RANDOM) WHERE ROWNUM = 1";
+            // //$rdm = random_int(0,65);
+            // //$sql = "SELECT id FROM Species WHERE id=$rdm";
+            // $sql_n = "SELECT SpName FROM Species WHERE id=$sql";
+            // $stid = oci_parse($db_conn, $sql_n);
+            // oci_execute($stid);
+            // $nrows = oci_fetch_all($stid, $res);
+            // //echo "$nrows fetched<br>";
+            // //var_dump($res);
+            // $pid = $res['id'];
+            echo "You caught a pokemon: " . $randomSpnameResult[0] . "!";
 
             OCICommit($db_conn);
         }
@@ -285,6 +260,17 @@
             if (($row = oci_fetch_row($resultPm)) != false) {
                 echo "<br> The number of tuples in Pokemon Table: " . $row[0] . "<br>";
             }
+        }
+
+        function displayPokemon() {
+            global $db_conn;
+
+            $res = executePlainSQL("SELECT * FROM Pokemon");
+            echo "<table>";
+            if (($row = oci_fetch_row($res)) != false) {
+              echo "<tr><td>". $row[0] . ", " . $row[1] . ", " . $row[2] . ", " . $row[3] . "</td></tr>";
+            }
+            echo "</table>";
         }
 
         // HANDLE ALL POST ROUTES
@@ -311,6 +297,8 @@
                 handleCountRequest();
             } else if (array_key_exists('showTuples', $_GET)){
                 showTuples();
+            } else if (array_key_exists('displayPokemon', $_GET)) {
+                displayPokemon();
             }
 
             disconnectFromDB();
@@ -319,7 +307,7 @@
 
     if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit'])) {
         handlePOSTRequest();
-    } else if (isset($_GET['countTupleRequest']) || isset($_GET['showTupleRequest'])) {
+    } else if (isset($_GET['countTupleRequest']) || isset($_GET['showTupleRequest']) || isset($_GET['displayPokemonRequest'])) {
         handleGETRequest();
     }
 		?>
