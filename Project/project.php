@@ -387,9 +387,9 @@
             global $db_conn;
 
             $res = executePlainSQL("SELECT * FROM Pokemon");
-            echo "<table>";
+            echo "<table style='border-collapse:separate;border-spacing:20px 0px;'><tr><th>Species ID</th><th>Species</th><th>Gender</th><th>Time Caught</th><th>Owned ID</th></tr>";
             while (($row = oci_fetch_row($res)) != false) {
-              echo "<tr><td>". $row[0] . ", " . $row[1] . ", " . $row[2] . ", Caught on: " . $row[3] . ". Owned ID: " . $row[4] . "</td></tr>";
+              echo "<tr><td>". $row[0] . "</td><td>" . $row[1] . "</td><td> " . $row[2] . "</td><td>" . $row[3] . ".</td><td>" . $row[4] . "</td></tr>";
             }
             echo "</table>";
         }
