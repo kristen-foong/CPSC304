@@ -34,12 +34,18 @@
           }
           input[type=submit], input[type=reset], input[type=button] {
             background:#444;
-            padding:10px 20px;
+            font-size:12px;
+            padding:3px 8px;
             color:#fff;
             font-family:'Poppins', Arial;
             font-weight:600;
             text-transform:uppercase;
             border:none;
+            transition:all 0.3s ease-in-out;
+            border:3px solid #fff;
+          }
+          input[type=submit]:hover, input[type=reset]:hover, input[type=button]:hover {
+            border:3px solid #222;
           }
           input[type=text] {
             padding:10px, 20px;
@@ -63,6 +69,10 @@
           }
           .inline form {
             margin:2px;
+          }
+          .typefilter input {
+            font-size:12px;
+            padding:3px 8px;
           }
           form {
             margin:3px;
@@ -95,72 +105,73 @@
         <h2>Pokedex Queries</h2>
         <!-- count tuples -->
         <h4>Filter By Type</h4>
-        <div class="inline">
+        <div class="inline typefilter">
 
           <!-- filter by type -->
 
           <form method="GET" action="project.php">
               <input type="hidden" id="getNormalPokemon" name="getNormalPokemon">
-              <input type="submit" value ="Normal" name="getNormal">
+              <input type="submit" value ="Normal" name="getNormal" style="background:#D9CF9B;">
           </form>
 
           <form method="GET" action="project.php">
               <input type="hidden" id="getGrassPokemon" name="getGrassPokemon">
-              <input type="submit" value ="Grass" name="getGrass">
+              <input type="submit" value ="Grass" name="getGrass" style="background:#51BE5D;">
           </form>
 
           <form method="GET" action="project.php">
               <input type="hidden" id="getFirePokemon" name="getFirePokemon">
-              <input type="submit" value ="Fire" name="getFire">
+              <input type="submit" value ="Fire" name="getFire" style="background:#EE6600;">
           </form>
 
           <form method="GET" action="project.php">
               <input type="hidden" id="getWaterPokemon" name="getWaterPokemon">
-              <input type="submit" value ="Water" name="getWater">
+              <input type="submit" value ="Water" name="getWater" style="background:#4C95E9;">
           </form>
 
           <form method="GET" action="project.php">
               <input type="hidden" id="getGroundPokemon" name="getGroundPokemon">
-              <input type="submit" value ="Ground" name="getGround">
+              <input type="submit" value ="Ground" name="getGround" style="background:#857156;">
           </form>
 
           <form method="GET" action="project.php">
               <input type="hidden" id="getFlyingPokemon" name="getFlyingPokemon">
-              <input type="submit" value ="Flying" name="getFlying">
+              <input type="submit" value ="Flying" name="getFlying" style="background:#D6C8EF;">
           </form>
 
           <form method="GET" action="project.php">
               <input type="hidden" id="getPoisonPokemon" name="getPoisonPokemon">
-              <input type="submit" value ="Poison" name="getPoison">
+              <input type="submit" value ="Poison" name="getPoison" style="background:#66479F;">
           </form>
 
           <form method="GET" action="project.php">
               <input type="hidden" id="getFightingPokemon" name="getFightingPokemon">
-              <input type="submit" value ="Fighting" name="getFighting">
+              <input type="submit" value ="Fighting" name="getFighting" style="background:#CA2C2C;">
           </form>
 
           <form method="GET" action="project.php">
               <input type="hidden" id="getBugPokemon" name="getBugPokemon">
-              <input type="submit" value ="Bug" name="getBug">
+              <input type="submit" value ="Bug" name="getBug" style="background:#71EE56;">
           </form>
 
           <form method="GET" action="project.php">
               <input type="hidden" id="getElectricPokemon" name="getElectricPokemon">
-              <input type="submit" value ="Electric" name="getElectric">
+              <input type="submit" value ="Electric" name="getElectric" style="background:#E3D236;">
           </form>
 
           <form method="GET" action="project.php">
               <input type="hidden" id="getPsychicPokemon" name="getPsychicPokemon">
-              <input type="submit" value ="Psychic" name="getPsychic">
+              <input type="submit" value ="Psychic" name="getPsychic" style="background:#F6BCF6;">
           </form>
 
           <form method="GET" action="project.php">
               <input type="hidden" id="getFairyPokemon" name="getFairyPokemon">
-              <input type="submit" value ="Fairy" name="getFairy">
+              <input type="submit" value ="Fairy" name="getFairy" style="background:#F6BCBC;">
           </form>
 
         </div>
 
+        <h4>Other Queries</h4>
         <div class="inline">
           <form method="POST" action="project.php">
               <input type="hidden" id="searchPokemonRequest" name="searchPokemonRequest">
