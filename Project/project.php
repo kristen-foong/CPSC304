@@ -8,9 +8,21 @@
 <html>
     <head>
         <title>Pokedex</title>
+        <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800" rel="stylesheet">
+        <style>
+          body {
+            font-family: 'Poppins', Arial;
+            font-weight:'400';
+            padding:30px auto;
+          }
+          h1 {
+            text-align:center;
+          }
+        </style>
     </head>
 
     <body>
+        <h1>CS304 POKEMON DATABASE</h1>
         <h2>Reset</h2>
         <p>If you wish to reset the table press on the reset button. If this is the first time you're running this page, you MUST use reset</p>
 
@@ -60,12 +72,6 @@
 
         <hr />
 
-
-        <script>
-            function updateNickname(string) {
-
-            }
-        </script>
         <?php
 
         $success = True; //keep track of errors so it redirects the page only if there are no errors
@@ -165,17 +171,6 @@
             OCILogoff($db_conn);
         }
 
-        function handleUpdateRequest() {
-            global $db_conn;
-
-            $old_name = $_POST['oldName'];
-            $new_name = $_POST['newName'];
-
-            // you need the wrap the old name and new name values with single quotations
-            executePlainSQL("UPDATE Pokemon SET nickname='" . $new_name . "' WHERE nickname='" . $old_name . "'");
-            OCICommit($db_conn);
-        }
-
         function handleResetRequest() {
             global $db_conn;
             // Drop old tables
@@ -250,8 +245,21 @@
             // //echo "$nrows fetched<br>";
             // //var_dump($res);
             // $pid = $res['id'];
-            echo "You caught a pokemon: " . $randomSpnameResult[0] . "!";
+            echo "You caught a " . $rgen . " " . $randomSpnameResult[0] . "!";
 
+            OCICommit($db_conn);
+        }
+
+        function handleUpdateRequest($old_name) {
+            global $db_conn;
+
+            $new_name = $_POST['newName'];
+
+            // you need the wrap the old name and new name values with single quotations
+            if(isset($_POST['newName'])) {
+              executePlainSQL("UPDATE Pokemon SET nickname='" . $new_name . "' WHERE nickname='" . $old_name . "'");
+              echo "Updated" . $new_name . "," . $old_name;
+            }
             OCICommit($db_conn);
         }
 
