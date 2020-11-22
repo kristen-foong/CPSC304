@@ -33,6 +33,12 @@
             text-transform:uppercase;
             border:none;
           }
+          input[type=text] {
+            padding:10px, 20px;
+            font-family:'Poppins', Arial;
+            font-weight:400;
+            border:1px solid #ccc;
+          }
           footer {
             font-size:10px;
             text-align:center;
@@ -56,6 +62,8 @@
         <h1>CS304 POKEMON DATABASE</h1>
 
         <h2>General</h2>
+        <p>If you wish to reset the table press on the reset button. If this is the first time you're running this page, you MUST use reset</p>
+
         <div class="inline">
 
           <form method="POST" action="project.php">
@@ -140,9 +148,7 @@
         </div>
 
         <hr>
-        <h2>Manage Your Pokemon</h2>
-        <p>If you wish to reset the table press on the reset button. If this is the first time you're running this page, you MUST use reset</p>
-
+                <h2>Manage Your Pokemon</h2>
         <div class="inline">
 
         <!-- generate pokemon -->
@@ -153,30 +159,28 @@
 
             <input type="submit" value="Generate Pokemon" name="insertSubmit">
         </form>
-<!--
-        <hr />
-        <h2>Update Species Name in Species Table</h2>
-        <p>The values are case sensitive and if you enter in the wrong case, the update statement will not do anything.</p>
-        <form method="POST" action="project.php">
-            <input type="hidden" id="updateQueryRequest" name="updateQueryRequest">
-            Old Name: <input type="text" name="oldName"> <br /><br />
-            New Name: <input type="text" name="newName"> <br /><br />
-            <input type="submit" value="Update" name="updateSubmit"></p>
-        </form> -->
 
         <!-- display pokemon -->
         <form method="GET" action="project.php">
             <input type="hidden" id="displayPokemon" name="displayPokemonRequest">
             <input type="submit" value="Display Pokemon" name="displayPokemon">
         </form>
-        <br>
         </div>
 
-        <!-- release pokemon nickname -->
+        <br>
+        <!-- release pokemon -->
         <form method="POST" action="project.php">
             <input type="hidden" id="releasePokemonRequest" name="releasePokemonRequest">
             <input type="submit" value="Release Pokemon" name="releaseSubmit">
             <input type="text" name="ridID" placeholder="Enter OwnedID of Pokemon to Release">
+        </form>
+
+        <!-- change pokemon nickname -->
+        <form method="POST" action="project.php">
+            <input type="hidden" id="updateQueryRequest" name="updateQueryRequest">
+            <input type="submit" value="Change Pokemon Nickname" name="updateSubmit">
+            <input type="text" name="nidID" placeholder="Enter OwnedID of Pokemon">
+            <input type="text" name="newName" placeholder="Enter new nickname for Pokemon">
         </form>
 
 
@@ -367,19 +371,31 @@
             OCICommit($db_conn);
         }
 
-        function handleUpdateRequest($old_name) {
-            global $db_conn;
+        // update nickname -- buggy rn
+        function handleUpdateRequest() {
+          global $db_conn;
 
-            $new_name = $_POST['newName'];
+          $nid = $_POST['nidID'];
+          $new_name = $_POST['newName'];
 
-            // you need the wrap the old name and new name values with single quotations
+          if(isset($_POST['nidID']) && is_numeric($nid)) {
             if(isset($_POST['newName'])) {
-              executePlainSQL("UPDATE Pokemon SET nickname='" . $new_name . "' WHERE nickname='" . $old_name . "'");
-              echo "Updated" . $new_name . "," . $old_name;
+              $npoke = executePlainSQL("SELECT Nickname, OwnedID FROM Pokemon WHERE OwnedID='" . $nid . "'");
+              if(($row = oci_fetch_row($npoke)) != false) {
+                $res = executePlainSQL("UPDATE Pokemon SET Nickname='" . $new_name . "' WHERE OwnedID=$row[1]");
+                echo $row[0] . "'s nickname was updated to " . $new_name . ".";
+              } else {
+                echo "Nickname was not specified, no changes were made.";
+              }
+            } else {
+              echo "Invalid OwnedID, no changes were made.";
             }
-            OCICommit($db_conn);
+          }
+
+          OCICommit($db_conn);
         }
 
+        // count tuples in Pokemon and Species tables
         function handleCountRequest() {
             global $db_conn;
 
@@ -395,6 +411,7 @@
             OCICommit($db_conn);
         }
 
+        // general function for filtering through Pokedex
         function getElem($elem) {
           global $db_conn;
           $res = executePlainSQL("SELECT S.ID, S.SpName, O.Type1, O.Type2 FROM Species S, ofType O WHERE S.ID=O.ID AND (O.Type1='$elem' OR O.Type2='$elem')");
@@ -408,7 +425,7 @@
           OCICommit($db_conn);
         }
 
-
+        // displays all caught Pokemon
         function displayPokemon() {
             global $db_conn;
 
@@ -421,6 +438,7 @@
             OCICommit($db_conn);
         }
 
+        // deletes a pokemon from the Pokemon table given a valid OwnedID is provided
         function releasePokemon() {
           global $db_conn;
 
@@ -430,6 +448,8 @@
             if(($row = oci_fetch_row($rpoke)) != false) {
               $res = executePlainSQL("DELETE FROM Pokemon WHERE OwnedID=$row[1]");
               echo $row[0] . " was released.";
+            } else {
+              echo "Invalid OwnedID. No pokemon was released.";
             }
           } else {
             echo "No OwnedID was selected or improper input. No pokemon was released.";
