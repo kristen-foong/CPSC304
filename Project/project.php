@@ -13,7 +13,13 @@
           body {
             font-family: 'Poppins', Arial;
             font-weight:'400';
-            padding:30px auto;
+            padding:0px;
+            margin:0px;
+            position:relative;
+          }
+          #wrapper {
+            position:relative;
+            margin:30px 30px;
           }
           h1 {
             text-align:center;
@@ -27,18 +33,102 @@
             text-transform:uppercase;
             border:none;
           }
+          footer {
+            font-size:10px;
+            text-align:center;
+            width:100%;
+            position:absolute;
+            bottom:0px;
+          }
+          .inline {
+            display:flex;
+            align-items:center;
+            flex-wrap:wrap;
+          }
+          .inline form {
+            margin:2px;
+          }
         </style>
     </head>
 
     <body>
+      <div id="wrapper">
         <h1>CS304 POKEMON DATABASE</h1>
 
+        <h2>General</h2>
+        <div class="inline">
+
+          <form method="POST" action="project.php">
+              <!-- if you want another page to load after the button is clicked, you have to specify that page in the action parameter -->
+              <input type="hidden" id="resetTablesRequest" name="resetTablesRequest">
+              <input type="submit" value="Reset Tables" name="reset">
+          </form>
+
+            <!-- count tuples -->
+            <form method="GET" action="project.php">
+                <input type="hidden" id="countTupleRequest" name="countTupleRequest">
+                <input type="submit" value ="Count Tuples In Tables" name="countTuples">
+            </form>
+        </div>
+
+        <h2>Filter By Type</h2>
+        <!-- count tuples -->
+        <div class="inline">
+
+          <!-- filter by type -->
+
+          <form method="GET" action="project.php">
+              <input type="hidden" id="getNormalPokemon" name="getNormalPokemon">
+              <input type="submit" value ="Normal" name="getNormal">
+          </form>
+
+          <form method="GET" action="project.php">
+              <input type="hidden" id="getGrassPokemon" name="getGrassPokemon">
+              <input type="submit" value ="Grass" name="getGrass">
+          </form>
+
+          <form method="GET" action="project.php">
+              <input type="hidden" id="getFirePokemon" name="getFirePokemon">
+              <input type="submit" value ="Fire" name="getFire">
+          </form>
+
+          <form method="GET" action="project.php">
+              <input type="hidden" id="getWaterPokemon" name="getWaterPokemon">
+              <input type="submit" value ="Water" name="getWater">
+          </form>
+
+          <form method="GET" action="project.php">
+              <input type="hidden" id="getGroundPokemon" name="getGroundPokemon">
+              <input type="submit" value ="Ground" name="getGround">
+          </form>
+
+          <form method="GET" action="project.php">
+              <input type="hidden" id="getFlyingPokemon" name="getFlyingPokemon">
+              <input type="submit" value ="Flying" name="getFlying">
+          </form>
+
+          <form method="GET" action="project.php">
+              <input type="hidden" id="getPoisonPokemon" name="getPoisonPokemon">
+              <input type="submit" value ="Poison" name="getPoison">
+          </form>
+
+          <form method="GET" action="project.php">
+              <input type="hidden" id="getFightingPokemon" name="getFightingPokemon">
+              <input type="submit" value ="Fighting" name="getFighting">
+          </form>
+
+          <form method="GET" action="project.php">
+              <input type="hidden" id="getBugPokemon" name="getBugPokemon">
+              <input type="submit" value ="Bug" name="getBug">
+          </form>
+
+        </div>
+
+        <hr>
+        <h2>Manage Your Pokemon</h2>
         <p>If you wish to reset the table press on the reset button. If this is the first time you're running this page, you MUST use reset</p>
-        <form method="POST" action="project.php">
-            <!-- if you want another page to load after the button is clicked, you have to specify that page in the action parameter -->
-            <input type="hidden" id="resetTablesRequest" name="resetTablesRequest">
-            <p><input type="submit" value="Reset Tables" name="reset"></p>
-        </form>
+
+        <div class="inline">
 
         <!-- generate pokemon -->
         <form method="POST" action="project.php">
@@ -46,7 +136,7 @@
             <!-- Number: <input type="text" name="insNo"> <br /><br />
             Name: <input type="text" name="insName"> <br /><br /> -->
 
-            <input type="submit" value="Generate Pokemon" name="insertSubmit"></p>
+            <input type="submit" value="Generate Pokemon" name="insertSubmit">
         </form>
 <!--
         <hr />
@@ -59,17 +149,13 @@
             <input type="submit" value="Update" name="updateSubmit"></p>
         </form> -->
 
-        <!-- count tuples -->
-        <form method="GET" action="project.php">
-            <input type="hidden" id="countTupleRequest" name="countTupleRequest">
-            <input type="submit" value ="Count Tuples In Tables" name="countTuples"></p>
-        </form>
-
         <!-- display pokemon -->
         <form method="GET" action="project.php">
             <input type="hidden" id="displayPokemon" name="displayPokemonRequest">
-            <input type="submit" value="Display Pokemon" name="displayPokemon"></p>
+            <input type="submit" value="Display Pokemon" name="displayPokemon">
         </form>
+
+      </div>
 
         <hr />
 
@@ -269,14 +355,27 @@
 
             $resultSp = executePlainSQL("SELECT Count(*) FROM Species");
             if (($row = oci_fetch_row($resultSp)) != false) {
-                echo "<br> The number of tuples in Species Table: " . $row[0] . "<br>";
+                echo "<br> The number of tuples in Pokedex: " . $row[0] . "<br>";
             }
 
             $resultPm = executePlainSQL("SELECT Count(*) FROM Pokemon");
             if (($row = oci_fetch_row($resultPm)) != false) {
-                echo "<br> The number of tuples in Pokemon Table: " . $row[0] . "<br>";
+                echo "<br> The number of tuples in Your Pokemon Table: " . $row[0] . "<br>";
             }
         }
+
+        function getElem($elem) {
+          global $db_conn;
+          $res = executePlainSQL("SELECT S.ID, S.SpName, O.Type1, O.Type2 FROM Species S, ofType O WHERE S.ID=O.ID AND (O.Type1='$elem' OR O.Type2='$elem')");
+          while(($row = oci_fetch_row($res)) != false) {
+            echo $row[0] . ", " . $row[1] . ", Type: " . $row[2];
+            if ($row[3] != NULL) {
+              echo " & " . $row[3];
+            }
+            echo "<br>";
+          }
+        }
+
 
         function displayPokemon() {
             global $db_conn;
@@ -315,6 +414,24 @@
                 showTuples();
             } else if (array_key_exists('displayPokemon', $_GET)) {
                 displayPokemon();
+            } else if (array_key_exists('getNormal', $_GET)) {
+                getElem("Normal");
+            } else if (array_key_exists('getGrass', $_GET)) {
+                getElem("Grass");
+            } else if (array_key_exists('getFire', $_GET)) {
+                getElem("Fire");
+            } else if (array_key_exists('getWater', $_GET)) {
+               getElem("Water");
+            } else if (array_key_exists('getGround', $_GET)) {
+              getElem("Ground");
+            } else if (array_key_exists('getFlying', $_GET)) {
+              getElem("Flying");
+            } else if (array_key_exists('getPoison', $_GET)) {
+              getElem("Poison");
+            } else if (array_key_exists('getFighting', $_GET)) {
+              getElem("Fighting");
+            } else if (array_key_exists('getBug', $_GET)) {
+              getElem("Bug");
             }
 
             disconnectFromDB();
@@ -325,7 +442,14 @@
         handlePOSTRequest();
     } else if (isset($_GET['countTupleRequest']) || isset($_GET['showTupleRequest']) || isset($_GET['displayPokemonRequest'])) {
         handleGETRequest();
+    } else if (isset($_GET['getNormalPokemon']) || isset($_GET['getGrassPokemon']) || isset($_GET['getFirePokemon']) || isset($_GET['getWaterPokemon']) || isset($_GET['getGroundPokemon']) || isset($_GET['getFlyingPokemon']) ||
+      isset($_GET['getPoisonPokemon']) || isset($_GET['getFightingPokemon']) || isset($_GET['getBugPokemon'])) {
+        handleGETRequest();
     }
 		?>
+  </div>
 	</body>
+  <footer>
+    <div style="text-align:center;">Created by Derrick Sutanto, Shawn Pak, and Kristen Foong &#169; 2020</div>
+  </footer>
 </html>
