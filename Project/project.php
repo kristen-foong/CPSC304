@@ -32,24 +32,21 @@
 
     <body>
         <h1>CS304 POKEMON DATABASE</h1>
-        <h2>Reset</h2>
-        <p>If you wish to reset the table press on the reset button. If this is the first time you're running this page, you MUST use reset</p>
 
+        <p>If you wish to reset the table press on the reset button. If this is the first time you're running this page, you MUST use reset</p>
         <form method="POST" action="project.php">
             <!-- if you want another page to load after the button is clicked, you have to specify that page in the action parameter -->
             <input type="hidden" id="resetTablesRequest" name="resetTablesRequest">
-            <p><input type="submit" value="Reset" name="reset"></p>
+            <p><input type="submit" value="Reset Tables" name="reset"></p>
         </form>
 
-        <hr />
-
-        <h2>Generate new Pokemon</h2>
+        <!-- generate pokemon -->
         <form method="POST" action="project.php">
             <input type="hidden" id="insertQueryRequest" name="insertQueryRequest">
             <!-- Number: <input type="text" name="insNo"> <br /><br />
             Name: <input type="text" name="insName"> <br /><br /> -->
 
-            <input type="submit" value="Insert" name="insertSubmit"></p>
+            <input type="submit" value="Generate Pokemon" name="insertSubmit"></p>
         </form>
 <!--
         <hr />
@@ -62,21 +59,16 @@
             <input type="submit" value="Update" name="updateSubmit"></p>
         </form> -->
 
-        <hr />
-
-        <h2>Count the Tuples in Tables</h2>
+        <!-- count tuples -->
         <form method="GET" action="project.php">
             <input type="hidden" id="countTupleRequest" name="countTupleRequest">
-            <input type="submit" name="countTuples"></p>
+            <input type="submit" value ="Count Tuples In Tables" name="countTuples"></p>
         </form>
 
-        <hr />
-
-
-        <h2>Display Your Pokemon</h2>
+        <!-- display pokemon -->
         <form method="GET" action="project.php">
             <input type="hidden" id="displayPokemon" name="displayPokemonRequest">
-            <input type="submit" name="displayPokemon"></p>
+            <input type="submit" value="Display Pokemon" name="displayPokemon"></p>
         </form>
 
         <hr />
