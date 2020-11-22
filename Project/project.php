@@ -122,6 +122,21 @@
               <input type="submit" value ="Bug" name="getBug">
           </form>
 
+          <form method="GET" action="project.php">
+              <input type="hidden" id="getElectricPokemon" name="getElectricPokemon">
+              <input type="submit" value ="Electric" name="getElectric">
+          </form>
+
+          <form method="GET" action="project.php">
+              <input type="hidden" id="getPsychicPokemon" name="getPsychicPokemon">
+              <input type="submit" value ="Psychic" name="getPsychic">
+          </form>
+
+          <form method="GET" action="project.php">
+              <input type="hidden" id="getFairyPokemon" name="getFairyPokemon">
+              <input type="submit" value ="Fairy" name="getFairy">
+          </form>
+
         </div>
 
         <hr>
@@ -154,8 +169,17 @@
             <input type="hidden" id="displayPokemon" name="displayPokemonRequest">
             <input type="submit" value="Display Pokemon" name="displayPokemon">
         </form>
+        <br>
+        </div>
 
-      </div>
+        <!-- release pokemon nickname -->
+        <form method="POST" action="project.php">
+            <input type="hidden" id="releasePokemonRequest" name="releasePokemonRequest">
+            <input type="submit" value="Release Pokemon" name="releaseSubmit">
+            <input type="text" name="ridID" placeholder="Enter OwnedID of Pokemon to Release">
+        </form>
+
+
 
         <hr />
 
@@ -368,6 +392,7 @@
             if (($row = oci_fetch_row($resultPm)) != false) {
                 echo "<br> The number of tuples in Your Pokemon Table: " . $row[0] . "<br>";
             }
+            OCICommit($db_conn);
         }
 
         function getElem($elem) {
@@ -380,6 +405,7 @@
             }
             echo "<br>";
           }
+          OCICommit($db_conn);
         }
 
 
@@ -392,7 +418,26 @@
               echo "<tr><td>". $row[0] . "</td><td>" . $row[1] . "</td><td> " . $row[2] . "</td><td>" . $row[3] . ".</td><td>" . $row[4] . "</td></tr>";
             }
             echo "</table>";
+            OCICommit($db_conn);
         }
+
+        function releasePokemon() {
+          global $db_conn;
+
+          $rid = $_POST['ridID'];
+          if(isset($_POST['ridID']) && is_numeric($rid)) {
+            $rpoke = executePlainSQL("SELECT Nickname, OwnedID FROM Pokemon WHERE OwnedID='" . $rid . "'");
+            if(($row = oci_fetch_row($rpoke)) != false) {
+              $res = executePlainSQL("DELETE FROM Pokemon WHERE OwnedID=$row[1]");
+              echo $row[0] . " was released.";
+            }
+          } else {
+            echo "No OwnedID was selected or improper input. No pokemon was released.";
+          }
+
+          OCICommit($db_conn);
+        }
+
 
         // HANDLE ALL POST ROUTES
 	// A better coding practice is to have one method that reroutes your requests accordingly. It will make it easier to add/remove functionality.
@@ -404,6 +449,8 @@
                 handleUpdateRequest();
             } else if (array_key_exists('insertQueryRequest', $_POST)) {
                 handleInsertRequest();
+            } else if (array_key_exists('releasePokemonRequest', $_POST)) {
+                releasePokemon();
             }
 
             disconnectFromDB();
@@ -438,18 +485,24 @@
               getElem("Fighting");
             } else if (array_key_exists('getBug', $_GET)) {
               getElem("Bug");
+            } else if (array_key_exists('getElectric', $_GET)) {
+              getElem("Electric");
+            } else if (array_key_exists('getPsychic', $_GET)) {
+              getElem("Psychic");
+            } else if (array_key_exists('getFairy', $_GET)) {
+              getElem("Fairy");
             }
 
             disconnectFromDB();
         }
     }
 
-    if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit'])) {
+    if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit'])|| isset($_POST['releaseSubmit'])) {
         handlePOSTRequest();
     } else if (isset($_GET['countTupleRequest']) || isset($_GET['showTupleRequest']) || isset($_GET['displayPokemonRequest'])) {
         handleGETRequest();
     } else if (isset($_GET['getNormalPokemon']) || isset($_GET['getGrassPokemon']) || isset($_GET['getFirePokemon']) || isset($_GET['getWaterPokemon']) || isset($_GET['getGroundPokemon']) || isset($_GET['getFlyingPokemon']) ||
-      isset($_GET['getPoisonPokemon']) || isset($_GET['getFightingPokemon']) || isset($_GET['getBugPokemon'])) {
+      isset($_GET['getPoisonPokemon']) || isset($_GET['getFightingPokemon']) || isset($_GET['getBugPokemon']) || isset($_GET['getElectricPokemon']) || isset($_GET['getPsychicPokemon']) || isset($_GET['getFairyPokemon'])) {
         handleGETRequest();
     }
 		?>
