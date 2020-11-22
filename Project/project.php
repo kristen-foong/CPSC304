@@ -338,7 +338,7 @@
             // //echo "$nrows fetched<br>";
             // //var_dump($res);
             // $pid = $res['id'];
-            echo "You caught a " . $rgen . " " . $randomSpnameResult[0] . "!";
+            echo "You caught a " . $randomSpnameResult[0] . "!";
 
             OCICommit($db_conn);
         }
