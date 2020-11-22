@@ -211,6 +211,13 @@
             <input type="text" name="newName" placeholder="Enter new nickname for Pokemon">
         </form>
 
+        <!-- check Weakness -->
+        <form method="POST" action="project.php">
+            <input type="hidden" id="checkWeaknessRequest" name="checkWeaknessRequest">
+            <input type="submit" value="Check Weaknesses" name="checkWeakSubmit">
+            <input type="text" name="cwid" placeholder="Enter OwnedID of Pokemon">
+        </form>
+
         <hr />
 
         <?php
@@ -486,6 +493,7 @@
           OCICommit($db_conn);
         }
 
+        // seach pokemon by name
         function searchPokemon() {
           global $db_conn;
 
@@ -503,6 +511,7 @@
           OCICommit($db_conn);
         }
 
+        // search pokemon by id
         function searchID() {
           global $db_conn;
 
@@ -515,6 +524,30 @@
               . "</td><td>" . $row[6] . "</td><td>" . $row[7] . "</tr>";
             }
             echo "</table>";
+          }
+
+          OCICommit($db_conn);
+        }
+
+        // checks a pokemon's weaknesses
+        function checkWeak() {
+          global $db_conn;
+
+          $cwid = $_POST['cwid'];
+          if(isset($_POST['cwid'])) {
+            $cwpoke = executePlainSQL("SELECT P.ID, P.Nickname, O.Type1, O.Type2 FROM Pokemon P, ofType O WHERE P.OwnedID='" . $cwid . "' AND P.ID=O.ID");
+            if(($row = oci_fetch_row($cwpoke)) != false) {
+              echo "Checking " . $row[1] . "'s weaknesses...<br>";
+              $check;
+              if ($row[3] != NULL) {
+                $check = executePlainSQL("SELECT * FROM WeakAgainst WHERE (Type1_TypeName='$row[2]' OR Type1_TypeName='$row[3]')");
+              } else {
+                $check = executePlainSQL("SELECT * FROM WeakAgainst WHERE Type1_TypeName='$row[2]'");
+              }
+              while(($row2 = oci_fetch_array($check)) != false) {
+                echo $row2[0] . " weak against " . $row2[1] . "<br>";
+              }
+            }
           }
 
           OCICommit($db_conn);
@@ -537,6 +570,8 @@
                 searchPokemon();
             } else if (array_key_exists('searchIDRequest', $_POST)) {
                 searchID();
+            } else if (array_key_exists('checkWeaknessRequest', $_POST)) {
+                checkWeak();
             }
 
             disconnectFromDB();
@@ -583,7 +618,7 @@
         }
     }
 
-    if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit'])|| isset($_POST['releaseSubmit']) || isset($_POST['searchSubmit']) || isset($_POST['searchIDSubmit'])) {
+    if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit'])|| isset($_POST['releaseSubmit']) || isset($_POST['searchSubmit']) || isset($_POST['searchIDSubmit']) || isset($_POST['checkWeakSubmit'])) {
         handlePOSTRequest();
     } else if (isset($_GET['countTupleRequest']) || isset($_GET['showTupleRequest']) || isset($_GET['displayPokemonRequest'])) {
         handleGETRequest();
