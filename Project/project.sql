@@ -1,6 +1,5 @@
 DROP TABLE EvolvesInto;
 DROP TABLE has_a;
-DROP TABLE p_uses;
 DROP TABLE Mega_Item;
 DROP TABLE ofType;
 DROP TABLE WeakAgainst;
@@ -9,6 +8,7 @@ DROP TABLE has;
 DROP TABLE Mega_Evolution;
 DROP TABLE Evo_Item;
 DROP TABLE Status_Item;
+DROP TABLE p_uses;
 DROP TABLE P_Type;
 DROP TABLE P_Stats;
 DROP TABLE Item;
@@ -68,24 +68,24 @@ GRANT ALL PRIVILEGES ON P_Stats TO PUBLIC;
 
 -- Item table
 CREATE TABLE Item (
-	ItemName			VARCHAR(20),
+	ItemName			VARCHAR(255),
 	Quantity			INT,
 	PRIMARY KEY (ItemName)
 );
 GRANT ALL PRIVILEGES ON Item TO PUBLIC;
 
--- Evo Item table
+-- Evo_Item table
 CREATE TABLE Evo_Item (
-	ItemName		VARCHAR(20),
-	Usage			VARCHAR(20),
+	ItemName		VARCHAR(255),
+	Usage			VARCHAR(255),
 	FOREIGN KEY (ItemName) REFERENCES Item
 );
 GRANT ALL PRIVILEGES ON Evo_Item TO PUBLIC;
 
 -- Status Item table
 CREATE TABLE Status_Item (
-	ItemName			VARCHAR(20),
-	Status			VARCHAR(20),
+	ItemName			VARCHAR(255),
+	Status				VARCHAR(255),
 	FOREIGN KEY (ItemName) REFERENCES Item
 );
 GRANT ALL PRIVILEGES ON Status_Item TO PUBLIC;
@@ -93,9 +93,9 @@ GRANT ALL PRIVILEGES ON Status_Item TO PUBLIC;
 -- Mega_Evolution table
 CREATE TABLE Mega_Evolution (
 	ID					INT,
-	MeName			VARCHAR(20),
-	SpName			VARCHAR(20),
-	Mega_Stone			VARCHAR(20),
+	MeName			VARCHAR(255),
+	SpName			VARCHAR(255),
+	Mega_Stone			VARCHAR(255),
 	PRIMARY KEY (MeName),
 	FOREIGN KEY (ID) REFERENCES Species ON DELETE CASCADE
 );
@@ -103,8 +103,8 @@ GRANT ALL PRIVILEGES ON Mega_Evolution TO PUBLIC;
 
 -- Mega_Item table
 CREATE TABLE Mega_Item (
-	Mega_Stone		VARCHAR(20),
-	MeName				VARCHAR(20),
+	Mega_Stone		VARCHAR(255),
+	MeName				VARCHAR(255),
 	PRIMARY KEY (MeName),
 	FOREIGN KEY (MeName) REFERENCES Mega_Evolution ON DELETE CASCADE
 );
@@ -131,8 +131,8 @@ GRANT ALL PRIVILEGES ON is_of TO PUBLIC;
 -- ofType table
 CREATE TABLE ofType (
 	ID					INT,
-	Type1			VARCHAR(20),
-	Type2 		VARCHAR(20),
+	Type1			VARCHAR(255),
+	Type2 		VARCHAR(255),
 	PRIMARY KEY (ID),
 	FOREIGN KEY (ID) REFERENCES Species,
 	FOREIGN KEY (Type1) REFERENCES P_Type,
@@ -142,8 +142,8 @@ GRANT ALL PRIVILEGES ON ofType TO PUBLIC;
 
 -- WeakAgainst table
 CREATE TABLE WeakAgainst (
-	Type1_TypeName		VARCHAR(20),
-	Type2_TypeName		VARCHAR(20),
+	Type1_TypeName		VARCHAR(255),
+	Type2_TypeName		VARCHAR(255),
 	FOREIGN KEY (Type1_TypeName) REFERENCES P_Type(P_TypeName),
 	FOREIGN KEY (Type2_TypeName) REFERENCES P_Type(P_TypeName)
 );
@@ -152,16 +152,17 @@ GRANT ALL PRIVILEGES ON WeakAgainst TO PUBLIC;
 
 -- p_uses table
 CREATE TABLE p_uses (
-	OwnedID		INT,
-	ItemName			VARCHAR(20),
-	PRIMARY KEY (OwnedID, ItemName),
-	FOREIGN KEY (OwnedID) REFERENCES Pokemon
+	OwnedID				INT,
+	ItemName			VARCHAR(255),
+	PRIMARY KEY (OwnedID),
+	FOREIGN KEY (OwnedID) REFERENCES Pokemon,
+	FOREIGN KEY (ItemName) REFERENCES Item
 );
 GRANT ALL PRIVILEGES ON p_uses TO PUBLIC;
 
 -- has_a table
 CREATE TABLE has_a (
-	MeName			VARCHAR(20),
+	MeName			VARCHAR(255),
 	ID					INT,
 	PRIMARY KEY (ID),
 	FOREIGN KEY (MeName) REFERENCES Mega_Evolution,
@@ -235,6 +236,12 @@ INSERT INTO Species VALUES (62,'Poliwrath','Water Absorb','Damp','Swift Swim');
 INSERT INTO Species VALUES (63,'Abra','Synchronize','Inner Focus','Magic guard');
 INSERT INTO Species VALUES (64,'Kadabra','Synchronize','Inner Focus','Magic guard');
 INSERT INTO Species VALUES (65,'Alakazam','Synchronize','Inner Focus','Magic guard');
+
+
+-- insert into Pokemon table
+INSERT INTO Pokemon VALUES (65, 'Alakazam', 'male', CURRENT_TIMESTAMP, 0);
+INSERT INTO Pokemon VALUES (52, 'Meowth', 'female', CURRENT_TIMESTAMP, 1);
+INSERT INTO Pokemon VALUES (54, 'Psyduck', 'male', CURRENT_TIMESTAMP, 2);
 
 
 -- insert into Mega_Evolution table
@@ -537,22 +544,183 @@ INSERT INTO EvolvesInto VALUES (61,62);
 INSERT INTO EvolvesInto VALUES (63,64);
 INSERT INTO EvolvesInto VALUES (64,65);
 
---
--- -- procedure to pick random pokemon ID
--- CREATE PROCEDURE randomPokemon
--- AS
--- 	SELECT ID, SpName
--- 	FROM (
--- 		SELECT ID, SpName
--- 		FROM Species
--- 		ORDER BY DBMS_RANDOM.RANDOM
--- 	)
--- 	WHERE ROWNUM < 65
--- GO ;
---
--- -- procedure to insert random pokemon to table
--- CREATE PROCEDURE addRandom @ID INT, @SpName varchar(255)
--- AS
--- 	INSERT INTO Pokemon
--- 	VALUES (ID, SpName, 'Male', CURRENT_TIMESTAMP)
--- GO ;
+
+-- insert into Item Table
+INSERT INTO Item VALUES('Amulet Coin', 1);
+INSERT INTO Item VALUES('Red Orb', 1);
+INSERT INTO Item VALUES('Blue Orb', 1);
+INSERT INTO Item VALUES('Draco Plate', 1);
+INSERT INTO Item VALUES('Dread Plate', 1);
+INSERT INTO Item VALUES('Earth Plate', 1);
+INSERT INTO Item VALUES('Fist Plate', 1);
+INSERT INTO Item VALUES('Flame Plate', 1);
+INSERT INTO Item VALUES('Icicle Plate', 1);
+INSERT INTO Item VALUES('Insect Plate', 1);
+INSERT INTO Item VALUES('Iron Plate', 1);
+INSERT INTO Item VALUES('Meadow Plate', 1);
+INSERT INTO Item VALUES('Mind Plate', 1);
+INSERT INTO Item VALUES('Pixie Plate', 1);
+INSERT INTO Item VALUES('Sky Plate', 1);
+INSERT INTO Item VALUES('Splash Plate', 1);
+INSERT INTO Item VALUES('Spooky Plate', 1);
+INSERT INTO Item VALUES('Stone Plate', 1);
+INSERT INTO Item VALUES('Toxic Plate', 1);
+INSERT INTO Item VALUES('Zap Plate', 1);
+INSERT INTO Item VALUES('Power Anklet', 1);
+INSERT INTO Item VALUES('Power Band', 1);
+INSERT INTO Item VALUES('Power Lens', 1);
+INSERT INTO Item VALUES('Power Belt', 1);
+INSERT INTO Item VALUES('Power Bracer', 1);
+INSERT INTO Item VALUES('Power Weight', 1);
+INSERT INTO Item VALUES ('Sun Stone', 1);
+INSERT INTO Item VALUES ('Moon Stone', 1);
+INSERT INTO Item VALUES ('Fire Stone', 1);
+INSERT INTO Item VALUES ('Dawn Stone', 1);
+INSERT INTO Item VALUES ('Shiny Stone', 1);
+INSERT INTO Item VALUES ('Dusk Stone', 1);
+INSERT INTO Item VALUES ('Ice Stone', 1);
+INSERT INTO Item VALUES ('Leaf Stone', 1);
+INSERT INTO Item VALUES ('Thunder Stone', 1);
+INSERT INTO Item VALUES ('Water Stone', 1);
+INSERT INTO Item VALUES ('Alakazite', 1);
+INSERT INTO Item VALUES ('Beedrillite', 1);
+INSERT INTO Item VALUES ('Blastoisinite', 1);
+INSERT INTO Item VALUES ('Charizardite X', 1);
+INSERT INTO Item VALUES ('Charizardite Y', 1);
+INSERT INTO Item VALUES ('Pidgeotite', 1);
+INSERT INTO Item VALUES ('Venusaurite', 1);
+INSERT INTO Item VALUES ('Deep Sea Scale', 1);
+INSERT INTO Item VALUES ('Deep Sea Tooth', 1);
+INSERT INTO Item VALUES ('Dragon Scale', 1);
+INSERT INTO Item VALUES ('Dubious Disc', 1);
+INSERT INTO Item VALUES ('Kings Rock', 1);
+INSERT INTO Item VALUES ('Metal Coat', 1);
+INSERT INTO Item VALUES ('Oval Stone', 1);
+INSERT INTO Item VALUES ('Prism Scale', 1);
+INSERT INTO Item VALUES ('Protector', 1);
+INSERT INTO Item VALUES ('Razor Claw', 1);
+INSERT INTO Item VALUES ('Razor Fang', 1);
+INSERT INTO Item VALUES ('Reaper Cloth', 1);
+INSERT INTO Item VALUES ('Satchet', 1);
+INSERT INTO Item VALUES ('Upgrade', 1);
+INSERT INTO Item VALUES ('Whipped Dream', 1);
+INSERT INTO Item VALUES('Antidote', 1);
+INSERT INTO Item VALUES('Burn Heal', 1);
+INSERT INTO Item VALUES('Elixir', 1);
+INSERT INTO Item VALUES('Ether', 1);
+INSERT INTO Item VALUES('Full Heal', 1);
+INSERT INTO Item VALUES('Full Restore', 1);
+INSERT INTO Item VALUES('Hyper Potion', 1);
+INSERT INTO Item VALUES('Ice Heal', 1);
+INSERT INTO Item VALUES('Max Elixir', 1);
+INSERT INTO Item VALUES('Max Ether', 1);
+INSERT INTO Item VALUES('Max Revive', 1);
+INSERT INTO Item VALUES('Moomoo Milk', 1);
+INSERT INTO Item VALUES('Paralyze Heal', 1);
+INSERT INTO Item VALUES('Potion', 1);
+INSERT INTO Item VALUES('Revive', 1);
+INSERT INTO Item VALUES('Super Potion', 1);
+INSERT INTO Item VALUES('Cheri Berry', 1);
+INSERT INTO Item VALUES('Chesto Berry', 1);
+INSERT INTO Item VALUES('Pecha Berry', 1);
+INSERT INTO Item VALUES('Rawst Berry', 1);
+INSERT INTO Item VALUES('Aspear Berry', 1);
+INSERT INTO Item VALUES('Leppa Berry', 1);
+INSERT INTO Item VALUES('Oran Berry', 1);
+INSERT INTO Item VALUES('Persim Berry', 1);
+INSERT INTO Item VALUES('Lum Berry', 1);
+INSERT INTO Item VALUES('Sitrus Berry', 1);
+INSERT INTO Item VALUES('X Attack', 1);
+INSERT INTO Item VALUES('X Defense', 1);
+INSERT INTO Item VALUES('X Sp. Atk', 1);
+INSERT INTO Item VALUES('X Sp. Def', 1);
+INSERT INTO Item VALUES('X Speed', 1);
+INSERT INTO Item VALUES('X Accuracy', 1);
+INSERT INTO Item VALUES('Dire Hit', 1);
+INSERT INTO Item VALUES('Guard Spec', 1);
+
+
+-- insert into Evo_Item Table
+INSERT INTO Evo_Item VALUES ('Sun Stone', 'Bag');
+INSERT INTO Evo_Item VALUES ('Moon Stone', 'Bag');
+INSERT INTO Evo_Item VALUES ('Fire Stone', 'Bag');
+INSERT INTO Evo_Item VALUES ('Dawn Stone', 'Bag');
+INSERT INTO Evo_Item VALUES ('Shiny Stone', 'Bag');
+INSERT INTO Evo_Item VALUES ('Dusk Stone', 'Bag');
+INSERT INTO Evo_Item VALUES ('Ice Stone', 'Bag');
+INSERT INTO Evo_Item VALUES ('Leaf Stone', 'Bag');
+INSERT INTO Evo_Item VALUES ('Thunder Stone', 'Bag');
+INSERT INTO Evo_Item VALUES ('Water Stone', 'Bag');
+INSERT INTO Evo_Item VALUES ('Alakazite', 'Held');
+INSERT INTO Evo_Item VALUES ('Beedrillite', 'Held');
+INSERT INTO Evo_Item VALUES ('Blastoisinite', 'Held');
+INSERT INTO Evo_Item VALUES ('Charizardite X', 'Held');
+INSERT INTO Evo_Item VALUES ('Charizardite Y', 'Held');
+INSERT INTO Evo_Item VALUES ('Pidgeotite', 'Held');
+INSERT INTO Evo_Item VALUES ('Venusaurite', 'Held');
+INSERT INTO Evo_Item VALUES ('Deep Sea Scale', 'Held');
+INSERT INTO Evo_Item VALUES ('Deep Sea Tooth', 'Held');
+INSERT INTO Evo_Item VALUES ('Dragon Scale', 'Held');
+INSERT INTO Evo_Item VALUES ('Dubious Disc', 'Held');
+INSERT INTO Evo_Item VALUES ('Kings Rock', 'Held');
+INSERT INTO Evo_Item VALUES ('Metal Coat', 'Held');
+INSERT INTO Evo_Item VALUES ('Oval Stone', 'Held');
+INSERT INTO Evo_Item VALUES ('Prism Scale', 'Held');
+INSERT INTO Evo_Item VALUES ('Protector', 'Held');
+INSERT INTO Evo_Item VALUES ('Razor Claw', 'Held');
+INSERT INTO Evo_Item VALUES ('Razor Fang', 'Held');
+INSERT INTO Evo_Item VALUES ('Reaper Cloth', 'Held');
+INSERT INTO Evo_Item VALUES ('Satchet', 'Held');
+INSERT INTO Evo_Item VALUES ('Upgrade', 'Held');
+INSERT INTO Evo_Item VALUES ('Whipped Dream', 'Held');
+
+-- insert into Status_Item table
+INSERT INTO Status_Item VALUES('Antidote', 'Poison');
+INSERT INTO Status_Item VALUES('Burn Heal', 'Burn');
+INSERT INTO Status_Item VALUES('Elixir', 'PP');
+INSERT INTO Status_Item VALUES('Ether', 'PP');
+INSERT INTO Status_Item VALUES('Full Heal', 'Statuses');
+INSERT INTO Status_Item VALUES('Full Restore', 'HP, Statuses');
+INSERT INTO Status_Item VALUES('Hyper Potion', 'HP');
+INSERT INTO Status_Item VALUES('Ice Heal', 'Freeze');
+INSERT INTO Status_Item VALUES('Max Elixir', 'PP');
+INSERT INTO Status_Item VALUES('Max Ether', 'PP');
+INSERT INTO Status_Item VALUES('Max Revive', 'Fainted, HP');
+INSERT INTO Status_Item VALUES('Moomoo Milk', 'HP');
+INSERT INTO Status_Item VALUES('Paralyze Heal', 'Paralysis');
+INSERT INTO Status_Item VALUES('Potion', 'HP');
+INSERT INTO Status_Item VALUES('Revive', 'Fainted');
+INSERT INTO Status_Item VALUES('Super Potion', 'HP');
+INSERT INTO Status_Item VALUES('Cheri Berry', 'Paralysis');
+INSERT INTO Status_Item VALUES('Chesto Berry', 'Sleep');
+INSERT INTO Status_Item VALUES('Pecha Berry', 'Poison');
+INSERT INTO Status_Item VALUES('Rawst Berry', 'Burn');
+INSERT INTO Status_Item VALUES('Aspear Berry', 'Freeze');
+INSERT INTO Status_Item VALUES('Leppa Berry', 'PP');
+INSERT INTO Status_Item VALUES('Oran Berry', 'HP');
+INSERT INTO Status_Item VALUES('Persim Berry', 'Confusion');
+INSERT INTO Status_Item VALUES('Lum Berry', 'Statuses');
+INSERT INTO Status_Item VALUES('Sitrus Berry', 'HP');
+INSERT INTO Status_Item VALUES('X Attack', 'Attack');
+INSERT INTO Status_Item VALUES('X Defense', 'Defense');
+INSERT INTO Status_Item VALUES('X Sp. Atk', 'Sp. Attack');
+INSERT INTO Status_Item VALUES('X Sp. Def', 'Sp. Defense');
+INSERT INTO Status_Item VALUES('X Speed', 'Speed');
+INSERT INTO Status_Item VALUES('X Accuracy', 'Accuracy');
+INSERT INTO Status_Item VALUES('Dire Hit', 'Critical Hit');
+INSERT INTO Status_Item VALUES('Guard Spec', 'Status Reduction');
+
+-- insert into uses Table
+INSERT INTO p_uses VALUES (0, 'Moomoo Milk');
+INSERT INTO p_uses VALUES (1, 'Oran Berry');
+INSERT INTO p_uses VALUES (2, 'Amulet Coin');
+
+
+-- insert into Mega_Item Table
+INSERT INTO Mega_Item VALUES('Alakazite', 'Mega Alakazam');
+INSERT INTO Mega_Item VALUES('Beedrillite', 'Mega Beedrill');
+INSERT INTO Mega_Item VALUES('Blastoisinite', 'Mega Blastoise');
+INSERT INTO Mega_Item VALUES('Charizardite X', 'Mega Charizard X');
+INSERT INTO Mega_Item VALUES('Charizardite Y', 'Mega Charizard Y');
+INSERT INTO Mega_Item VALUES('Pidgeotite', 'Mega Pidgeot');
+INSERT INTO Mega_Item VALUES('Venusaurite', 'Mega Venusaur');
