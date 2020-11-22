@@ -160,7 +160,7 @@
         <hr />
 
         <?php
-
+        $ownedID = 0;
         $success = True; //keep track of errors so it redirects the page only if there are no errors
         $db_conn = NULL; // edit the login credentials in connectToDB()
         $show_debug_alert_messages = False; // set to True if you want alerts to show you which methods are being triggered (see how it is used in debugAlertMessage())
@@ -268,25 +268,26 @@
 
             echo("Clearing tables...");
             executePlainSQL("CREATE TABLE Pokemon (
-              ID					INT,
+            	ID					INT,
             	Nickname		VARCHAR(255),
             	Gender			VARCHAR(20),
             	TimeCaught		TIMESTAMP,
-            	PRIMARY KEY (Nickname),
+            	OwnedID			INT,
+            	PRIMARY KEY (OwnedID),
             	FOREIGN KEY (ID) REFERENCES SPECIES
             )");
             executePlainSQL("CREATE TABLE is_of (
-            	Nickname		VARCHAR(255),
-            	ID					INT,
-            	PRIMARY KEY (Nickname, ID),
-            	FOREIGN KEY (Nickname) REFERENCES Pokemon,
+            	OwnedID		INT,
+            	ID						INT,
+            	PRIMARY KEY (OwnedID, ID),
+            	FOREIGN KEY (OwnedID) REFERENCES Pokemon,
             	FOREIGN KEY (ID) REFERENCES Species
             )");
             executePlainSQL("CREATE TABLE p_uses (
-              	Nickname		VARCHAR(255),
-              	ItemName		VARCHAR(20),
-              	PRIMARY KEY (Nickname, ItemName),
-              	FOREIGN KEY (Nickname) REFERENCES Pokemon
+            	OwnedID		INT,
+            	ItemName			VARCHAR(20),
+            	PRIMARY KEY (OwnedID, ItemName),
+            	FOREIGN KEY (OwnedID) REFERENCES Pokemon
             )");
             // executePlainSQL("DELETE FROM Pokemon");
             // executePlainSQL("DELETE FROM is_of");
@@ -320,7 +321,8 @@
             $randomSpidResult = OCI_Fetch_Array($randomSpid, OCI_BOTH);
             $randomSpname = executePlainSQL("SELECT SpName FROM Species WHERE id = $randomSpidResult[0]");
             $randomSpnameResult = OCI_Fetch_Array($randomSpname, OCI_BOTH);
-            $newPokemon = executePlainSQL("INSERT INTO Pokemon VALUES ($randomSpidResult[0],'$randomSpnameResult[0]' , '$rgen', CURRENT_TIMESTAMP)");
+            $newPokemon = executePlainSQL("INSERT INTO Pokemon VALUES ($randomSpidResult[0],'$randomSpnameResult[0]' , '$rgen', CURRENT_TIMESTAMP, $ownedID)");
+            $ownedID++;
 
             //  $sql = "SELECT id FROM (SELECT id FROM Species ORDER BY DBMS_RANDOM.RANDOM) WHERE ROWNUM = 1";
             // //$rdm = random_int(0,65);
@@ -383,7 +385,7 @@
             $res = executePlainSQL("SELECT * FROM Pokemon");
             echo "<table>";
             while (($row = oci_fetch_row($res)) != false) {
-              echo "<tr><td>". $row[0] . ", " . $row[1] . ", " . $row[2] . ", Caught on: " . $row[3] . "</td></tr>";
+              echo "<tr><td>". $row[0] . ", " . $row[1] . ", " . $row[2] . ", Caught on: " . $row[3] . ". Owned ID: " . $row[4] . "</td></tr>";
             }
             echo "</table>";
         }

@@ -32,7 +32,8 @@ CREATE TABLE Pokemon (
 	Nickname		VARCHAR(255),
 	Gender			VARCHAR(20),
 	TimeCaught		TIMESTAMP,
-	PRIMARY KEY (Nickname),
+	OwnedID			INT,
+	PRIMARY KEY (OwnedID),
 	FOREIGN KEY (ID) REFERENCES SPECIES
 );
 GRANT ALL PRIVILEGES ON Pokemon TO PUBLIC;
@@ -119,10 +120,10 @@ GRANT ALL PRIVILEGES ON has TO PUBLIC;
 
 -- is of table
 CREATE TABLE is_of (
-	Nickname		VARCHAR(255),
+	OwnedID		INT,
 	ID						INT,
-	PRIMARY KEY (Nickname, ID),
-	FOREIGN KEY (Nickname) REFERENCES Pokemon,
+	PRIMARY KEY (OwnedID, ID),
+	FOREIGN KEY (OwnedID) REFERENCES Pokemon,
 	FOREIGN KEY (ID) REFERENCES Species
 );
 GRANT ALL PRIVILEGES ON is_of TO PUBLIC;
@@ -151,10 +152,10 @@ GRANT ALL PRIVILEGES ON WeakAgainst TO PUBLIC;
 
 -- p_uses table
 CREATE TABLE p_uses (
-	Nickname		VARCHAR(255),
+	OwnedID		INT,
 	ItemName			VARCHAR(20),
-	PRIMARY KEY (Nickname, ItemName),
-	FOREIGN KEY (Nickname) REFERENCES Pokemon
+	PRIMARY KEY (OwnedID, ItemName),
+	FOREIGN KEY (OwnedID) REFERENCES Pokemon
 );
 GRANT ALL PRIVILEGES ON p_uses TO PUBLIC;
 
@@ -167,7 +168,6 @@ CREATE TABLE has_a (
 	FOREIGN KEY (ID) REFERENCES Species
 );
 GRANT ALL PRIVILEGES ON has_a TO PUBLIC;
-
 
 -- insert into species table
 INSERT INTO Species VALUES (1,'Bulbasaur','Overgrow',NULL,'Chrolophyll');
