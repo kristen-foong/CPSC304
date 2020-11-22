@@ -227,11 +227,18 @@
             //     $tuple
             // );
             //
+            $rgen = 'agender';
+            $rnum = rand(0,10)%2;
+            if ( $rnum == 0) {
+              $rgen = 'male';
+            } else {
+              $rgen = 'female';
+            }
             $randomSpid = executePlainSQL("SELECT id FROM (SELECT id FROM Species ORDER BY DBMS_RANDOM.RANDOM) WHERE ROWNUM = 1");
             $randomSpidResult = OCI_Fetch_Array($randomSpid, OCI_BOTH);
             $randomSpname = executePlainSQL("SELECT SpName FROM Species WHERE id = $randomSpidResult[0]");
             $randomSpnameResult = OCI_Fetch_Array($randomSpname, OCI_BOTH);
-            $newPokemon = executePlainSQL("INSERT INTO Pokemon VALUES ($randomSpidResult[0],'$randomSpnameResult[0]' , 'male', CURRENT_TIMESTAMP)");
+            $newPokemon = executePlainSQL("INSERT INTO Pokemon VALUES ($randomSpidResult[0],'$randomSpnameResult[0]' , '$rgen', CURRENT_TIMESTAMP)");
 
             //  $sql = "SELECT id FROM (SELECT id FROM Species ORDER BY DBMS_RANDOM.RANDOM) WHERE ROWNUM = 1";
             // //$rdm = random_int(0,65);
@@ -267,8 +274,8 @@
 
             $res = executePlainSQL("SELECT * FROM Pokemon");
             echo "<table>";
-            if (($row = oci_fetch_row($res)) != false) {
-              echo "<tr><td>". $row[0] . ", " . $row[1] . ", " . $row[2] . ", " . $row[3] . "</td></tr>";
+            while (($row = oci_fetch_row($res)) != false) {
+              echo "<tr><td>". $row[0] . ", " . $row[1] . ", " . $row[2] . ", Caught on: " . $row[3] . "</td></tr>";
             }
             echo "</table>";
         }
