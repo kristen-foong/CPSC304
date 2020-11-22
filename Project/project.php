@@ -18,6 +18,15 @@
           h1 {
             text-align:center;
           }
+          input[type=submit], input[type=reset], input[type=button] {
+            background:#444;
+            padding:10px 20px;
+            color:#fff;
+            font-family:'Poppins', Arial;
+            font-weight:600;
+            text-transform:uppercase;
+            border:none;
+          }
         </style>
     </head>
 
