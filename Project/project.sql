@@ -19,8 +19,8 @@ DROP TABLE Species;
 CREATE TABLE Species (
 	ID						INT,
 	SpName				VARCHAR(255),
-	Ability2 			VARCHAR(255),
 	Ability1			VARCHAR(255),
+	Ability2 			VARCHAR(255),
 	HiddenAbility	VARCHAR(255),
 	PRIMARY KEY (ID)
 );

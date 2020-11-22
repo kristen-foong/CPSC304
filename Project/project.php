@@ -16,13 +16,21 @@
             padding:0px;
             margin:0px;
             position:relative;
+            line-height:100%;
           }
           #wrapper {
             position:relative;
             margin:30px 30px;
+              font-size:15px;
           }
           h1 {
             text-align:center;
+          }
+          h2 {
+
+          }
+          h4 {
+            margin:5px 0px;
           }
           input[type=submit], input[type=reset], input[type=button] {
             background:#444;
@@ -45,6 +53,8 @@
             width:100%;
             position:absolute;
             bottom:0px;
+            padding-top:20px;
+            margin:0px;
           }
           .inline {
             display:flex;
@@ -53,6 +63,9 @@
           }
           .inline form {
             margin:2px;
+          }
+          form {
+            margin:3px;
           }
         </style>
     </head>
@@ -79,8 +92,9 @@
             </form>
         </div>
 
-        <h2>Filter By Type</h2>
+        <h2>Pokedex Queries</h2>
         <!-- count tuples -->
+        <h4>Filter By Type</h4>
         <div class="inline">
 
           <!-- filter by type -->
@@ -147,8 +161,15 @@
 
         </div>
 
-        <hr>
-                <h2>Manage Your Pokemon</h2>
+        <div class="inline">
+          <form method="POST" action="project.php">
+              <input type="hidden" id="searchPokemonRequest" name="searchPokemonRequest">
+              <input type="submit" value="Search for Pokemon" name="searchSubmit">
+              <input type="text" name="pname" placeholder="Enter species name of Pokemon">
+          </form>
+        </div>
+
+        <h2>Manage Your Pokemon</h2>
         <div class="inline">
 
         <!-- generate pokemon -->
@@ -167,7 +188,6 @@
         </form>
         </div>
 
-        <br>
         <!-- release pokemon -->
         <form method="POST" action="project.php">
             <input type="hidden" id="releasePokemonRequest" name="releasePokemonRequest">
@@ -182,8 +202,6 @@
             <input type="text" name="nidID" placeholder="Enter OwnedID of Pokemon">
             <input type="text" name="newName" placeholder="Enter new nickname for Pokemon">
         </form>
-
-
 
         <hr />
 
@@ -414,14 +432,16 @@
         // general function for filtering through Pokedex
         function getElem($elem) {
           global $db_conn;
+          echo "<table style='border-collapse:separate;border-spacing:20px 0px;'><tr><th>Species ID</th><th>Species</th><th>Type 1</th><th>Type 2</th></tr>";
           $res = executePlainSQL("SELECT S.ID, S.SpName, O.Type1, O.Type2 FROM Species S, ofType O WHERE S.ID=O.ID AND (O.Type1='$elem' OR O.Type2='$elem')");
           while(($row = oci_fetch_row($res)) != false) {
-            echo $row[0] . ", " . $row[1] . ", Type: " . $row[2];
+            echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td><td>" . $row[2] . "</td>";
             if ($row[3] != NULL) {
-              echo " & " . $row[3];
+              echo "<td>" . $row[3] . "</td>";
             }
-            echo "<br>";
+            echo "</tr>";
           }
+          echo "</table>";
           OCICommit($db_conn);
         }
 
@@ -430,7 +450,7 @@
             global $db_conn;
 
             $res = executePlainSQL("SELECT * FROM Pokemon");
-            echo "<table style='border-collapse:separate;border-spacing:20px 0px;'><tr><th>Species ID</th><th>Species</th><th>Gender</th><th>Time Caught</th><th>Owned ID</th></tr>";
+            echo "<table style='border-collapse:separate;border-spacing:20px 0px;'><tr><th>Species ID</th><th>Nickname</th><th>Gender</th><th>Time Caught</th><th>Owned ID</th></tr>";
             while (($row = oci_fetch_row($res)) != false) {
               echo "<tr><td>". $row[0] . "</td><td>" . $row[1] . "</td><td> " . $row[2] . "</td><td>" . $row[3] . ".</td><td>" . $row[4] . "</td></tr>";
             }
@@ -458,6 +478,23 @@
           OCICommit($db_conn);
         }
 
+        function searchPokemon() {
+          global $db_conn;
+
+          $pname = $_POST['pname'];
+          if(isset($_POST['pname'])) {
+            $psearch = executePlainSQL("SELECT * FROM Species S, ofType O WHERE S.ID=O.ID AND S.SpName='".$pname."' ");
+            echo "<table style='border-collapse:separate;border-spacing:20px 0px;'><tr><th>Species ID</th><th>Species</th><th>Ability 1</th><th>Ability 2</th><th>Hidden Ability</th><th>Type 1</th><th>Type 2</th></tr>";
+            while (($row = oci_fetch_row($psearch)) != false) {
+              echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td><td>" . $row[2] . "</td><td>" . $row[3] . "</td><td>" . $row[4]
+              . "</td><td>" . $row[6] . "</td><td>" . $row[7] . "</tr>";
+            }
+            echo "</table>";
+          }
+
+          OCICommit($db_conn);
+        }
+
 
         // HANDLE ALL POST ROUTES
 	// A better coding practice is to have one method that reroutes your requests accordingly. It will make it easier to add/remove functionality.
@@ -471,6 +508,8 @@
                 handleInsertRequest();
             } else if (array_key_exists('releasePokemonRequest', $_POST)) {
                 releasePokemon();
+            } else if (array_key_exists('searchPokemonRequest', $_POST)) {
+                searchPokemon();
             }
 
             disconnectFromDB();
@@ -517,7 +556,7 @@
         }
     }
 
-    if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit'])|| isset($_POST['releaseSubmit'])) {
+    if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit'])|| isset($_POST['releaseSubmit']) || isset($_POST['searchSubmit'])) {
         handlePOSTRequest();
     } else if (isset($_GET['countTupleRequest']) || isset($_GET['showTupleRequest']) || isset($_GET['displayPokemonRequest'])) {
         handleGETRequest();
