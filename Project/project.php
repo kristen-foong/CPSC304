@@ -164,8 +164,16 @@
         <div class="inline">
           <form method="POST" action="project.php">
               <input type="hidden" id="searchPokemonRequest" name="searchPokemonRequest">
-              <input type="submit" value="Search for Pokemon" name="searchSubmit">
+              <input type="submit" value="Search Pokemon by Name" name="searchSubmit">
               <input type="text" name="pname" placeholder="Enter species name of Pokemon">
+          </form>
+        </div>
+
+        <div class="inline">
+          <form method="POST" action="project.php">
+              <input type="hidden" id="searchIDRequest" name="searchIDRequest">
+              <input type="submit" value="Search Pokemon by ID" name="searchIDSubmit">
+              <input type="text" name="pid" placeholder="Enter id number of Pokemon">
           </form>
         </div>
 
@@ -495,6 +503,23 @@
           OCICommit($db_conn);
         }
 
+        function searchID() {
+          global $db_conn;
+
+          $pid = $_POST['pid'];
+          if(isset($_POST['pid'])) {
+            $psearch = executePlainSQL("SELECT * FROM Species S, ofType O WHERE S.ID=O.ID AND S.ID='".$pid."' ");
+            echo "<table style='border-collapse:separate;border-spacing:20px 0px;'><tr><th>Species ID</th><th>Species</th><th>Ability 1</th><th>Ability 2</th><th>Hidden Ability</th><th>Type 1</th><th>Type 2</th></tr>";
+            while (($row = oci_fetch_row($psearch)) != false) {
+              echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td><td>" . $row[2] . "</td><td>" . $row[3] . "</td><td>" . $row[4]
+              . "</td><td>" . $row[6] . "</td><td>" . $row[7] . "</tr>";
+            }
+            echo "</table>";
+          }
+
+          OCICommit($db_conn);
+        }
+
 
         // HANDLE ALL POST ROUTES
 	// A better coding practice is to have one method that reroutes your requests accordingly. It will make it easier to add/remove functionality.
@@ -510,6 +535,8 @@
                 releasePokemon();
             } else if (array_key_exists('searchPokemonRequest', $_POST)) {
                 searchPokemon();
+            } else if (array_key_exists('searchIDRequest', $_POST)) {
+                searchID();
             }
 
             disconnectFromDB();
@@ -556,7 +583,7 @@
         }
     }
 
-    if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit'])|| isset($_POST['releaseSubmit']) || isset($_POST['searchSubmit'])) {
+    if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit'])|| isset($_POST['releaseSubmit']) || isset($_POST['searchSubmit']) || isset($_POST['searchIDSubmit'])) {
         handlePOSTRequest();
     } else if (isset($_GET['countTupleRequest']) || isset($_GET['showTupleRequest']) || isset($_GET['displayPokemonRequest'])) {
         handleGETRequest();
