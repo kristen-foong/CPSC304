@@ -265,6 +265,7 @@
             executePlainSQL("DROP TABLE p_uses");
             executePlainSQL("DROP TABLE is_of");
             executePlainSQL("DROP TABLE Pokemon");
+            $ownedID = 0;
 
             echo("Clearing tables...");
             executePlainSQL("CREATE TABLE Pokemon (
@@ -277,14 +278,14 @@
             	FOREIGN KEY (ID) REFERENCES SPECIES
             )");
             executePlainSQL("CREATE TABLE is_of (
-            	OwnedID		INT,
+            	OwnedID	     	INT,
             	ID						INT,
             	PRIMARY KEY (OwnedID, ID),
             	FOREIGN KEY (OwnedID) REFERENCES Pokemon,
             	FOREIGN KEY (ID) REFERENCES Species
             )");
             executePlainSQL("CREATE TABLE p_uses (
-            	OwnedID		INT,
+            	OwnedID		    INT,
             	ItemName			VARCHAR(20),
             	PRIMARY KEY (OwnedID, ItemName),
             	FOREIGN KEY (OwnedID) REFERENCES Pokemon
@@ -321,8 +322,11 @@
             $randomSpidResult = OCI_Fetch_Array($randomSpid, OCI_BOTH);
             $randomSpname = executePlainSQL("SELECT SpName FROM Species WHERE id = $randomSpidResult[0]");
             $randomSpnameResult = OCI_Fetch_Array($randomSpname, OCI_BOTH);
-            $newPokemon = executePlainSQL("INSERT INTO Pokemon VALUES ($randomSpidResult[0],'$randomSpnameResult[0]' , '$rgen', CURRENT_TIMESTAMP, $ownedID)");
-            $ownedID++;
+
+            $resultSp = executePlainSQL("SELECT Count(*) FROM Pokemon");
+            $row = oci_fetch_row($resultSp);
+            $newPokemon = executePlainSQL("INSERT INTO Pokemon VALUES ($randomSpidResult[0],'$randomSpnameResult[0]' , '$rgen', CURRENT_TIMESTAMP, $row[0])");
+
 
             //  $sql = "SELECT id FROM (SELECT id FROM Species ORDER BY DBMS_RANDOM.RANDOM) WHERE ROWNUM = 1";
             // //$rdm = random_int(0,65);
@@ -360,7 +364,7 @@
                 echo "<br> The number of tuples in Pokedex: " . $row[0] . "<br>";
             }
 
-            $resultPm = executePlainSQL("SELECT Count(*) FROM Pokemon");
+            $resultPm = executePlainSQL("SELECT Count(*) FROM Pokemon ORDER BY OwnedID ASC");
             if (($row = oci_fetch_row($resultPm)) != false) {
                 echo "<br> The number of tuples in Your Pokemon Table: " . $row[0] . "<br>";
             }
