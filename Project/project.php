@@ -207,6 +207,13 @@
         </form>
         </div>
 
+        <!-- show pokemon -->
+        <form method="POST" action="project.php">
+            <input type="hidden" id="showPokemonRequest" name="showPokemonRequest">
+            <input type="submit" value="Show Pokemon" name="showSubmit">
+            <input type="text" name="spid" placeholder="Enter OwnedID of Pokemon to Check">
+        </form>
+
         <!-- release pokemon -->
         <form method="POST" action="project.php">
             <input type="hidden" id="releasePokemonRequest" name="releasePokemonRequest">
@@ -357,10 +364,11 @@
             	FOREIGN KEY (ID) REFERENCES Species
             )");
             executePlainSQL("CREATE TABLE p_uses (
-            	OwnedID		    INT,
-            	ItemName			VARCHAR(20),
-            	PRIMARY KEY (OwnedID, ItemName),
-            	FOREIGN KEY (OwnedID) REFERENCES Pokemon
+            	OwnedID				INT,
+            	ItemName			VARCHAR(255),
+            	PRIMARY KEY (OwnedID),
+            	FOREIGN KEY (OwnedID) REFERENCES Pokemon,
+            	FOREIGN KEY (ItemName) REFERENCES Item
             )");
             // executePlainSQL("DELETE FROM Pokemon");
             // executePlainSQL("DELETE FROM is_of");
@@ -564,6 +572,23 @@
           OCICommit($db_conn);
         }
 
+        // show specific pokemon details
+        function showThisPokemon() {
+            global $db_conn;
+
+            $ownedID = $_POST['spid'];
+            // echo $ownedID;
+            if (isset($_POST['spid'])) {
+                $thisPokemon = executePlainSQL("SELECT * FROM Pokemon WHERE OwnedID='" . $ownedID . "'");
+                echo "<table style='border-collapse:separate;border-spacing:20px 0px;'><tr><th>Species ID</th><th>Nickname</th><th>Gender</th><th>Time Caught</th><th>Owned ID</th></tr>";
+                if(($row = oci_fetch_row($thisPokemon)) != false) {
+                  echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td><td>" . $row[2] . "</td><td>" . $row[3] . "</td><td>" . $row[4] . "</td></tr>";
+                }
+            }
+            echo "</table>";
+            OCICommit($db_conn);
+        }
+
 
         // HANDLE ALL POST ROUTES
 	// A better coding practice is to have one method that reroutes your requests accordingly. It will make it easier to add/remove functionality.
@@ -583,6 +608,8 @@
                 searchID();
             } else if (array_key_exists('checkWeaknessRequest', $_POST)) {
                 checkWeak();
+            } else if (array_key_exists('showPokemonRequest', $_POST)) {
+                showThisPokemon();
             }
 
             disconnectFromDB();
@@ -629,7 +656,8 @@
         }
     }
 
-    if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit'])|| isset($_POST['releaseSubmit']) || isset($_POST['searchSubmit']) || isset($_POST['searchIDSubmit']) || isset($_POST['checkWeakSubmit'])) {
+    if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit'])|| isset($_POST['releaseSubmit']) || isset($_POST['searchSubmit']) || isset($_POST['searchIDSubmit']) || isset($_POST['checkWeakSubmit']) ||
+    isset($_POST['showSubmit'])) {
         handlePOSTRequest();
     } else if (isset($_GET['countTupleRequest']) || isset($_GET['showTupleRequest']) || isset($_GET['displayPokemonRequest'])) {
         handleGETRequest();
