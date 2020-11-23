@@ -726,10 +726,10 @@ INSERT INTO Mega_Item VALUES('Pidgeotite', 'Mega Pidgeot');
 INSERT INTO Mega_Item VALUES('Venusaurite', 'Mega Venusaur');
 
 -- insert into has_a table
-INSERT INTO has_a VALUES('Mega Venusaur', '3');
-INSERT INTO has_a VALUES('Mega Charizard X', '6');
-INSERT INTO has_a VALUES('Mega Charizard Y', '6');
-INSERT INTO has_a VALUES('Mega Blastoise', '9');
-INSERT INTO has_a VALUES('Mega Alakazam', '65');
-INSERT INTO has_a VALUES('Mega Beedrill', '15');
-INSERT INTO has_a VALUES('Mega Pidgeot', '18');
+INSERT INTO has_a VALUES('Mega Venusaur', 3);
+INSERT INTO has_a VALUES('Mega Charizard X', 6);
+INSERT INTO has_a VALUES('Mega Charizard Y', 6);
+INSERT INTO has_a VALUES('Mega Blastoise', 9);
+INSERT INTO has_a VALUES('Mega Alakazam', 65);
+INSERT INTO has_a VALUES('Mega Beedrill', 15);
+INSERT INTO has_a VALUES('Mega Pidgeot', 18);
