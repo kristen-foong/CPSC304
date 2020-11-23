@@ -536,7 +536,7 @@
 
           $pid = $_POST['pid'];
           if(isset($_POST['pid'])) {
-            $psearch = executePlainSQL("SELECT * FROM Species S, ofType O WHERE S.ID=O.ID AND S.ID='".$pid."' ");
+            $psearch = executePlainSQL("SELECT * FROM Species S INNER JOIN ofType O ON S.ID=O.ID WHERE S.ID='".$pid."' ");
             echo "<table style='border-collapse:separate;border-spacing:20px 0px;'><tr><th>Species ID</th><th>Species</th><th>Ability 1</th><th>Ability 2</th><th>Hidden Ability</th><th>Type 1</th><th>Type 2</th></tr>";
             while (($row = oci_fetch_row($psearch)) != false) {
               echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td><td>" . $row[2] . "</td><td>" . $row[3] . "</td><td>" . $row[4]
@@ -672,3 +672,9 @@
     <div style="text-align:center;">Created by Derrick Sutanto, Shawn Pak, and Kristen Foong &#169; 2020</div>
   </footer>
 </html>
+
+
+<!-- CREDITS
+Pokemon database csv taken from https://gist.github.com/simsketch/1a029a8d7fca1e4c142cbfd043a68f19#file-pokemon-csv
+and adapted as needed for our tables.
+This project was created for UBC CPSC304 by Derrick Sutanto, Shawn Pak, and Kristen Foong -->
