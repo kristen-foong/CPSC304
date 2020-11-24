@@ -206,6 +206,12 @@
             <input type="hidden" id="displayPokemon" name="displayPokemonRequest">
             <input type="submit" value="Display Pokemon" name="displayPokemon">
         </form>
+
+        <!-- show pokemon stats -->
+        <form method="GET" action="project.php">
+            <input type="hidden" id="statPokemon" name="statPokemonRequest">
+            <input type="submit" value="Show Pokemon Stats" name="statPokemon">
+        </form>
         </div>
 
         <!-- show pokemon -->
@@ -709,6 +715,27 @@
           OCICommit($db_conn);
         }
 
+        // displays Pokemon stats
+        function showStats() {
+            global $db_conn;
+
+            $res = executePlainSQL("SELECT * FROM P_Stats INNER JOIN Pokemon ON P_Stats.ID=Pokemon.ID");
+            echo "<table style='border-collapse:separate;border-spacing:20px 0px;'><tr><th>Nickname</tb><th>Species ID</th><th>HP</th><th>Atk</th><th>Def</th><th>SpAtk</th><th>SpDef</th><th>Speed</th></tr>";
+            while (($row = oci_fetch_row($res)) != false) {
+              echo "<tr><td>". $row[8]
+              . "</td><td>" .$row[0]
+              . "</td><td>" . $row[1]
+              . "</td><td> " . $row[2]
+              . "</td><td>" . $row[3]
+              . ".</td><td>" . $row[4]
+              . "</td><td>" . $row[5]
+              . "</td><td>" . $row[6]
+              . "</tr>";
+            }
+            echo "</table>";
+            OCICommit($db_conn);
+        }
+
 
 
         // HANDLE ALL POST ROUTES
@@ -751,6 +778,8 @@
                 showTuples();
             } else if (array_key_exists('displayPokemon', $_GET)) {
                 displayPokemon();
+            } else if (array_key_exists('statPokemon', $_GET)) {
+                showStats();
             } else if (array_key_exists('getNormal', $_GET)) {
                 getElem("Normal");
             } else if (array_key_exists('getGrass', $_GET)) {
@@ -784,7 +813,7 @@
     if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit'])|| isset($_POST['releaseSubmit']) || isset($_POST['searchSubmit']) || isset($_POST['searchIDSubmit']) || isset($_POST['checkWeakSubmit']) ||
     isset($_POST['showSubmit']) || isset($_POST['sortPokemon']) || isset($_POST['groupPokemon'])) {
         handlePOSTRequest();
-    } else if (isset($_GET['countTupleRequest']) || isset($_GET['showTupleRequest']) || isset($_GET['displayPokemonRequest'])) {
+    } else if (isset($_GET['countTupleRequest']) || isset($_GET['showTupleRequest']) || isset($_GET['displayPokemonRequest']) || isset($_GET['statPokemonRequest'])) {
         handleGETRequest();
     } else if (isset($_GET['getNormalPokemon']) || isset($_GET['getGrassPokemon']) || isset($_GET['getFirePokemon']) || isset($_GET['getWaterPokemon']) || isset($_GET['getGroundPokemon']) || isset($_GET['getFlyingPokemon']) ||
       isset($_GET['getPoisonPokemon']) || isset($_GET['getFightingPokemon']) || isset($_GET['getBugPokemon']) || isset($_GET['getElectricPokemon']) || isset($_GET['getPsychicPokemon']) || isset($_GET['getFairyPokemon'])) {
