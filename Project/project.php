@@ -1019,6 +1019,7 @@
             OCICommit($db_conn);
         }
 
+
         function showPokemonNotWeakAgainst() {
           global $db_conn;
           $numTypes = $_POST['numTypes'];

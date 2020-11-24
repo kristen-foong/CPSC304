@@ -31,7 +31,7 @@ CREATE TABLE Pokemon (
 	ID					INT,
 	Nickname		VARCHAR(255),
 	Gender			VARCHAR(20),
-	TimeCaught		TIMESTAMP,
+	TimeCaught		DATE,
 	OwnedID			INT,
 	PRIMARY KEY (OwnedID),
 	FOREIGN KEY (ID) REFERENCES SPECIES
@@ -239,9 +239,9 @@ INSERT INTO Species VALUES (65,'Alakazam','Synchronize','Inner Focus','Magic gua
 
 
 -- insert into Pokemon table
-INSERT INTO Pokemon VALUES (65, 'Alakazam', 'male', CURRENT_TIMESTAMP, 0);
-INSERT INTO Pokemon VALUES (52, 'Meowth', 'female', CURRENT_TIMESTAMP, 1);
-INSERT INTO Pokemon VALUES (54, 'Psyduck', 'male', CURRENT_TIMESTAMP, 2);
+INSERT INTO Pokemon VALUES (65, 'Alakazam', 'male', CURRENT_DATE, 0);
+INSERT INTO Pokemon VALUES (52, 'Meowth', 'female', CURRENT_DATE, 1);
+INSERT INTO Pokemon VALUES (54, 'Psyduck', 'male', CURRENT_DATE, 2);
 
 
 -- insert into Mega_Evolution table
