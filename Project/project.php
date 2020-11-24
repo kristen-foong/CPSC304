@@ -14,7 +14,7 @@
             font-family: 'Roboto', Arial;
             font-size:12px;
             font-weight:'400';
-            padding:20px 30px 0px 30px;
+            padding:20px 30px;
             position:relative;
             line-height:100%;
             background:#fff;
@@ -86,7 +86,7 @@
             text-transform:uppercase;
             border:none;
             transition:all 0.3s ease-in-out;
-            border:3px solid #fff;
+            border:2px solid #fff;
             letter-spacing:1px;
           }
           input[type=submit]:hover, input[type=reset]:hover, input[type=button]:hover {
@@ -102,9 +102,10 @@
             font-size:13px;
             padding:3px 8px;
             letter-spacing:1px;
+            text-shadow:1px 1px 0px rgba(0,0,0,0.5);
           }
           .typefilter input[type=submit]:hover, input[type=reset]:hover, input[type=button]:hover {
-            border:3px solid #222;
+            border:2px solid #222;
           }
           form {
             margin:3px;
@@ -336,7 +337,7 @@
           <!-- change pokemon nickname -->
           <form method="POST" action="project.php">
               <input type="hidden" id="updateQueryRequest" name="updateQueryRequest">
-              <input type="submit" value="Change Pokemon Nickname" name="updateSubmit">
+              <input type="submit" value="Change Nickname" name="updateSubmit">
               <input type="text" name="nidID" placeholder="Enter OwnedID of Pokemon">
               <input type="text" name="newName" placeholder="Enter new nickname for Pokemon">
           </form>
@@ -937,7 +938,7 @@
                 echo "</table>";
               } else if ($_POST['groupBy'] == 'date') {
                 $res = executePlainSQL("SELECT TimeCaught, COUNT(*) FROM Pokemon GROUP BY TimeCaught HAVING COUNT(*) >= $having");
-                echo "<table style='border-collapse:separate;border-spacing:20px 0px;'><tr><th><th>Time Caught</th><th>Pokemon</th></tr>";
+                echo "<table style='border-collapse:separate;border-spacing:20px 0px;'><tr><th>Time Caught</th><th>Pokemon</th></tr>";
                 while (($row = oci_fetch_row($res)) != false) {
                   echo "<tr>
                     <td>" . $row[0] . "</td>
