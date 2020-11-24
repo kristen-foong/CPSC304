@@ -327,6 +327,12 @@
         <input type="submit" value="View" name="groupPokemon">
       </form>
 
+          <form method="GET" action="project.php">
+            <input type="hidden" id="aggrPokemonRequest" name="aggrPokemonRequest">
+            <label>Get the most common gender by Pokemon</label>
+            <input type="submit" value="Show" name="aggrPokemon">
+          </form>
+
           <!-- release pokemon -->
           <form method="POST" action="project.php">
               <input type="hidden" id="releasePokemonRequest" name="releasePokemonRequest">
@@ -517,9 +523,9 @@
             $randomSpname = executePlainSQL("SELECT SpName FROM Species WHERE id = $randomSpidResult[0]");
             $randomSpnameResult = OCI_Fetch_Array($randomSpname, OCI_BOTH);
 
-            $resultSp = executePlainSQL("SELECT Count(*) FROM Pokemon");
+            $resultSp = executePlainSQL("SELECT ownedID FROM Pokemon WHERE ROWNUM = 1 ORDER BY ownedID DESC");
             $row = oci_fetch_row($resultSp);
-            $newPokemon = executePlainSQL("INSERT INTO Pokemon VALUES ($randomSpidResult[0],'$randomSpnameResult[0]' , '$rgen', CURRENT_TIMESTAMP, $row[0])");
+            $newPokemon = executePlainSQL("INSERT INTO Pokemon VALUES ($randomSpidResult[0],'$randomSpnameResult[0]' , '$rgen', CURRENT_TIMESTAMP, $row[0]+1)");
 
 
             //  $sql = "SELECT id FROM (SELECT id FROM Species ORDER BY DBMS_RANDOM.RANDOM) WHERE ROWNUM = 1";
@@ -1028,6 +1034,23 @@
         }
 
 
+        function aggregateStats(){
+          global $db_conn;
+
+            $res = executePlainSQL("SELECT P.ID, MAX(G.GenderCount) FROM (SELECT SQP.ID, SQP.Gender, COUNT(*) AS GenderCount FROM Pokemon SQP GROUP BY SQP.ID, SQP.Gender) AS G GROUP BY G.ID");
+            echo "<table><tr><th>ID</th><th>Gender</th></tr>";
+            while (($row = oci_fetch_row($res)) != false) {
+              echo "<tr>
+                <td>" . $row[0] . "</td>
+                <td>" . $row[1] . "</td>
+              </tr>";
+            }
+            echo "</table>";
+
+          OCICommit($db_conn);
+        }
+
+
         // HANDLE ALL POST ROUTES
 	// A better coding practice is to have one method that reroutes your requests accordingly. It will make it easier to add/remove functionality.
     function handlePOSTRequest() {
@@ -1076,6 +1099,8 @@
                 displayMegaEvolutions();
             } else if (array_key_exists('displayEvolutions', $_GET)) {
                 displayEvolutions();
+            } else if (array_key_exists('aggrPokemon', $_GET)) {
+                aggregateStats();
             } else if (array_key_exists('getNormal', $_GET)) {
                 getElem("Normal");
             } else if (array_key_exists('getGrass', $_GET)) {
@@ -1109,7 +1134,8 @@
     if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit'])|| isset($_POST['releaseSubmit']) || isset($_POST['searchSubmit']) || isset($_POST['searchIDSubmit']) || isset($_POST['checkWeakSubmit']) ||
     isset($_POST['showSubmit']) || isset($_POST['sortPokemon']) || isset($_POST['groupPokemon'])|| isset($_POST['showPokemonNotWeakAgainstSubmit'])) {
         handlePOSTRequest();
-    } else if (isset($_GET['countTupleRequest']) || isset($_GET['showTupleRequest']) || isset($_GET['displayPokemonRequest']) || isset($_GET['statPokemonRequest']) || isset($_GET['displayEvolutionsRequest'])|| isset($_GET['displayMegaEvolutionsRequest']) ) {
+    } else if (isset($_GET['countTupleRequest']) || isset($_GET['showTupleRequest']) || isset($_GET['displayPokemonRequest']) || isset($_GET['statPokemonRequest']) || isset($_GET['displayEvolutionsRequest'])||
+    isset($_GET['displayMegaEvolutionsRequest'])|| isset($_GET['aggrPokemonRequest']) ) {
         handleGETRequest();
     } else if (isset($_GET['getNormalPokemon']) || isset($_GET['getGrassPokemon']) || isset($_GET['getFirePokemon']) || isset($_GET['getWaterPokemon']) || isset($_GET['getGroundPokemon']) || isset($_GET['getFlyingPokemon']) ||
       isset($_GET['getPoisonPokemon']) || isset($_GET['getFightingPokemon']) || isset($_GET['getBugPokemon']) || isset($_GET['getElectricPokemon']) || isset($_GET['getPsychicPokemon']) || isset($_GET['getFairyPokemon'])) {
