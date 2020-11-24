@@ -8,50 +8,55 @@
 <html>
     <head>
         <title>Pokedex</title>
-        <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Rajdhani:300,400,600,800|Roboto:400,600" rel="stylesheet">
         <style>
           body {
-            font-family: 'Poppins', Arial;
+            font-family: 'Roboto', Arial;
+            font-size:12px;
             font-weight:'400';
-            padding:0px 10px;
-            margin:0px;
+            padding:20px 30px 0px 30px;
             position:relative;
             line-height:100%;
+            background:#fff;
+            /* background:linear-gradient(rgba(250,250,250,0.9), rgba(250,250,250,0.9)),url(https://cdn.discordapp.com/attachments/396242044575678465/780620296788901888/itl.cat_pokemon-wallpaper_2455.png);
+            background-size:cover;
+            background-position:center center; */
           }
           #wrapper {
             position:relative;
-            margin:30px 30px;
-            font-size:15px;
+            width:100vw - 60px;
+            padding:0px 30px;
           }
           h1 {
-            text-align:center;
+            text-align:left;
+            font-family:'Rajdhani', Arial;
+            text-transform:uppercase;
+            font-weight:800;
+            letter-spacing:2px;
+            font-size:50px;
+            margin-bottom:5px;
+            padding-bottom:5px;
+            margin-top:0px;
+            border-bottom:2px solid #333;
+            line-height:100%;
           }
           h2 {
-
+            font-family:'Rajdhani', Arial;
+            text-transform:uppercase;
+            font-weight:600;
+            background:#333;
+            padding:10px 0px 10px 20px;
+            color:#fff;
+            letter-spacing:1px;
+            clip-path: polygon(0% 0, 100% 0%, 97% 100%, 0% 100%);
           }
           h4 {
             margin:5px 0px;
-          }
-          input[type=submit], input[type=reset], input[type=button] {
-            background:#444;
-            font-size:12px;
-            padding:3px 8px;
-            color:#fff;
-            font-family:'Poppins', Arial;
-            font-weight:600;
+            font-family:'Rajdhani', Arial;
             text-transform:uppercase;
-            border:none;
-            transition:all 0.3s ease-in-out;
-            border:3px solid #fff;
-          }
-          input[type=submit]:hover, input[type=reset]:hover, input[type=button]:hover {
-            border:3px solid #222;
-          }
-          input[type=text] {
-            padding:10px, 20px;
-            font-family:'Poppins', Arial;
-            font-weight:400;
-            border:1px solid #ccc;
+            font-weight:600;
+            font-size:13px;
+            letter-spacing:1px;
           }
           footer {
             font-size:10px;
@@ -71,21 +76,65 @@
           .inline form {
             margin:2px;
           }
-          .typefilter input {
-            font-size:12px;
+          input[type=submit], input[type=reset], input[type=button] {
+            background:#444;
+            font-size:13px;
             padding:3px 8px;
+            color:#fff;
+            font-family:'Rajdhani', Arial;
+            font-weight:600;
+            text-transform:uppercase;
+            border:none;
+            transition:all 0.3s ease-in-out;
+            border:3px solid #fff;
+            letter-spacing:1px;
+          }
+          input[type=submit]:hover, input[type=reset]:hover, input[type=button]:hover {
+            background:#BA1200;
+          }
+          input[type=text] {
+            padding:10px, 20px;
+            font-family:'Roboto', Arial;
+            font-weight:400;
+            border:1px solid #ccc;
+          }
+          .typefilter input {
+            font-size:13px;
+            padding:3px 8px;
+            letter-spacing:1px;
+          }
+          .typefilter input[type=submit]:hover, input[type=reset]:hover, input[type=button]:hover {
+            border:3px solid #222;
           }
           form {
             margin:3px;
+          }
+          .left {
+            width:34%;
+            height:100%;
+            position:absolute;
+            top:0px; left:0px;
+          }
+          .right {
+            width:64%;
+            height:100%;
+            position:absolute;
+            top:0px; right:0;
+            font-size:13px;
+          }
+          table {
+            font-size:13px;
           }
         </style>
     </head>
 
     <body>
+        <h1>// CS304 POKEMON DATABASE</h1>
       <div id="wrapper">
-        <h1>CS304 POKEMON DATABASE</h1>
 
+        <div class="left">
         <h2>General</h2>
+
         <p>If you wish to reset the table press on the reset button. If this is the first time you're running this page, you MUST use reset</p>
 
         <div class="inline">
@@ -101,187 +150,206 @@
                 <input type="hidden" id="countTupleRequest" name="countTupleRequest">
                 <input type="submit" value ="Count Tuples In Tables" name="countTuples">
             </form>
+
         </div>
 
         <h2>Pokedex Queries</h2>
-        <!-- count tuples -->
-        <h4>Filter By Type</h4>
-        <div class="inline typefilter">
 
-          <!-- filter by type -->
+          <!-- count tuples -->
+          <h4>Filter By Type</h4>
+          <div class="inline typefilter">
 
-          <form method="GET" action="project.php">
-              <input type="hidden" id="getNormalPokemon" name="getNormalPokemon">
-              <input type="submit" value ="Normal" name="getNormal" style="background:#D9CF9B;">
-          </form>
+            <!-- filter by type -->
 
-          <form method="GET" action="project.php">
-              <input type="hidden" id="getGrassPokemon" name="getGrassPokemon">
-              <input type="submit" value ="Grass" name="getGrass" style="background:#51BE5D;">
-          </form>
+            <form method="GET" action="project.php">
+                <input type="hidden" id="getNormalPokemon" name="getNormalPokemon">
+                <input type="submit" value ="Normal" name="getNormal" style="background:#D9CF9B;">
+            </form>
 
-          <form method="GET" action="project.php">
-              <input type="hidden" id="getFirePokemon" name="getFirePokemon">
-              <input type="submit" value ="Fire" name="getFire" style="background:#EE6600;">
-          </form>
+            <form method="GET" action="project.php">
+                <input type="hidden" id="getGrassPokemon" name="getGrassPokemon">
+                <input type="submit" value ="Grass" name="getGrass" style="background:#51BE5D;">
+            </form>
 
-          <form method="GET" action="project.php">
-              <input type="hidden" id="getWaterPokemon" name="getWaterPokemon">
-              <input type="submit" value ="Water" name="getWater" style="background:#4C95E9;">
-          </form>
+            <form method="GET" action="project.php">
+                <input type="hidden" id="getFirePokemon" name="getFirePokemon">
+                <input type="submit" value ="Fire" name="getFire" style="background:#EE6600;">
+            </form>
 
-          <form method="GET" action="project.php">
-              <input type="hidden" id="getGroundPokemon" name="getGroundPokemon">
-              <input type="submit" value ="Ground" name="getGround" style="background:#857156;">
-          </form>
+            <form method="GET" action="project.php">
+                <input type="hidden" id="getWaterPokemon" name="getWaterPokemon">
+                <input type="submit" value ="Water" name="getWater" style="background:#4C95E9;">
+            </form>
 
-          <form method="GET" action="project.php">
-              <input type="hidden" id="getFlyingPokemon" name="getFlyingPokemon">
-              <input type="submit" value ="Flying" name="getFlying" style="background:#D6C8EF;">
-          </form>
+            <form method="GET" action="project.php">
+                <input type="hidden" id="getGroundPokemon" name="getGroundPokemon">
+                <input type="submit" value ="Ground" name="getGround" style="background:#857156;">
+            </form>
 
-          <form method="GET" action="project.php">
-              <input type="hidden" id="getPoisonPokemon" name="getPoisonPokemon">
-              <input type="submit" value ="Poison" name="getPoison" style="background:#66479F;">
-          </form>
+            <form method="GET" action="project.php">
+                <input type="hidden" id="getFlyingPokemon" name="getFlyingPokemon">
+                <input type="submit" value ="Flying" name="getFlying" style="background:#D6C8EF;">
+            </form>
 
-          <form method="GET" action="project.php">
-              <input type="hidden" id="getFightingPokemon" name="getFightingPokemon">
-              <input type="submit" value ="Fighting" name="getFighting" style="background:#CA2C2C;">
-          </form>
+            <form method="GET" action="project.php">
+                <input type="hidden" id="getPoisonPokemon" name="getPoisonPokemon">
+                <input type="submit" value ="Poison" name="getPoison" style="background:#66479F;">
+            </form>
 
-          <form method="GET" action="project.php">
-              <input type="hidden" id="getBugPokemon" name="getBugPokemon">
-              <input type="submit" value ="Bug" name="getBug" style="background:#71EE56;">
-          </form>
+            <form method="GET" action="project.php">
+                <input type="hidden" id="getFightingPokemon" name="getFightingPokemon">
+                <input type="submit" value ="Fighting" name="getFighting" style="background:#CA2C2C;">
+            </form>
 
-          <form method="GET" action="project.php">
-              <input type="hidden" id="getElectricPokemon" name="getElectricPokemon">
-              <input type="submit" value ="Electric" name="getElectric" style="background:#E3D236;">
-          </form>
+            <form method="GET" action="project.php">
+                <input type="hidden" id="getBugPokemon" name="getBugPokemon">
+                <input type="submit" value ="Bug" name="getBug" style="background:#71EE56;">
+            </form>
 
-          <form method="GET" action="project.php">
-              <input type="hidden" id="getPsychicPokemon" name="getPsychicPokemon">
-              <input type="submit" value ="Psychic" name="getPsychic" style="background:#F6BCF6;">
-          </form>
+            <form method="GET" action="project.php">
+                <input type="hidden" id="getElectricPokemon" name="getElectricPokemon">
+                <input type="submit" value ="Electric" name="getElectric" style="background:#E3D236;">
+            </form>
 
-          <form method="GET" action="project.php">
-              <input type="hidden" id="getFairyPokemon" name="getFairyPokemon">
-              <input type="submit" value ="Fairy" name="getFairy" style="background:#F6BCBC;">
-          </form>
+            <form method="GET" action="project.php">
+                <input type="hidden" id="getPsychicPokemon" name="getPsychicPokemon">
+                <input type="submit" value ="Psychic" name="getPsychic" style="background:#F6BCF6;">
+            </form>
 
-        </div>
+            <form method="GET" action="project.php">
+                <input type="hidden" id="getFairyPokemon" name="getFairyPokemon">
+                <input type="submit" value ="Fairy" name="getFairy" style="background:#F6BCBC;">
+            </form>
+          </div>
 
-        <h4>Other Queries</h4>
-        <div class="inline">
+          <h4>Other Queries</h4>
+          <div class="inline">
+            <form method="POST" action="project.php">
+                <input type="hidden" id="searchPokemonRequest" name="searchPokemonRequest">
+                <input type="submit" value="Search Pokemon by Name" name="searchSubmit">
+                <input type="text" name="pname" placeholder="Enter species name of Pokemon">
+            </form>
+          </div>
+
+          <div class="inline">
+            <form method="POST" action="project.php">
+                <input type="hidden" id="searchIDRequest" name="searchIDRequest">
+                <input type="submit" value="Search Pokemon by ID" name="searchIDSubmit">
+                <input type="text" name="pid" placeholder="Enter id number of Pokemon">
+            </form>
+
           <form method="POST" action="project.php">
-              <input type="hidden" id="searchPokemonRequest" name="searchPokemonRequest">
-              <input type="submit" value="Search Pokemon by Name" name="searchSubmit">
-              <input type="text" name="pname" placeholder="Enter species name of Pokemon">
+              <input type="hidden" id="showPokemonNotWeakAgainstRequest" name="showPokemonNotWeakAgainstRequest">
+              <input type="submit" value="All Pokemon that are not weak to this type" name="showPokemonNotWeakAgainstSubmit">
+              <input type="text" name="numTypes" placeholder="Enter type">
           </form>
-        </div>
 
-        <div class="inline">
-          <form method="POST" action="project.php">
-              <input type="hidden" id="searchIDRequest" name="searchIDRequest">
-              <input type="submit" value="Search Pokemon by ID" name="searchIDSubmit">
-              <input type="text" name="pid" placeholder="Enter id number of Pokemon">
+          <form method="GET" action="project.php">
+            <input type="hidden" id="displayMegaEvolutions" name="displayMegaEvolutionsRequest">
+            <input type="submit" value="Display Mega Evolutions" name="displayMegaEvolutions">
           </form>
-        </div>
+
+        <form method="GET" action="project.php">
+            <input type="hidden" id="displayEvolutions" name="displayEvolutionsRequest">
+            <input type="submit" value="Display Evolutions" name="displayEvolutions">
+        </form>
+          </div>
 
         <h2>Manage Your Pokemon</h2>
-        <div class="inline">
 
-        <!-- generate pokemon -->
+          <div class="inline">
+
+          <!-- generate pokemon -->
+          <form method="POST" action="project.php">
+              <input type="hidden" id="insertQueryRequest" name="insertQueryRequest">
+              <!-- Number: <input type="text" name="insNo"> <br /><br />
+              Name: <input type="text" name="insName"> <br /><br /> -->
+
+              <input type="submit" value="Generate Pokemon" name="insertSubmit">
+          </form>
+
+          <!-- display pokemon -->
+          <form method="GET" action="project.php">
+              <input type="hidden" id="displayPokemon" name="displayPokemonRequest">
+              <input type="submit" value="Display Pokemon" name="displayPokemon">
+          </form>
+
+          <!-- show pokemon stats -->
+          <form method="GET" action="project.php">
+              <input type="hidden" id="statPokemon" name="statPokemonRequest">
+              <input type="submit" value="Show Pokemon Stats" name="statPokemon">
+          </form>
+          </div>
+
+          <!-- show pokemon -->
+          <form method="POST" action="project.php">
+              <input type="hidden" id="showPokemonRequest" name="showPokemonRequest">
+              <input type="submit" value="Show Pokemon" name="showSubmit">
+              <input type="text" name="spid" placeholder="Enter OwnedID of Pokemon to Check">
+          </form>
+
+  	    <!-- sort by -->
         <form method="POST" action="project.php">
-            <input type="hidden" id="insertQueryRequest" name="insertQueryRequest">
-            <!-- Number: <input type="text" name="insNo"> <br /><br />
-            Name: <input type="text" name="insName"> <br /><br /> -->
+        <input type="hidden" id="sortPokemonRequest" name="sortPokemonRequest">
+        <label for="sortBy">Sort by</label>
+        <select id="sortBy" name="sortBy">
+          <option id="spid" value="spid">Species ID</option>
+          <option id="nickname" value="nickname">Nickname</option>
+          <option id="date" value="date">Day caught</option>
+          <option id="hp" value="hp">HP</option>
+          <option id="atk" value="atk">Attack</option>
+          <option id="def" value="def">Defence</option>
+          <option id="spatk" value="spatk">Special attack</option>
+          <option id="spdef" value="spef">Special defence</option>
+          <option id="speed" value="speed">Speed</option>
+        </select>
+        <label for="order">from</label>
+        <select id="order" name="order">
+          <option id="asc" value="asc">Smallest to biggest</option>
+          <option id="desc" value="desc">Biggest to smallest</option>
+        </select>
+        <input type="submit" value="Sort" name="sortPokemon">
+      </form>
 
-            <input type="submit" value="Generate Pokemon" name="insertSubmit">
-        </form>
+          <!-- group by -->
+          <form method="POST" action="project.php">
+        <input type="hidden" id="groupPokemonRequest" name="groupPokemonRequest">
+        <label for="groupBy">See aggregates for</label>
+        <select id="groupBy" name="groupBy">
+          <option id="spid" value="spid">Species</option>
+          <option id="date" value="date">Days caught</option>
+          <option id="gender" value="gender">Gender</option>
+        </select>
+        <label for="having">with at least</label>
+        <input type="number" id="having" name="having" value="1" min="1" max="99">
+        <label>Pokemon</label>
+        <input type="submit" value="View" name="groupPokemon">
+      </form>
 
-        <!-- display pokemon -->
-        <form method="GET" action="project.php">
-            <input type="hidden" id="displayPokemon" name="displayPokemonRequest">
-            <input type="submit" value="Display Pokemon" name="displayPokemon">
-        </form>
+          <!-- release pokemon -->
+          <form method="POST" action="project.php">
+              <input type="hidden" id="releasePokemonRequest" name="releasePokemonRequest">
+              <input type="submit" value="Release Pokemon" name="releaseSubmit">
+              <input type="text" name="ridID" placeholder="Enter OwnedID of Pokemon to Release">
+          </form>
 
-        <!-- show pokemon stats -->
-        <form method="GET" action="project.php">
-            <input type="hidden" id="statPokemon" name="statPokemonRequest">
-            <input type="submit" value="Show Pokemon Stats" name="statPokemon">
-        </form>
+          <!-- change pokemon nickname -->
+          <form method="POST" action="project.php">
+              <input type="hidden" id="updateQueryRequest" name="updateQueryRequest">
+              <input type="submit" value="Change Pokemon Nickname" name="updateSubmit">
+              <input type="text" name="nidID" placeholder="Enter OwnedID of Pokemon">
+              <input type="text" name="newName" placeholder="Enter new nickname for Pokemon">
+          </form>
+
+          <!-- check Weakness -->
+          <form method="POST" action="project.php">
+              <input type="hidden" id="checkWeaknessRequest" name="checkWeaknessRequest">
+              <input type="submit" value="Check Weaknesses" name="checkWeakSubmit">
+              <input type="text" name="cwid" placeholder="Enter OwnedID of Pokemon">
+          </form>
         </div>
-
-        <!-- show pokemon -->
-        <form method="POST" action="project.php">
-            <input type="hidden" id="showPokemonRequest" name="showPokemonRequest">
-            <input type="submit" value="Show Pokemon" name="showSubmit">
-            <input type="text" name="spid" placeholder="Enter OwnedID of Pokemon to Check">
-        </form>
-
-	    <!-- sort by -->
-      <form method="POST" action="project.php">
-      <input type="hidden" id="sortPokemonRequest" name="sortPokemonRequest">
-      <label for="sortBy">Sort by</label>
-      <select id="sortBy" name="sortBy">
-        <option id="spid" value="spid">Species ID</option>
-        <option id="nickname" value="nickname">Nickname</option>
-        <option id="date" value="date">Day caught</option>
-        <option id="hp" value="hp">HP</option>
-        <option id="atk" value="atk">Attack</option>
-        <option id="def" value="def">Defence</option>
-        <option id="spatk" value="spatk">Special attack</option>
-        <option id="spdef" value="spef">Special defence</option>
-        <option id="speed" value="speed">Speed</option>
-      </select>
-      <label for="order">from</label>
-      <select id="order" name="order">
-        <option id="asc" value="asc">Smallest to biggest</option>
-        <option id="desc" value="desc">Biggest to smallest</option>
-      </select>
-      <input type="submit" value="Sort" name="sortPokemon">
-    </form>
-
-        <!-- group by -->
-        <form method="POST" action="project.php">
-      <input type="hidden" id="groupPokemonRequest" name="groupPokemonRequest">
-      <label for="groupBy">See aggregates for</label>
-      <select id="groupBy" name="groupBy">
-        <option id="spid" value="spid">Species</option>
-        <option id="date" value="date">Days caught</option>
-        <option id="gender" value="gender">Gender</option>
-      </select>
-      <label for="having">with at least</label>
-      <input type="number" id="having" name="having" value="1" min="1" max="99">
-      <label>Pokemon</label>
-      <input type="submit" value="View" name="groupPokemon">
-    </form>
-
-        <!-- release pokemon -->
-        <form method="POST" action="project.php">
-            <input type="hidden" id="releasePokemonRequest" name="releasePokemonRequest">
-            <input type="submit" value="Release Pokemon" name="releaseSubmit">
-            <input type="text" name="ridID" placeholder="Enter OwnedID of Pokemon to Release">
-        </form>
-
-        <!-- change pokemon nickname -->
-        <form method="POST" action="project.php">
-            <input type="hidden" id="updateQueryRequest" name="updateQueryRequest">
-            <input type="submit" value="Change Pokemon Nickname" name="updateSubmit">
-            <input type="text" name="nidID" placeholder="Enter OwnedID of Pokemon">
-            <input type="text" name="newName" placeholder="Enter new nickname for Pokemon">
-        </form>
-
-        <!-- check Weakness -->
-        <form method="POST" action="project.php">
-            <input type="hidden" id="checkWeaknessRequest" name="checkWeaknessRequest">
-            <input type="submit" value="Check Weaknesses" name="checkWeakSubmit">
-            <input type="text" name="cwid" placeholder="Enter OwnedID of Pokemon">
-        </form>
-
-        <hr />
+      <div class="right">
+        <h2>Results</h2>
 
         <?php
         $ownedID = 0;
@@ -537,6 +605,27 @@
             OCICommit($db_conn);
         }
 
+        // displays Pokemon stats
+       function showStats() {
+           global $db_conn;
+
+           $res = executePlainSQL("SELECT * FROM P_Stats INNER JOIN Pokemon ON P_Stats.ID=Pokemon.ID");
+           echo "<table style='border-collapse:separate;border-spacing:20px 0px;'><tr><th>Nickname</tb><th>Species ID</th><th>HP</th><th>Atk</th><th>Def</th><th>SpAtk</th><th>SpDef</th><th>Speed</th></tr>";
+           while (($row = oci_fetch_row($res)) != false) {
+             echo "<tr><td>". $row[8]
+             . "</td><td>" .$row[0]
+             . "</td><td>" . $row[1]
+             . "</td><td> " . $row[2]
+             . "</td><td>" . $row[3]
+             . ".</td><td>" . $row[4]
+             . "</td><td>" . $row[5]
+             . "</td><td>" . $row[6]
+             . "</tr>";
+           }
+           echo "</table>";
+           OCICommit($db_conn);
+       }
+
         // deletes a pokemon from the Pokemon table given a valid OwnedID is provided
         function releasePokemon() {
           global $db_conn;
@@ -623,14 +712,16 @@
 
             $ownedID = $_POST['spid'];
             // echo $ownedID;
-            if (isset($_POST['spid'])) {
+            if (isset($_POST['spid']) && is_numeric($ownedID)) {
                 $thisPokemon = executePlainSQL("SELECT * FROM Pokemon WHERE OwnedID='" . $ownedID . "'");
-                echo "<table style='border-collapse:separate;border-spacing:20px 0px;'><tr><th>Species ID</th><th>Nickname</th><th>Gender</th><th>Time Caught</th><th>Owned ID</th></tr>";
                 if(($row = oci_fetch_row($thisPokemon)) != false) {
+                  echo "<table style='border-collapse:separate;border-spacing:20px 0px;'><tr><th>Species ID</th><th>Nickname</th><th>Gender</th><th>Time Caught</th><th>Owned ID</th></tr>";
                   echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td><td>" . $row[2] . "</td><td>" . $row[3] . "</td><td>" . $row[4] . "</td></tr>";
+                  echo "</table>";
+                } else {
+                  echo "Invalid input, try again.";
                 }
             }
-            echo "</table>";
             OCICommit($db_conn);
         }
 
@@ -893,6 +984,47 @@
           OCICommit($db_conn);
         }
 
+        function displayMegaEvolutions() {
+          global $db_conn;
+          $res = executePlainSQL("SELECT S.SpName, H.MeName FROM Species S, has_a H WHERE S.ID = H.ID");
+          echo "<table style='border-collapse:separate;border-spacing:20px 0px;'><tr><th>Pokemon</th><th>Mega Evolution</th></tr>";
+            while (($row = oci_fetch_row($res)) != false) {
+              echo "<tr>
+              <td>" . $row[0] . "</td>
+              <td> " . $row[1] . "</td>
+            </tr>";
+            }
+            echo "</table>";
+            OCICommit($db_conn);
+        }
+
+        function displayEvolutions() {
+          global $db_conn;
+          $res = executePlainSQL("SELECT S1.SpName, S2.SpName FROM Species S1, Species S2, EvolvesInto EI WHERE S1.ID = EI.SpID1 AND S2.ID = EI.SpID2");
+          echo "<table style='border-collapse:separate;border-spacing:20px 0px;'><tr><th>Pokemon</th><th>Evolves Into</th></tr>";
+            while (($row = oci_fetch_row($res)) != false) {
+              echo "<tr>
+              <td>" . $row[0] . "</td>
+              <td> " . $row[1] . "</td>
+            </tr>";
+            }
+            echo "</table>";
+            OCICommit($db_conn);
+        }
+
+        function showPokemonNotWeakAgainst() {
+          global $db_conn;
+          $numTypes = $_POST['numTypes'];
+          $res = executePlainSQL("SELECT S.SpName FROM Species S WHERE NOT EXISTS (SELECT OT.ID FROM WeakAgainst WA, ofType OT WHERE S.ID = OT.ID AND (OT.Type1 = WA.Type1_TypeName OR OT.Type2 = WA.Type1_TypeName) AND WA.Type2_TypeName = '" . $numTypes . "') ");
+          echo "<table style='border-collapse:separate;border-spacing:20px 0px;'><tr><th>All Pokemon not weak to " . $numTypes . "</th></tr>";
+            while (($row = oci_fetch_row($res)) != false) {
+              echo "<tr>
+              <td>" . $row[0] . "</td>
+            </tr>";
+            }
+            echo "</table>";
+          OCICommit($db_conn);
+        }
 
 
         // HANDLE ALL POST ROUTES
@@ -916,9 +1048,11 @@
             } else if (array_key_exists('showPokemonRequest', $_POST)) {
                 showThisPokemon();
             } else if (array_key_exists('sortPokemonRequest', $_POST)) {
-          	sortPokemonBy();
+          	   sortPokemonBy();
             } else if (array_key_exists('groupPokemonRequest', $_POST)) {
-          	groupPokemonBy();
+          	   groupPokemonBy();
+            } else if (array_key_exists('showPokemonNotWeakAgainstRequest', $_POST)) {
+                showPokemonNotWeakAgainst();
             }
 
             disconnectFromDB();
@@ -937,6 +1071,10 @@
                 displayPokemon();
             } else if (array_key_exists('statPokemon', $_GET)) {
                 showStats();
+            }  else if (array_key_exists('displayMegaEvolutions', $_GET)) {
+                displayMegaEvolutions();
+            } else if (array_key_exists('displayEvolutions', $_GET)) {
+                displayEvolutions();
             } else if (array_key_exists('getNormal', $_GET)) {
                 getElem("Normal");
             } else if (array_key_exists('getGrass', $_GET)) {
@@ -968,9 +1106,9 @@
     }
 
     if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit'])|| isset($_POST['releaseSubmit']) || isset($_POST['searchSubmit']) || isset($_POST['searchIDSubmit']) || isset($_POST['checkWeakSubmit']) ||
-    isset($_POST['showSubmit']) || isset($_POST['sortPokemon']) || isset($_POST['groupPokemon'])) {
+    isset($_POST['showSubmit']) || isset($_POST['sortPokemon']) || isset($_POST['groupPokemon'])|| isset($_POST['showPokemonNotWeakAgainstSubmit'])) {
         handlePOSTRequest();
-    } else if (isset($_GET['countTupleRequest']) || isset($_GET['showTupleRequest']) || isset($_GET['displayPokemonRequest']) || isset($_GET['statPokemonRequest'])) {
+    } else if (isset($_GET['countTupleRequest']) || isset($_GET['showTupleRequest']) || isset($_GET['displayPokemonRequest']) || isset($_GET['statPokemonRequest']) || isset($_GET['displayEvolutionsRequest'])|| isset($_GET['displayMegaEvolutionsRequest']) ) {
         handleGETRequest();
     } else if (isset($_GET['getNormalPokemon']) || isset($_GET['getGrassPokemon']) || isset($_GET['getFirePokemon']) || isset($_GET['getWaterPokemon']) || isset($_GET['getGroundPokemon']) || isset($_GET['getFlyingPokemon']) ||
       isset($_GET['getPoisonPokemon']) || isset($_GET['getFightingPokemon']) || isset($_GET['getBugPokemon']) || isset($_GET['getElectricPokemon']) || isset($_GET['getPsychicPokemon']) || isset($_GET['getFairyPokemon'])) {
@@ -978,6 +1116,7 @@
     }
 		?>
   </div>
+</div>
 	</body>
   <!-- <footer>
     <div style="text-align:center;">Created by Derrick Sutanto, Shawn Pak, and Kristen Foong &#169; 2020</div>
