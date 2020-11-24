@@ -520,6 +520,11 @@
             }
             $randomSpid = executePlainSQL("SELECT id FROM (SELECT id FROM Species ORDER BY DBMS_RANDOM.RANDOM) WHERE ROWNUM = 1");
             $randomSpidResult = OCI_Fetch_Array($randomSpid, OCI_BOTH);
+            if($randomSpidResult[0] >= 29 && $randomSpidResult[0] < 32) {
+              $rgen = 'female';
+            } else if ($randomSpidResult[0] >= 32 && $randomSpidResult[0] < 35) {
+              $rgen = 'male';
+            }
             $randomSpname = executePlainSQL("SELECT SpName FROM Species WHERE id = $randomSpidResult[0]");
             $randomSpnameResult = OCI_Fetch_Array($randomSpname, OCI_BOTH);
 
