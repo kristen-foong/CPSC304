@@ -471,7 +471,7 @@
             	ID					INT,
             	Nickname		VARCHAR(255),
             	Gender			VARCHAR(20),
-            	TimeCaught		TIMESTAMP,
+            	TimeCaught		DATE,
             	OwnedID			INT,
             	PRIMARY KEY (OwnedID),
             	FOREIGN KEY (ID) REFERENCES SPECIES
@@ -525,7 +525,7 @@
 
             $resultSp = executePlainSQL("SELECT ownedID FROM Pokemon WHERE ROWNUM = 1 ORDER BY ownedID DESC");
             $row = oci_fetch_row($resultSp);
-            $newPokemon = executePlainSQL("INSERT INTO Pokemon VALUES ($randomSpidResult[0],'$randomSpnameResult[0]' , '$rgen', CURRENT_TIMESTAMP, $row[0]+1)");
+            $newPokemon = executePlainSQL("INSERT INTO Pokemon VALUES ($randomSpidResult[0],'$randomSpnameResult[0]' , '$rgen', CURRENT_DATE, $row[0]+1)");
 
 
             //  $sql = "SELECT id FROM (SELECT id FROM Species ORDER BY DBMS_RANDOM.RANDOM) WHERE ROWNUM = 1";
