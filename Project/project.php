@@ -301,7 +301,7 @@
           <option id="atk" value="atk">Attack</option>
           <option id="def" value="def">Defence</option>
           <option id="spatk" value="spatk">Special attack</option>
-          <option id="spdef" value="spef">Special defence</option>
+          <option id="spdef" value="spdef">Special defence</option>
           <option id="speed" value="speed">Speed</option>
         </select>
         <label for="order">from</label>
@@ -329,7 +329,7 @@
 
           <form method="GET" action="project.php">
             <input type="hidden" id="aggrPokemonRequest" name="aggrPokemonRequest">
-            <label>Get the most common gender by Pokemon</label>
+            <label>Get the most common gender by Pokemon ID</label>
             <input type="submit" value="Show" name="aggrPokemon">
           </form>
 
@@ -891,7 +891,7 @@
                   </tr>";
                 }
                 echo "</table>";
-              } else if ($_POST['sortBy'] == 'Speed') {
+              } else if ($_POST['sortBy'] == 'speed') {
                 $res = executePlainSQL("SELECT Pokemon.*, P_Stats.* FROM Pokemon LEFT JOIN P_Stats ON Pokemon.ID = P_Stats.ID ORDER BY P_Stats.Speed $order");
                 echo "<table style='border-collapse:separate;border-spacing:20px 0px;'><tr><th>Species ID</th><th>Nickname</th><th>Gender</th><th>Time Caught</th><th>Owned ID</th><th>HP</th><th>Attack</th><th>Defence</th><th>Sp. attack</th><th>Sp. defence</th><th>Speed</th></tr>";
                 while (($row = oci_fetch_row($res)) != false) {
