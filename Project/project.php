@@ -222,28 +222,42 @@
         </form>
 
 	    <!-- sort by -->
-    	<form method="POST" action="project.php">
-          <input type="hidden" id="sortPokemonRequest" name="sortPokemonRequest">
-          <label for="sortBy">Sort by</label>
-          <select id="sortBy" name="sortBy">
-            <option id="spid" value="spid">Species ID</option>
-            <option id="nickname" value="nickname">Nickname</option>
-            <option id="date" value="date">Day caught</option>
-          </select>
-          <input type="submit" value="Sort" name="sortPokemon">
-        </form>
+      <form method="POST" action="project.php">
+      <input type="hidden" id="sortPokemonRequest" name="sortPokemonRequest">
+      <label for="sortBy">Sort by</label>
+      <select id="sortBy" name="sortBy">
+        <option id="spid" value="spid">Species ID</option>
+        <option id="nickname" value="nickname">Nickname</option>
+        <option id="date" value="date">Day caught</option>
+        <option id="hp" value="hp">HP</option>
+        <option id="atk" value="atk">Attack</option>
+        <option id="def" value="def">Defence</option>
+        <option id="spatk" value="spatk">Special attack</option>
+        <option id="spdef" value="spef">Special defence</option>
+        <option id="speed" value="speed">Speed</option>
+      </select>
+      <label for="order">from</label>
+      <select id="order" name="order">
+        <option id="asc" value="asc">Smallest to biggest</option>
+        <option id="desc" value="desc">Biggest to smallest</option>
+      </select>
+      <input type="submit" value="Sort" name="sortPokemon">
+    </form>
 
         <!-- group by -->
         <form method="POST" action="project.php">
-          <input type="hidden" id="groupPokemonRequest" name="groupPokemonRequest">
-          <label for="groupBy">See aggregates for</label>
-          <select id="groupBy" name="groupBy">
-            <option id="spid" value="spid">Species</option>
-            <option id="date" value="date">Days caught</option>
-            <option id="gender" value="gender">Gender</option>
-          </select>
-          <input type="submit" value="View" name="groupPokemon">
-        </form>
+      <input type="hidden" id="groupPokemonRequest" name="groupPokemonRequest">
+      <label for="groupBy">See aggregates for</label>
+      <select id="groupBy" name="groupBy">
+        <option id="spid" value="spid">Species</option>
+        <option id="date" value="date">Days caught</option>
+        <option id="gender" value="gender">Gender</option>
+      </select>
+      <label for="having">with at least</label>
+      <input type="number" id="having" name="having" value="1" min="1" max="99">
+      <label>Pokemon</label>
+      <input type="submit" value="View" name="groupPokemon">
+    </form>
 
         <!-- release pokemon -->
         <form method="POST" action="project.php">
@@ -620,55 +634,187 @@
             OCICommit($db_conn);
         }
 
-        function sortPokemonBy() {
+        function sortPokemonBy()
+        {
           global $db_conn;
 
           if (isset($_POST['sortBy'])) {
-            if ($_POST['sortBy'] == 'spid') {
-              $res = executePlainSQL("SELECT * FROM Pokemon ORDER BY ID");
-              //echo $_POST['sortBy'];
-              echo "<table style='border-collapse:separate;border-spacing:20px 0px;'><tr><th>Species ID</th><th>Nickname</th><th>Gender</th><th>Time Caught</th><th>Owned ID</th></tr>";
-              while (($row = oci_fetch_row($res)) != false) {
-                echo "<tr>
+            if (isset($_POST['order'])) {
+              $order = $_POST['order'];
+              if ($_POST['sortBy'] == 'spid') {
+                $res = executePlainSQL("SELECT Pokemon.*, P_Stats.* FROM Pokemon LEFT JOIN P_Stats ON Pokemon.ID = P_Stats.ID ORDER BY Pokemon.ID $order");
+                echo "<table style='border-collapse:separate;border-spacing:20px 0px;'><tr><th>Species ID</th><th>Nickname</th><th>Gender</th><th>Time Caught</th><th>Owned ID</th><th>HP</th><th>Attack</th><th>Defence</th><th>Sp. attack</th><th>Sp. defence</th><th>Speed</th></tr>";
+                while (($row = oci_fetch_row($res)) != false) {
+                  echo "<tr>
                     <td>" . $row[0] . "</td>
                     <td>" . $row[1] . "</td>
                     <td>" . $row[2] . "</td>
                     <td>" . $row[3] . "</td>
                     <td>" . $row[4] . "</td>
+                    <td>" . $row[6] . "</td>
+                    <td>" . $row[7] . "</td>
+                    <td>" . $row[8] . "</td>
+                    <td>" . $row[9] . "</td>
+                    <td>" . $row[10] . "</td>
+                    <td>" . $row[11] . "</td>
                   </tr>";
-              }
-              echo "</table>";
-            } else if ($_POST['sortBy'] == 'nickname') {
-              $res = executePlainSQL("SELECT * FROM Pokemon ORDER BY Nickname");
-              //echo $_POST['sortBy'];
-              echo "<table style='border-collapse:separate;border-spacing:20px 0px;'><tr><th>Species ID</th><th>Nickname</th><th>Gender</th><th>Time Caught</th><th>Owned ID</th></tr>";
-              while (($row = oci_fetch_row($res)) != false) {
-                echo "<tr>
+                }
+                echo "</table>";
+              } else if ($_POST['sortBy'] == 'nickname') {
+                $res = executePlainSQL("SELECT Pokemon.*, P_Stats.* FROM Pokemon LEFT JOIN P_Stats ON Pokemon.ID = P_Stats.ID ORDER BY Pokemon.Nickname $order");
+                echo "<table style='border-collapse:separate;border-spacing:20px 0px;'><tr><th>Species ID</th><th>Nickname</th><th>Gender</th><th>Time Caught</th><th>Owned ID</th><th>HP</th><th>Attack</th><th>Defence</th><th>Sp. attack</th><th>Sp. defence</th><th>Speed</th></tr>";
+                while (($row = oci_fetch_row($res)) != false) {
+                  echo "<tr>
                       <td>" . $row[0] . "</td>
                       <td>" . $row[1] . "</td>
                       <td>" . $row[2] . "</td>
                       <td>" . $row[3] . "</td>
                       <td>" . $row[4] . "</td>
+                      <td>" . $row[6] . "</td>
+                      <td>" . $row[7] . "</td>
+                      <td>" . $row[8] . "</td>
+                      <td>" . $row[9] . "</td>
+                      <td>" . $row[10] . "</td>
+                      <td>" . $row[11] . "</td>
                     </tr>";
-              }
-              echo "</table>";
-            } else if ($_POST['sortBy'] == 'date') {
-              $res = executePlainSQL("SELECT * FROM Pokemon ORDER BY TimeCaught");
-              //echo $_POST['sortBy'];
-              echo "<table style='border-collapse:separate;border-spacing:20px 0px;'><tr><th>Species ID</th><th>Nickname</th><th>Gender</th><th>Time Caught</th><th>Owned ID</th></tr>";
-              while (($row = oci_fetch_row($res)) != false) {
-                echo "<tr>
+                }
+                echo "</table>";
+              } else if ($_POST['sortBy'] == 'date') {
+                $res = executePlainSQL("SELECT Pokemon.*, P_Stats.* FROM Pokemon LEFT JOIN P_Stats ON Pokemon.ID = P_Stats.ID ORDER BY Pokemon.TimeCaught $order");
+                echo "<table style='border-collapse:separate;border-spacing:20px 0px;'><tr><th>Species ID</th><th>Nickname</th><th>Gender</th><th>Time Caught</th><th>Owned ID</th><th>HP</th><th>Attack</th><th>Defence</th><th>Sp. attack</th><th>Sp. defence</th><th>Speed</th></tr>";
+                while (($row = oci_fetch_row($res)) != false) {
+                  echo "<tr>
                     <td>" . $row[0] . "</td>
                     <td>" . $row[1] . "</td>
                     <td>" . $row[2] . "</td>
                     <td>" . $row[3] . "</td>
                     <td>" . $row[4] . "</td>
+                    <td>" . $row[6] . "</td>
+                    <td>" . $row[7] . "</td>
+                    <td>" . $row[8] . "</td>
+                    <td>" . $row[9] . "</td>
+                    <td>" . $row[10] . "</td>
+                    <td>" . $row[11] . "</td>
                   </tr>";
+                }
+                echo "</table>";
+              } else if ($_POST['sortBy'] == 'hp') {
+                $res = executePlainSQL("SELECT Pokemon.*, P_Stats.* FROM Pokemon LEFT JOIN P_Stats ON Pokemon.ID = P_Stats.ID ORDER BY P_Stats.HP $order");
+                echo "<table style='border-collapse:separate;border-spacing:20px 0px;'><tr><th>Species ID</th><th>Nickname</th><th>Gender</th><th>Time Caught</th><th>Owned ID</th><th>HP</th><th>Attack</th><th>Defence</th><th>Sp. attack</th><th>Sp. defence</th><th>Speed</th></tr>";
+                while (($row = oci_fetch_row($res)) != false) {
+                  echo "<tr>
+                    <td>" . $row[0] . "</td>
+                    <td>" . $row[1] . "</td>
+                    <td>" . $row[2] . "</td>
+                    <td>" . $row[3] . "</td>
+                    <td>" . $row[4] . "</td>
+                    <td>" . $row[6] . "</td>
+                    <td>" . $row[7] . "</td>
+                    <td>" . $row[8] . "</td>
+                    <td>" . $row[9] . "</td>
+                    <td>" . $row[10] . "</td>
+                    <td>" . $row[11] . "</td>
+                  </tr>";
+                }
+                echo "</table>";
+              } else if ($_POST['sortBy'] == 'atk') {
+                $res = executePlainSQL("SELECT Pokemon.*, P_Stats.* FROM Pokemon LEFT JOIN P_Stats ON Pokemon.ID = P_Stats.ID ORDER BY P_Stats.Atk $order");
+                echo "<table style='border-collapse:separate;border-spacing:20px 0px;'><tr><th>Species ID</th><th>Nickname</th><th>Gender</th><th>Time Caught</th><th>Owned ID</th><th>HP</th><th>Attack</th><th>Defence</th><th>Sp. attack</th><th>Sp. defence</th><th>Speed</th></tr>";
+                while (($row = oci_fetch_row($res)) != false) {
+                  echo "<tr>
+                    <td>" . $row[0] . "</td>
+                    <td>" . $row[1] . "</td>
+                    <td>" . $row[2] . "</td>
+                    <td>" . $row[3] . "</td>
+                    <td>" . $row[4] . "</td>
+                    <td>" . $row[6] . "</td>
+                    <td>" . $row[7] . "</td>
+                    <td>" . $row[8] . "</td>
+                    <td>" . $row[9] . "</td>
+                    <td>" . $row[10] . "</td>
+                    <td>" . $row[11] . "</td>
+                  </tr>";
+                }
+                echo "</table>";
+              } else if ($_POST['sortBy'] == 'def') {
+                $res = executePlainSQL("SELECT Pokemon.*, P_Stats.* FROM Pokemon LEFT JOIN P_Stats ON Pokemon.ID = P_Stats.ID ORDER BY P_Stats.Def $order");
+                echo "<table style='border-collapse:separate;border-spacing:20px 0px;'><tr><th>Species ID</th><th>Nickname</th><th>Gender</th><th>Time Caught</th><th>Owned ID</th><th>HP</th><th>Attack</th><th>Defence</th><th>Sp. attack</th><th>Sp. defence</th><th>Speed</th></tr>";
+                while (($row = oci_fetch_row($res)) != false) {
+                  echo "<tr>
+                    <td>" . $row[0] . "</td>
+                    <td>" . $row[1] . "</td>
+                    <td>" . $row[2] . "</td>
+                    <td>" . $row[3] . "</td>
+                    <td>" . $row[4] . "</td>
+                    <td>" . $row[6] . "</td>
+                    <td>" . $row[7] . "</td>
+                    <td>" . $row[8] . "</td>
+                    <td>" . $row[9] . "</td>
+                    <td>" . $row[10] . "</td>
+                    <td>" . $row[11] . "</td>
+                  </tr>";
+                }
+                echo "</table>";
+              } else if ($_POST['sortBy'] == 'spatk') {
+                $res = executePlainSQL("SELECT Pokemon.*, P_Stats.* FROM Pokemon LEFT JOIN P_Stats ON Pokemon.ID = P_Stats.ID ORDER BY P_Stats.Spatk $order");
+                echo "<table style='border-collapse:separate;border-spacing:20px 0px;'><tr><th>Species ID</th><th>Nickname</th><th>Gender</th><th>Time Caught</th><th>Owned ID</th><th>HP</th><th>Attack</th><th>Defence</th><th>Sp. attack</th><th>Sp. defence</th><th>Speed</th></tr>";
+                while (($row = oci_fetch_row($res)) != false) {
+                  echo "<tr>
+                    <td>" . $row[0] . "</td>
+                    <td>" . $row[1] . "</td>
+                    <td>" . $row[2] . "</td>
+                    <td>" . $row[3] . "</td>
+                    <td>" . $row[4] . "</td>
+                    <td>" . $row[6] . "</td>
+                    <td>" . $row[7] . "</td>
+                    <td>" . $row[8] . "</td>
+                    <td>" . $row[9] . "</td>
+                    <td>" . $row[10] . "</td>
+                    <td>" . $row[11] . "</td>
+                  </tr>";
+                }
+                echo "</table>";
+              } else if ($_POST['sortBy'] == 'spdef') {
+                $res = executePlainSQL("SELECT Pokemon.*, P_Stats.* FROM Pokemon LEFT JOIN P_Stats ON Pokemon.ID = P_Stats.ID ORDER BY P_Stats.Spdef $order");
+                echo "<table style='border-collapse:separate;border-spacing:20px 0px;'><tr><th>Species ID</th><th>Nickname</th><th>Gender</th><th>Time Caught</th><th>Owned ID</th><th>HP</th><th>Attack</th><th>Defence</th><th>Sp. attack</th><th>Sp. defence</th><th>Speed</th></tr>";
+                while (($row = oci_fetch_row($res)) != false) {
+                  echo "<tr>
+                    <td>" . $row[0] . "</td>
+                    <td>" . $row[1] . "</td>
+                    <td>" . $row[2] . "</td>
+                    <td>" . $row[3] . "</td>
+                    <td>" . $row[4] . "</td>
+                    <td>" . $row[6] . "</td>
+                    <td>" . $row[7] . "</td>
+                    <td>" . $row[8] . "</td>
+                    <td>" . $row[9] . "</td>
+                    <td>" . $row[10] . "</td>
+                    <td>" . $row[11] . "</td>
+                  </tr>";
+                }
+                echo "</table>";
+              } else if ($_POST['sortBy'] == 'Speed') {
+                $res = executePlainSQL("SELECT Pokemon.*, P_Stats.* FROM Pokemon LEFT JOIN P_Stats ON Pokemon.ID = P_Stats.ID ORDER BY P_Stats.Speed $order");
+                echo "<table style='border-collapse:separate;border-spacing:20px 0px;'><tr><th>Species ID</th><th>Nickname</th><th>Gender</th><th>Time Caught</th><th>Owned ID</th><th>HP</th><th>Attack</th><th>Defence</th><th>Sp. attack</th><th>Sp. defence</th><th>Speed</th></tr>";
+                while (($row = oci_fetch_row($res)) != false) {
+                  echo "<tr>
+                    <td>" . $row[0] . "</td>
+                    <td>" . $row[1] . "</td>
+                    <td>" . $row[2] . "</td>
+                    <td>" . $row[3] . "</td>
+                    <td>" . $row[4] . "</td>
+                    <td>" . $row[6] . "</td>
+                    <td>" . $row[7] . "</td>
+                    <td>" . $row[8] . "</td>
+                    <td>" . $row[9] . "</td>
+                    <td>" . $row[10] . "</td>
+                    <td>" . $row[11] . "</td>
+                  </tr>";
+                }
+                echo "</table>";
               }
-              echo "</table>";
             }
           }
-
           OCICommit($db_conn);
         }
 
@@ -676,64 +822,75 @@
           global $db_conn;
 
           if (isset($_POST['groupBy'])) {
-            if ($_POST['groupBy'] == 'spid') {
-              $res = executePlainSQL("SELECT ID, COUNT(*) FROM Pokemon GROUP BY ID");
-              // echo $_POST['groupBy'];
-              echo "<table style='border-collapse:separate;border-spacing:20px 0px;'><tr><th>Species ID</th><th>Pokemon</th></tr>";
-              while (($row = oci_fetch_row($res)) != false) {
-                echo "<tr>
+            if (isset($_POST['having'])) {
+              $having = $_POST['having'];
+              if ($_POST['groupBy'] == 'spid') {
+                $res = executePlainSQL("SELECT ID, COUNT(*) FROM Pokemon GROUP BY ID HAVING COUNT(*) >= $having");
+                echo "<table style='border-collapse:separate;border-spacing:20px 0px;'><tr><th>Species ID</th><th>Pokemon</th></tr>";
+                while (($row = oci_fetch_row($res)) != false) {
+                  echo "<tr>
                     <td>" . $row[0] . "</td>
                     <td>" . $row[1] . "</td>
                   </tr>";
-              }
-              echo "</table>";
-            } else if ($_POST['groupBy'] == 'gender') {
-              $res = executePlainSQL("SELECT Gender, COUNT(*) FROM Pokemon GROUP BY Gender");
-              //echo $_POST['groupBy'];
-              echo "<table style='border-collapse:separate;border-spacing:20px 0px;'><tr><th>Gender</th><th>Pokemon</th></tr>";
-              while (($row = oci_fetch_row($res)) != false) {
-                echo "<tr>
+                }
+                echo "</table>";
+              } else if ($_POST['groupBy'] == 'gender') {
+                $res = executePlainSQL("SELECT Gender, COUNT(*) FROM Pokemon GROUP BY Gender HAVING COUNT(*) >= $having");
+                echo "<table style='border-collapse:separate;border-spacing:20px 0px;'><tr><th>Gender</th><th>Pokemon</th></tr>";
+                while (($row = oci_fetch_row($res)) != false) {
+                  echo "<tr>
                       <td>" . $row[0] . "</td>
                       <td>" . $row[1] . "</td>
                     </tr>";
-              }
-              echo "</table>";
-            } else if ($_POST['groupBy'] == 'date') {
-              $res = executePlainSQL("SELECT TimeCaught, COUNT(*) FROM Pokemon GROUP BY TimeCaught");
-              //echo $_POST['groupBy'];
-              echo "<table style='border-collapse:separate;border-spacing:20px 0px;'><tr><th>Time Caught</th><th>Pokemon</th></tr>";
-              while (($row = oci_fetch_row($res)) != false) {
-                echo "<tr>
+                }
+                echo "</table>";
+              } else if ($_POST['groupBy'] == 'date') {
+                $res = executePlainSQL("SELECT TimeCaught, COUNT(*) FROM Pokemon GROUP BY TimeCaught HAVING COUNT(*) >= $having");
+                echo "<table style='border-collapse:separate;border-spacing:20px 0px;'><tr><th><th>Time Caught</th><th>Pokemon</th></tr>";
+                while (($row = oci_fetch_row($res)) != false) {
+                  echo "<tr>
                     <td>" . $row[0] . "</td>
                     <td>" . $row[1] . "</td>
                   </tr>";
+                }
+                echo "</table>";
               }
-              echo "</table>";
+            } else {
+              if ($_POST['groupBy'] == 'spid') {
+                $res = executePlainSQL("SELECT ID, COUNT(*) FROM Pokemon GROUP BY ID");
+                echo "<table style='border-collapse:separate;border-spacing:20px 0px;'><tr><th>Species ID</th><th>Pokemon</th></tr>";
+                while (($row = oci_fetch_row($res)) != false) {
+                  echo "<tr>
+                    <td>" . $row[0] . "</td>
+                    <td>" . $row[1] . "</td>
+                  </tr>";
+                }
+                echo "</table>";
+              } else if ($_POST['groupBy'] == 'gender') {
+                $res = executePlainSQL("SELECT Gender, COUNT(*) FROM Pokemon GROUP BY Gender");
+                echo "<table style='border-collapse:separate;border-spacing:20px 0px;'><tr><th>Gender</th><th>Pokemon</th></tr>";
+                while (($row = oci_fetch_row($res)) != false) {
+                  echo "<tr>
+                      <td>" . $row[0] . "</td>
+                      <td>" . $row[1] . "</td>
+                    </tr>";
+                }
+                echo "</table>";
+              } else if ($_POST['groupBy'] == 'date') {
+                $res = executePlainSQL("SELECT TimeCaught, COUNT(*) FROM Pokemon GROUP BY TimeCaught");
+                echo "<table style='border-collapse:separate;border-spacing:20px 0px;'><tr><th><th>Time Caught</th><th>Pokemon</th></tr>";
+                while (($row = oci_fetch_row($res)) != false) {
+                  echo "<tr>
+                    <td>" . $row[0] . "</td>
+                    <td>" . $row[1] . "</td>
+                  </tr>";
+                }
+                echo "</table>";
+              }
             }
           }
 
           OCICommit($db_conn);
-        }
-
-        // displays Pokemon stats
-        function showStats() {
-            global $db_conn;
-
-            $res = executePlainSQL("SELECT * FROM P_Stats INNER JOIN Pokemon ON P_Stats.ID=Pokemon.ID");
-            echo "<table style='border-collapse:separate;border-spacing:20px 0px;'><tr><th>Nickname</tb><th>Species ID</th><th>HP</th><th>Atk</th><th>Def</th><th>SpAtk</th><th>SpDef</th><th>Speed</th></tr>";
-            while (($row = oci_fetch_row($res)) != false) {
-              echo "<tr><td>". $row[8]
-              . "</td><td>" .$row[0]
-              . "</td><td>" . $row[1]
-              . "</td><td> " . $row[2]
-              . "</td><td>" . $row[3]
-              . ".</td><td>" . $row[4]
-              . "</td><td>" . $row[5]
-              . "</td><td>" . $row[6]
-              . "</tr>";
-            }
-            echo "</table>";
-            OCICommit($db_conn);
         }
 
 
@@ -822,9 +979,9 @@
 		?>
   </div>
 	</body>
-  <footer>
+  <!-- <footer>
     <div style="text-align:center;">Created by Derrick Sutanto, Shawn Pak, and Kristen Foong &#169; 2020</div>
-  </footer>
+  </footer> -->
 </html>
 
 
